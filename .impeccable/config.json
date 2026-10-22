@@ -74,6 +74,11 @@
         ],
         "createdAt": "2026-10-21T17:02:18.693Z",
         "reason": "logo comparison sheet, not part of the app; Tim already chose option B"
+      },
+      {
+        "rule": "design-system-font",
+        "value": "sf mono",
+        "createdAt": "2026-10-22T07:24:13.516Z"
       }
     ]
   }

@@ -28,3 +28,4 @@ landing/assets/*.png
 .impeccable/mocks/**/*.png
 .impeccable/mocks/**/*.jpg
 .impeccable/archive/
+hub/.slug

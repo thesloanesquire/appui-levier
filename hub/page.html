@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Levier · Remise du projet</title>
+<meta name="description" content="Ce qui est prêt chez Levier, comment le mettre en ligne et comment le faire évoluer.">
+<link rel="icon" href="../app/assets/logo-mark.svg" type="image/svg+xml">
+<link rel="stylesheet" href="hub.css">
+</head>
+<body>
+<header class="top"><div class="wrap top-in">
+  <a class="logo" href="#haut" aria-label="Levier"><svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="16" fill="#1F2A44"/><path d="M22 16v32h20" stroke="#fff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none"/><circle cx="47" cy="22" r="6" fill="#B8613F"/></svg><span>levier<b>.</b></span></a>
+  <span class="tag">Remise du projet · {{date}} · page non référencée</span>
+</div></header>
+
+<div class="wrap" id="haut">
+<section class="hero">
+  <h1>Tout ce qui est prêt, comment le publier, comment le faire grandir.</h1>
+  <p class="lead">Quatre pièces sont terminées : la page publique, la plateforme Appui, le kit de vente et les documents de fond. Cette page les montre, dit ce qu'il reste à décider avant de lancer, et explique pas à pas la mise en ligne puis l'évolution avec Claude Code. Le projet est à toi : code, données et nom.</p>
+  <div class="row"><a class="btn" href="#pieces">Voir les quatre pièces</a><a class="btn ghost" href="#deployer">Mettre en ligne</a><a class="btn ghost" href="#evoluer">Faire évoluer</a></div>
+</section>
+
+<div class="layout">
+<nav class="side" aria-label="Sections">
+  <a href="#pieces">Les quatre pièces</a><a href="#plateforme">La plateforme en images</a><a href="#kit">Le kit de vente</a><a href="#donnees">Les données</a>
+  <div class="sep"></div>
+  <a href="#avant">Avant de lancer</a><a href="#deployer">Mettre en ligne</a><a href="#evoluer">Faire évoluer</a><a href="#regles">Règles à tenir</a><a href="#suite">Prochaines évolutions</a>
+</nav>
+
+<main>
+<section id="pieces">
+  <h2>Les quatre pièces</h2>
+  <p class="lead">Chacune se consulte ici. Les documents de fond ne sont pas publiés sur Internet : ils sont dans le dossier du projet, sur GitHub (dépôt privé).</p>
+  <div class="cards">
+    <article class="card"><div class="top-row"><h3>La page publique</h3><span class="pill ok">Prête, sauf 3 mentions</span></div>
+      <p>Elle part de la douleur des associations (63 heures par demande acceptée, refus sans motif), calcule la date limite de dépôt, laisse essayer le matching sur 2'000 fondations romandes, puis présente l'offre, la garantie, Alexandre et 10 questions. En français, allemand et anglais.</p>
+      <div class="links"><a class="btn sm" href="../">Français</a><a class="btn sm ghost" href="../de/">Deutsch</a><a class="btn sm ghost" href="../en/">English</a></div></article>
+    <article class="card"><div class="top-row"><h3>La plateforme Appui</h3><span class="pill warn">Démo avec données fictives</span></div>
+      <p>L'outil interne : base de {{n_app}} fondations, matching expliqué, fiches pratiques, lettres, suivi des demandes, tableau de bord, espace client en lecture. La démo ci-contre tourne dans le navigateur, sans serveur : rien n'y est enregistré ailleurs que sur l'ordinateur qui l'ouvre.</p>
+      <div class="links"><a class="btn sm" href="../app/">Ouvrir la démo</a><a class="btn sm ghost" href="../app/#/portail/pedibus">Espace client</a></div></article>
+    <article class="card"><div class="top-row"><h3>Le kit de vente</h3><span class="pill ok">5 documents</span></div>
+      <p>Un prospectus de 2 pages (FR, DE, EN), un baromètre des fondations romandes de 4 pages, une présentation de 13 diapositives pour le premier rendez-vous. Ils reprennent les textes de la page, donc ils disent la même chose.</p>
+      <div class="links"><a class="btn sm" href="#kit">Voir le kit</a></div></article>
+    <article class="card"><div class="top-row"><h3>Les documents de fond</h3><span class="pill">Dans le dossier du projet</span></div>
+      <p>Audit du concurrent Spheriq, sources de données légales, architecture de l'IA, études de marché, argumentaire, scripts de prospection et d'objections, profil LinkedIn et plan du guide offert, revue du texte, guide d'hébergement.</p>
+      <div class="links"><a class="btn sm ghost" href="#evoluer">Où les trouver</a></div></article>
+  </div>
+</section>
+
+<section id="plateforme">
+  <h2>La plateforme en images</h2>
+  <p class="lead">Mode démo : six clients fictifs. Dans la vraie version, chaque conseiller se connecte avec son compte et tout le monde voit les mêmes données.</p>
+  <div class="shots">
+    <figure class="shot wide"><img src="assets/apercu.webp" width="1440" height="900" alt="Tableau de bord" loading="lazy"><figcaption><b>Tableau de bord.</b> La semaine en un coup d'œil : dépôts à venir, lettres à valider, étapes de toutes les campagnes, échéances. Un bouton demande à l'IA les cinq priorités.</figcaption></figure>
+    <figure class="shot"><img src="assets/fondations.webp" width="1440" height="900" alt="Fondations d'un client" loading="lazy"><figcaption><b>Les fondations d'un client.</b> Chaque score est expliqué : la phrase du but social qui correspond, le canton, les risques.</figcaption></figure>
+    <figure class="shot"><img src="assets/lettre.webp" width="1440" height="900" alt="Éditeur de lettre" loading="lazy"><figcaption><b>Une lettre par fondation.</b> Le but est cité mot pour mot ; à droite, ce qui a été utilisé et la liste « avant l'envoi ».</figcaption></figure>
+    <figure class="shot"><img src="assets/demandes.webp" width="1440" height="900" alt="Demandes et export" loading="lazy"><figcaption><b>Les demandes.</b> « Exporter la vague » produit un Word (une page par fondation) et un CSV pour le publipostage.</figcaption></figure>
+    <figure class="shot"><img src="assets/espace-client.webp" width="1440" height="900" alt="Espace client" loading="lazy"><figcaption><b>L'espace client.</b> Ce que le client voit sans compte compliqué : où en est sa recherche, ce qu'il doit valider, ce que Levier a fait.</figcaption></figure>
+  </div>
+</section>
+
+<section id="kit">
+  <h2>Le kit de vente</h2>
+  <p class="lead">À envoyer en pièce jointe ou à projeter. Les PDF sont ceux du dossier <code>kit/pdf/</code> ; ils se régénèrent d'une commande (voir « Faire évoluer »).</p>
+  <div class="kit">
+{{kit_cards}}
+  </div>
+  <div class="note">Les exemples de la présentation sont étiquetés « fictifs » ; la fiche d'une fondation (Fondation du Casino de Neuchâtel) est réelle, vérifiée le 22.10.2026 sur son site. Avant d'envoyer le kit à un prospect, remplacer l'adresse postale et confirmer les points de la section « Avant de lancer ».</div>
+</section>
+
+<section id="donnees">
+  <h2>Les données, au 22.10.2026</h2>
+  <p class="lead">Registre du commerce suisse (données ouvertes), listes publiques des autorités de surveillance, Loterie Romande. Rien n'est repris de Spheriq, Fundraiso, local.ch, search.ch ou Moneyhouse : leurs conditions l'interdisent.</p>
+  <div class="stats">
+    <div class="stat"><b>{{n_total}}</b><span>fondations inscrites en Suisse (hors prévoyance et liquidation : {{n_app}} dans Appui)</span></div>
+    <div class="stat"><b>{{n_rom}}</b><span>fondations actives dans les 6 cantons romands</span></div>
+    <div class="stat"><b>{{n_don}}</b><span>dont le but prévoit de soutenir des tiers (classement automatique)</span></div>
+    <div class="stat"><b>{{n_fiches}}</b><span>fiches pratiques vérifiées en ligne (site, conditions, délais)</span></div>
+  </div>
+  <h3>Ce que montre l'enrichissement des fondations</h3>
+  <p class="lead" style="margin-bottom:12px">Sur {{n_fiches}} fondations romandes parmi les plus prometteuses, étudiées une à une avec une recherche web :</p>
+  <table>
+    <tr><th>Indicateur</th><th>Résultat</th><th>Ce que cela veut dire</th></tr>
+    <tr><td>Site officiel trouvé</td><td>{{p_site}}</td><td>Une fondation sur deux environ n'a pas de site : elle se contacte par courrier, au siège.</td></tr>
+    <tr><td>Accepte les demandes</td><td>{{p_oui}} oui, {{p_non}} non, {{p_inc}} inconnu</td><td>Un quart indique ne pas accepter de demandes spontanées : il faut les retirer de la liste avant d'écrire.</td></tr>
+    <tr><td>Délais de dépôt publiés</td><td>{{p_delais}}</td><td>Le plus rare, et le plus utile : le calendrier se construit fondation par fondation.</td></tr>
+    <tr><td>Critères de soutien lisibles</td><td>{{p_crit}}</td><td>Base de la lettre : ce que la fondation finance, et ce qu'elle exclut.</td></tr>
+    <tr><td>Fiches « sûres » (accepte, confiance haute)</td><td>{{n_sures}}</td><td>Prêtes à servir pour une campagne sans autre vérification.</td></tr>
+  </table>
+  <p class="small muted">Échantillon choisi (fondations les plus prometteuses, répartition entre cantons), pas tiré au hasard : les pourcentages décrivent ces fondations, pas l'ensemble. Moteur : Claude avec recherche web ({{moteurs}}). Les cantons : {{cantons}}. Détail dans <code>data/enrichi/</code>.</p>
+</section>
+
+<section id="avant">
+  <h2>Avant de lancer</h2>
+  <p class="lead">Ces points dépendent d'Alexandre. Tant qu'ils ne sont pas tranchés, la page reste une démo.</p>
+  <ul class="checklist">
+    <li><div><b>Adresse postale, forme juridique et numéro IDE</b><span>Obligatoires pour une offre commerciale, et ils rassurent. Le pied de page contient encore « [Adresse postale à compléter] ».</span></div></li>
+    <li><div><b>Prix et garantie</b><span>CHF 750, 3'500 et 650 par mois, hors TVA ou non ? La garantie (« au moins 15 fondations dont le but correspond, sinon le Diagnostic est offert ») est une proposition : à valider et à écrire dans les conditions générales.</span></div></li>
+    <li><div><b>Contenu du Diagnostic</b><span>La page dit « 5 fondations prioritaires vérifiées », l'étude parle d'une carte de 20 à 30. Choisir une seule version.</span></div></li>
+    <li><div><b>Ton parcours, avec les pièces</b><span>Période, établissements et justificatifs des CHF 100'000 obtenus ; les plus de cent fondations sollicitées ; ton rôle à la RTS (en cours ou passé) ; intitulé et année du diplôme de l'IHEID.</span></div></li>
+    <li><div><b>Déclaration de protection des données</b><span>À publier avant d'affirmer quoi que ce soit sur l'hébergement en Suisse. L'outil traite des données de clients : la nLPD s'applique.</span></div></li>
+    <li><div><b>15 ou 20 minutes</b><span>Ton site actuel dit 20 minutes, la page dit 15. Et peux-tu tenir « devis sous 48 h » et « point écrit chaque mois » ?</span></div></li>
+    <li><div><b>Swissfundraising</b><span>La page cite son code éthique sans s'en réclamer. Une adhésion (indiquée à CHF 290 par an) donnerait un label, c'est à toi de décider.</span></div></li>
+    <li><div><b>Relecture de l'allemand et de l'anglais</b><span>Les deux versions sont des traductions, non relues par un·e locuteur·trice natif·ve.</span></div></li>
+  </ul>
+</section>
+
+<section id="deployer">
+  <h2>Mettre en ligne</h2>
+  <p class="lead">La démo que tu vois ici est statique : elle ne peut pas servir à de vrais clients, car les données y restent dans le navigateur. La vraie version tourne sur un serveur suisse, avec un compte par conseiller.</p>
+  <div class="cards" style="grid-template-columns:repeat(3,1fr)">
+    <div class="card"><h3>45 min</h3><p>la première fois, avec Claude Code à côté de toi.</p></div>
+    <div class="card"><h3>≈ CHF 7 par mois</h3><p>serveur VPS Lite d'Infomaniak (relevé le 21.10.2026, à vérifier), plus l'IA à l'usage : moins de CHF 20 par mois pour 20 clients.</p></div>
+    <div class="card"><h3>appui.levierconseil.ch</h3><p>le sous-domaine de ton site actuel, qui reste sur Netlify.</p></div>
+  </div>
+  <p class="small muted">Le guide complet, avec les commandes à copier, est dans <code>docs/HEBERGEMENT_INFOMANIAK.md</code>. Le plus simple : ouvrir le dossier dans Claude Code et écrire « guide-moi pour mettre Appui en ligne chez Infomaniak ».</p>
+  <ol class="steps">
+    <li><div><h3>Commander le serveur</h3><p>Manager Infomaniak, VPS Lite, Ubuntu 24.04. Noter l'adresse IP.</p></div></li>
+    <li><div><h3>Créer le sous-domaine</h3><p>Zone DNS de levierconseil.ch : une entrée de type A, nom <code>appui</code>, valeur l'adresse IP. Les autres entrées ne changent pas.</p></div></li>
+    <li><div><h3>Préparer le serveur</h3><p>Installer Docker, ouvrir seulement les ports 22, 80 et 443.</p></div></li>
+    <li><div><h3>Envoyer Appui et le démarrer</h3><p>Une commande construit le site et l'envoie, une autre lance le serveur. Le certificat HTTPS se crée tout seul.</p>
+      <div class="code"><pre>./scripts/construire_site.sh &amp;&amp; rsync -az --exclude 'serveur/pb_data' --exclude 'serveur/bin' --exclude 'data/' ./ ubuntu@IP:/opt/appui/
+ssh ubuntu@IP 'cd /opt/appui &amp;&amp; docker compose -f serveur/docker-compose.yml up -d --build'</pre><button type="button" data-copy>Copier</button></div></div></li>
+    <li><div><h3>Créer les comptes</h3><p>Sur <code>https://appui.levierconseil.ch/_/</code> : le compte administrateur, puis un compte par conseiller. Le mot de passe va dans un gestionnaire de mots de passe, jamais dans un fichier.</p></div></li>
+    <li><div><h3>Brancher l'IA suisse</h3><p>Manager Infomaniak, AI Services : créer le produit et un jeton, les mettre dans le fichier <code>.env</code> du serveur. Le bouton « Rédiger avec l'IA » apparaît dans chaque lettre (modèle Qwen 3.5).</p></div></li>
+    <li><div><h3>Sauvegardes</h3><p>Une tâche quotidienne copie la base ; une fois par mois, télécharger une sauvegarde et vérifier qu'elle s'ouvre.</p></div></li>
+  </ol>
+  <div class="note ok"><b>Mise à jour ensuite :</b> la même commande qu'à l'étape 4. Les clients, demandes et lettres ne sont jamais écrasés : ils vivent dans le volume du serveur.</div>
+</section>
+
+<section id="evoluer">
+  <h2>Faire évoluer</h2>
+  <p class="lead">Tout le projet est pensé pour être modifié en français avec Claude Code : le fichier <code>CLAUDE.md</code> lui explique ce qu'est Appui, quelles commandes lancer et quelles règles respecter.</p>
+  <ol class="steps">
+    <li><div><h3>Installer Claude Code</h3><p>Application Claude pour ordinateur (onglet Code) ou Terminal. Ouvrir le dossier du projet (dépôt GitHub <code>thesloanesquire/appui-levier</code> : Tim doit t'y inviter, indique-lui ton pseudo GitHub).</p></div></li>
+    <li><div><h3>Premier message</h3><div class="say">« Aide-moi à installer Appui. »</div><p>Claude lit <code>DEMARRER.md</code>, installe, crée ton compte administrateur et ouvre l'outil.</p></div></li>
+    <li><div><h3>Ensuite, parler normalement</h3><p>Quelques demandes courantes :</p></div></li>
+  </ol>
+  <table>
+    <tr><th>Tu dis</th><th>Claude fait</th></tr>
+    <tr><td>« Lance Appui en local »</td><td>Reconstruit le site, démarre le serveur et ouvre l'outil.</td></tr>
+    <tr><td>« Lance le bot sur https://site-du-client.ch »</td><td>Lit le site, fixe les critères, cherche et classe les fondations (3 à 6 minutes).</td></tr>
+    <tr><td>« Fais les fiches des meilleures fondations de &lt;client&gt; »</td><td>Vérifie en ligne site, conditions, délais et pièces des 10 premières (environ 15 minutes).</td></tr>
+    <tr><td>« Mets la base à jour »</td><td>Retélécharge le registre du commerce, reconstruit la base et republie.</td></tr>
+    <tr><td>« Régénère le kit de vente »</td><td>Relance <code>scripts/construire_kit.py</code> : les 5 PDF se refont avec les chiffres du jour.</td></tr>
+    <tr><td>« Change la phrase d'accroche de la page »</td><td>Modifie le texte (dans <code>scripts/construire_landing.py</code>), vérifie le style, reconstruit FR, DE et EN.</td></tr>
+    <tr><td>« Ajoute un conseiller »</td><td>Te guide dans l'administration du serveur.</td></tr>
+  </table>
+  <h3>Rythme conseillé</h3>
+  <ul class="list">
+    <li><b>Chaque lundi :</b> la veille hebdomadaire cherche les nouvelles fondations et les changements de règles. Demander à Claude Code : « crée la tâche planifiée de veille hebdomadaire ».</li>
+    <li><b>Chaque campagne :</b> bot, fiches, lettres, validation par le client, envoi par l'association, relances.</li>
+    <li><b>Chaque mois :</b> mise à jour de la base, vérification d'une sauvegarde, relecture des chiffres du kit.</li>
+  </ul>
+  <h3>Quel modèle choisir dans Claude</h3>
+  <p class="muted" style="margin-bottom:8px">Règle de Tim : plus la tâche est stratégique, plus le modèle est puissant.</p>
+  <div class="models">
+    <div class="model"><b>Opus</b><span class="pill acc">Stratégie et planification</span><p>Positionnement, offre et prix, nouvelle fonction à concevoir, rédaction de la page ou d'un argumentaire.</p></div>
+    <div class="model"><b>Sonnet</b><span class="pill ok">Exécution</span><p>Construire ce qui est décidé : une fonction, une page, un document, une correction, un test.</p></div>
+    <div class="model"><b>Haiku</b><span class="pill">Tâches faciles et basiques</span><p>Fiches de fondations en lot, classement, conversions. Le script <code>enrichir_fondations.py</code> accepte <code>--modele haiku</code>.</p></div>
+  </div>
+  <h3>Où est quoi</h3>
+  <table>
+    <tr><th>Dossier</th><th>Contenu</th></tr>
+    <tr><td><code>landing/</code></td><td>La page publique (le texte est dans <code>scripts/construire_landing.py</code>).</td></tr>
+    <tr><td><code>src/</code></td><td>La plateforme Appui (HTML, CSS et JavaScript, sans outil de compilation).</td></tr>
+    <tr><td><code>serveur/</code></td><td>Le serveur (PocketBase), les règles d'accès, le proxy de l'IA suisse.</td></tr>
+    <tr><td><code>scripts/</code></td><td>Données, bot, fiches, kit, contrôle de rédaction, mise en ligne.</td></tr>
+    <tr><td><code>kit/</code></td><td>Le kit de vente : sources et PDF.</td></tr>
+    <tr><td><code>docs/</code></td><td>Audits, études, argumentaire, <code>vente/</code> (prospection, LinkedIn, revue du texte), hébergement, feuille de route.</td></tr>
+    <tr><td><code>.claude/skills/</code></td><td>La skill de rédaction française : méthode, règles de confiance, tics d'IA à éviter.</td></tr>
+  </table>
+</section>
+
+<section id="regles">
+  <h2>Règles à tenir</h2>
+  <ul class="list">
+    <li><b>Aucune extraction</b> de Spheriq, Fundraiso, local.ch, search.ch ou Moneyhouse : leurs conditions l'interdisent.</li>
+    <li><b>Aucun envoi automatique</b> de lettres : l'association relit, signe et envoie. La prospection se fait un message à la fois, à la main (loi contre la concurrence déloyale, art. 3 al. 1 let. o).</li>
+    <li><b>Honoraires fixes</b>, jamais de pourcentage sur les fonds obtenus (principes éthiques de Swissfundraising, ch. 4).</li>
+    <li><b>Aucun chiffre, témoignage ou logo inventé</b>, ni sur la page, ni dans les lettres. Un chiffre garde sa source et sa date.</li>
+    <li><b>Données personnelles</b> : pas de noms de membres de conseil dans la base ; les documents confidentiels des clients passent par l'IA hébergée en Suisse.</li>
+    <li><b>Secrets</b> : jetons et mots de passe dans le fichier <code>.env</code> (jamais versionné), pas dans un e-mail ni un document.</li>
+    <li><b>Un texte, une vérification</b> : avant de publier, <code>python3 scripts/controle_texte.py</code> signale les formules creuses, les anglicismes et les chiffres sans source.</li>
+  </ul>
+</section>
+
+<section id="suite">
+  <h2>Prochaines évolutions</h2>
+  <p class="lead">Classées par effet sur ton temps et sur les accords obtenus. Chacune est à valider avant d'être construite (détail dans <code>docs/etude/2026-10-22_0_Synthese_et_propositions.md</code>).</p>
+  <table>
+    <tr><th>Quand</th><th>Quoi</th><th>Pourquoi</th></tr>
+    <tr><td>Tout de suite</td><td>Statut d'accès par fondation (accepte, sur invitation, non), moteur de délais, anti-doublon, liste des pièces, garde-fous de rédaction</td><td>Ne plus écrire à une fondation qui refuse, ne manquer aucune échéance, protéger ta réputation auprès des fondations.</td></tr>
+    <tr><td>Gains de temps</td><td>File « Aujourd'hui » avec calendrier, bibliothèque de textes par client, lecture automatique du règlement, relecture « conseil de fondation », recherche par le sens</td><td>Une lettre en 15 minutes au lieu d'une heure ; moins d'erreurs de classement.</td></tr>
+    <tr><td>Ce que voit le client</td><td>Carte des financeurs en PDF, rapport mensuel, stratégie offerte au premier contact</td><td>Le livrable que le client garde et montre.</td></tr>
+    <tr><td>Prospection</td><td>Liste de prospects issue du registre (4'750 associations romandes) et des bénéficiaires de la Loterie Romande</td><td>Un fichier propre, avec un suivi dans Appui.</td></tr>
+  </table>
+  <div class="note ok">Pour lancer la suivante : ouvrir le dossier dans Claude Code, choisir <b>Opus</b> pour concevoir, puis <b>Sonnet</b> pour construire, et écrire par exemple « construis A2, le moteur de délais, d'après la synthèse ».</div>
+</section>
+
+<footer class="foot">Page de remise générée le {{date}} depuis le dossier du projet (<code>scripts/construire_hub.py</code>). Elle n'est pas référencée par les moteurs de recherche et ne contient aucune donnée de client.</footer>
+</main>
+</div>
+</div>
+<script>
+(function(){
+  document.querySelectorAll('[data-copy]').forEach(function(b){b.addEventListener('click',function(){
+    var t=b.previousElementSibling.innerText;
+    (navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(function(){b.textContent='Copié';setTimeout(function(){b.textContent='Copier'},1500)}).catch(function(){b.textContent='Sélectionner et copier'})
+  })});
+  var links=[].slice.call(document.querySelectorAll('.side a')),secs=links.map(function(a){return document.querySelector(a.getAttribute('href'))});
+  if('IntersectionObserver' in window){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){links.forEach(function(a){a.removeAttribute('aria-current')});var a=links[secs.indexOf(e.target)];if(a)a.setAttribute('aria-current','true')}})},{rootMargin:'-30% 0px -60% 0px'});secs.forEach(function(s){if(s)io.observe(s)})}
+})();
+</script>
+</body>
+</html>
