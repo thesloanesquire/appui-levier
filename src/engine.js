@@ -236,7 +236,7 @@
     if (memeCanton) angles.push({ k: "Ancrage", v: "même canton : " + CANTONS[c.canton] });
     angles.push({ k: "Demande", v: chf(montant) + (P.budget ? " · " + pct(montant, P.budget) + " % du budget" : "") });
 
-    let o, p = [];
+    let o, p = [], sing = -1;
     if (L === "fr") {
       o = `Demande de soutien de ${chf(montant)} : ${P.titre}`;
       const depuis = c.fondee && !je ? `depuis ${c.fondee}` : "";
@@ -248,6 +248,7 @@
       if (c.preuves && c.preuves.length) p.push((je ? "Quelques éléments de mon parcours : " : "Quelques repères sur notre action : ") + c.preuves.join(" ; ") + ".");
       if (P.budget) p.push(`Le budget total s'élève à ${chf(P.budget)}. ` + (je ? "Je vous demande" : "Nous vous demandons") + ` une contribution de ${chf(montant)}, soit ${pct(montant, P.budget)} % du budget` +
         (P.autres ? `, le solde étant couvert par ${P.autres}.` : ". Les autres démarches de financement sont en cours."));
+      sing = p.length;
       p.push(`En ${je ? "me" : "nous"} soutenant, ${f.n} contribuerait concrètement à ${lex.cause}` + (memeCanton ? `, ici, dans le canton de ${CANTONS[c.canton]}` : "") +
         (ton === "chaleureux" ? `. Votre engagement aurait aussi valeur de signal : il ${je ? "me" : "nous"} aiderait à convaincre d'autres partenaires de ${je ? "me" : "nous"} rejoindre.` : `. Un premier soutien de votre part aurait en outre un effet de levier auprès d'autres partenaires.`));
       p.push(je ? "Je m'engage à vous transmettre un bref rapport à la fin de mes études et à mentionner votre soutien si vous le souhaitez."
@@ -258,6 +259,7 @@
       p.push(`Ihre Stiftung verfolgt den Zweck «${m.quote}». ` + (je ? "Genau deshalb wende ich mich an Sie." : `Genau in diesem Bereich engagiert sich ${c.nom}${c.fondee ? " seit " + c.fondee : ""}.`) + " " + (c.mission_de || c.mission));
       p.push((je ? "Ich ersuche Sie" : "Wir ersuchen Sie") + ` um Unterstützung für das Projekt «${P.titre_de || P.titre}». ` + ensureDot(P.resume_de || P.resume));
       p.push(`Das Gesamtbudget beträgt ${chf(P.budget)}. ` + (je ? "Ich beantrage" : "Wir beantragen") + ` einen Beitrag von ${chf(montant)}, das heisst ${pct(montant, P.budget)} % des Budgets.`);
+      sing = p.length;
       p.push(`Mit Ihrer Unterstützung würde ${f.n} einen konkreten Beitrag für ${lex.cause} leisten. Ein erster Beitrag hätte zudem eine Hebelwirkung bei weiteren Partnern.`);
       p.push((je ? "Ich verpflichte mich" : "Wir verpflichten uns") + ", Ihnen nach Projektabschluss einen Bericht und eine Abrechnung zuzustellen.");
       p.push((je ? "Für ein Gespräch stehe ich" : "Für ein Gespräch stehen wir") + " Ihnen gerne zur Verfügung. Mit freundlichen Grüssen");
@@ -266,6 +268,7 @@
       p.push(`Your foundation's purpose is "${m.quote}". ` + (je ? "This is why I am writing to you." : `This is exactly where ${c.nom} works${c.fondee ? " since " + c.fondee : ""}.`) + " " + (c.mission_en || c.mission));
       p.push((je ? "I am" : "We are") + ` requesting your support for "${P.titre_en || P.titre}". ` + ensureDot(P.resume_en || P.resume));
       p.push(`The total budget is ${chf(P.budget)}. ` + (je ? "I am" : "We are") + ` asking for a contribution of ${chf(montant)}, i.e. ${pct(montant, P.budget)}% of the budget.`);
+      sing = p.length;
       p.push(`By supporting ${je ? "me" : "us"}, ${f.n} would make a direct contribution to ${lex.cause}. An early commitment would also help ${je ? "me" : "us"} secure other partners.`);
       p.push((je ? "I will" : "We will") + " send you a report and a financial statement at the end of the project.");
       p.push((je ? "I would" : "We would") + " be glad to present the project in person. Yours faithfully,");
@@ -274,7 +277,7 @@
     const verif = ["Vérifier sur le site de la fondation qu'elle accepte les demandes spontanées et ses délais",
       "Vérifier le montant habituel de ses soutiens (rapport annuel)", "Faire relire et valider la lettre par le client"];
     if (m.lang !== L) verif.unshift("Le but de la fondation est rédigé en " + ({ de: "allemand", it: "italien", fr: "français" })[m.lang] + " : envisager cette langue");
-    return { objet: o, salut, paras: p, angles, verif, match: m, signature: [c.contact && c.contact.nom, c.contact && c.contact.fonction, je ? "" : c.nom].filter(Boolean),
+    return { objet: o, salut, paras: p, sing, angles, verif, match: m, signature: [c.contact && c.contact.nom, c.contact && c.contact.fonction, je ? "" : c.nom].filter(Boolean),
       annexes: je ? ["Curriculum vitae", "Attestation d'immatriculation", "Budget des études", "Lettre de recommandation"] : ["Budget détaillé", "Statuts", "Derniers comptes approuvés", "Rapport d'activité"] };
   }
   const lcFirst = (s) => (s ? s.charAt(0).toLowerCase() + s.slice(1) : "");

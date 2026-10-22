@@ -130,11 +130,46 @@ def nouvelles(base, cantons, maxn):
     return neuves[:maxn]
 
 
+def pilote(base, n, cantons):
+    """Les n fondations romandes les plus prometteuses : classées « Soutien financier » par l'As-So d'abord,
+    puis donatrices probables au but détaillé, réparties entre cantons."""
+    cand = [f for f in base.values() if f["canton"] in cantons and not f["en_liquidation"] and f["type"] == "donatrice_probable"]
+    def rang(f):
+        return (0 if any("Soutien financier" in x for x in (f.get("asso_types") or [])) else 1, -min(len(f["purpose"]), 900))
+    cand.sort(key=rang)
+    par, out = {}, []
+    for f in cand:
+        if par.get(f["canton"], 0) < max(10, n * {"VD": .35, "GE": .3}.get(f["canton"], .1)):
+            par[f["canton"]] = par.get(f["canton"], 0) + 1; out.append(f)
+        if len(out) >= n: break
+    return out
+
+
+def rapport(fiches):
+    ok = [x for x in fiches if x]
+    if not ok: return
+    n = len(ok); pct = lambda k: round(100 * k / n)
+    site = sum(1 for x in ok if x.get("site_web")); tel = sum(1 for x in ok if (x.get("contact") or {}).get("telephone"))
+    mail = sum(1 for x in ok if (x.get("contact") or {}).get("email")); acc = {}
+    for x in ok: acc[x["demande"].get("accepte_demandes", "inconnu")] = acc.get(x["demande"].get("accepte_demandes", "inconnu"), 0) + 1
+    delais = sum(1 for x in ok if x["demande"].get("delais")); mont = sum(1 for x in ok if x["demande"].get("montants"))
+    conf = {}
+    for x in ok: conf[x.get("confiance")] = conf.get(x.get("confiance"), 0) + 1
+    txt = (f"# Pilote d'enrichissement : {n} fondations ({datetime.date.today().strftime('%d.%m.%Y')})\n\n"
+           f"| Indicateur | Nombre | % |\n|---|---|---|\n| Site officiel trouvé | {site} | {pct(site)} % |\n| Téléphone institutionnel | {tel} | {pct(tel)} % |\n"
+           f"| E-mail générique | {mail} | {pct(mail)} % |\n| Délais de dépôt connus | {delais} | {pct(delais)} % |\n| Montants connus | {mont} | {pct(mont)} % |\n\n"
+           f"Accepte les demandes : {acc}\n\nConfiance : {conf}\n")
+    (DOSSIER / f"_pilote_{datetime.date.today().isoformat()}.md").write_text(txt)
+    print(txt)
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--id"); ap.add_argument("--nom"); ap.add_argument("--client"); ap.add_argument("--top", type=int, default=10)
     ap.add_argument("--nouvelles", action="store_true"); ap.add_argument("--cantons", default="VD,GE,FR,NE,VS,JU"); ap.add_argument("--max", type=int, default=30)
     ap.add_argument("--force", action="store_true"); ap.add_argument("--modele", default="sonnet")
+    ap.add_argument("--pilote", type=int, help="enrichir les N fondations romandes les plus prometteuses")
+    ap.add_argument("--paralleles", type=int, default=1, help="nombre d'enrichissements simultanés (3 conseillé)")
     a = ap.parse_args()
     base = charger()
     cibles = []
@@ -146,12 +181,28 @@ def main():
         cibles = [base[str(e["id"])] for e in b["resultats"] if e["verdict"] != "ecarter"][:a.top]
     elif a.nouvelles:
         cibles = nouvelles(base, set(a.cantons.split(",")), a.max)
+    elif a.pilote:
+        cibles = pilote(base, a.pilote, set(a.cantons.split(",")))
     else:
         ap.error("--id, --nom, --client ou --nouvelles requis")
-    print(f"Enrichissement de {len(cibles)} fondation(s), environ 1 à 3 min chacune")
-    for f in cibles:
-        enrichir(f, a.modele, a.force)
+    print(f"Enrichissement de {len(cibles)} fondation(s), environ 1 à 3 min chacune, {a.paralleles} en parallèle", flush=True)
+    if a.paralleles > 1:
+        from concurrent.futures import ThreadPoolExecutor
+        with ThreadPoolExecutor(a.paralleles) as ex:
+            fiches = list(ex.map(lambda f: _sur(f, a), cibles))
+    else:
+        fiches = [_sur(f, a) for f in cibles]
     exporter()
+    if a.pilote: rapport(fiches)
+
+
+def _sur(f, a):
+    try:
+        return enrichir(f, a.modele, a.force)
+    except SystemExit:
+        raise
+    except Exception as e:
+        print("  erreur", f["nom"], e, flush=True); return None
 
 
 if __name__ == "__main__":

@@ -1,0 +1,143 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><title>Maquette C · Levier humain (portrait, Spectral)</title>
+<link rel="stylesheet" href="base.css"><style>
+.btn{display:inline-flex;align-items:center;gap:8px;height:48px;padding:0 22px;border-radius:12px;background:var(--acc-d);color:#fff;font:600 16px/1 "Hanken Grotesk";text-decoration:none;box-shadow:0 1px 2px rgba(156,77,46,.3),inset 0 1px 0 rgba(255,255,255,.15)}
+.btn-ghost{background:#fff;color:var(--ink);box-shadow:0 0 0 1px var(--line),0 1px 2px rgba(31,42,68,.06)}
+.btn-sm{height:36px;padding:0 14px;font-size:14px;border-radius:10px}
+.muted{color:var(--muted)}
+.pill{display:inline-flex;align-items:center;height:24px;padding:0 10px;border-radius:99px;background:var(--soft);color:var(--muted);font:600 12px/1 "Hanken Grotesk";white-space:nowrap}
+.pill-ok{background:var(--ok-soft);color:var(--ok)}.pill-acc{background:var(--acc-soft);color:var(--acc-d)}
+/* page publique */
+.lp{background:var(--bg)}
+.lp-nav{height:76px;display:flex;align-items:center;padding:0 64px;gap:48px}
+.lp-links{display:flex;gap:32px;font-weight:500;color:var(--muted)}
+.lp-right{margin-left:auto;display:flex;gap:20px;align-items:center}.lang{font-size:14px;color:var(--muted);letter-spacing:.06em}.lang b{color:var(--ink)}
+.lp-hero{display:grid;grid-template-columns:1.05fr 1fr;gap:48px;padding:64px 64px 0;align-items:center}
+.badge{display:inline-flex;align-items:center;gap:8px;height:32px;padding:0 14px;border-radius:99px;background:var(--soft);font:600 14px/1 "Hanken Grotesk";color:var(--ink)}
+.lp h1{font:800 64px/1.02 "Hanken Grotesk";letter-spacing:-.04em;margin:22px 0 22px;max-width:15ch}
+.sub{font-size:20px;line-height:1.5;color:var(--muted);max-width:52ch}
+.lp-cta{display:flex;gap:12px;margin:32px 0 28px}
+.reassure{list-style:none;display:flex;flex-direction:column;gap:10px;color:var(--muted);font-size:15px}.reassure li{display:flex;gap:10px;align-items:center}.reassure svg{color:var(--ok)}
+.lp-visual{position:relative;height:500px}
+.lp-visual::before{content:"";position:absolute;inset:-40px -64px -40px 0;background:radial-gradient(closest-side,rgba(184,97,63,.12),transparent);z-index:0}
+.stack{position:relative;height:100%;z-index:1}
+.card{position:absolute;background:var(--card);border-radius:var(--rad);box-shadow:0 24px 60px -20px rgba(31,42,68,.28),0 0 0 1px rgba(31,42,68,.05);color:var(--ink)}
+.c-match{width:440px;left:40px;top:30px;padding:24px}
+.cm-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;font-size:14px}
+.q.big{font-size:24px;line-height:1.35}
+.cm-why{display:flex;gap:8px;align-items:center;margin-top:16px;padding-top:14px;border-top:1px solid var(--line);font-size:14px;color:var(--muted)}.cm-why svg{color:var(--ok)}
+.c-letter{width:380px;left:200px;top:280px;padding:20px}
+.cl-head{display:flex;gap:10px;align-items:center;font-size:14px;margin-bottom:14px}.cl-head .pill{margin-left:auto}
+.cl-lines{display:flex;flex-direction:column;gap:9px}.cl-lines i{display:block;height:8px;border-radius:4px;background:#E9ECF2}
+.cl-foot{margin-top:16px}
+.c-chip{left:0;top:410px;padding:14px 18px;display:flex;gap:10px;align-items:center;font-size:15px}.c-chip svg{color:var(--acc)}
+.portrait-card{background:var(--card);border-radius:var(--rad);padding:32px;box-shadow:0 24px 60px -20px rgba(31,42,68,.22);display:grid;gap:20px}
+.portrait-card img{width:96px;height:96px;border-radius:50%;object-fit:cover;float:left;margin-right:16px}
+.portrait-card{grid-template-columns:96px 1fr;column-gap:18px;align-items:center}.portrait-card img{float:none;margin:0}.portrait-card > div{display:flex;flex-direction:column;gap:4px}.portrait-card > div b{font-size:20px}.portrait-card > div span{color:var(--muted);font-size:14px}.portrait-card > p,.portrait-card > .pc-proof{grid-column:1/-1}.pc-fact{font-size:19px;line-height:1.5}
+.pc-proof{display:flex;gap:12px}.pc-proof span{flex:1;background:var(--soft);border-radius:14px;padding:14px;font-size:14px;color:var(--muted)}.pc-proof b{display:block;color:var(--ink);font-size:18px}
+.lp-strip{position:absolute;left:0;right:0;bottom:0;display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:40px;padding:26px 64px;background:var(--soft);align-items:center}
+.lp-strip b{display:block;font:800 28px/1 "Hanken Grotesk";letter-spacing:-.03em;margin-bottom:6px}.lp-strip span{font-size:14px;color:var(--muted)}.src{font-size:12px;color:var(--muted);max-width:200px}
+/* dashboard */
+.db{display:grid;grid-template-columns:248px 1fr;background:var(--soft)}
+.db-side{background:var(--side);border-right:1px solid var(--line);padding:22px 16px;display:flex;flex-direction:column;gap:18px}
+.db-search{display:flex;align-items:center;gap:8px;height:38px;padding:0 12px;border-radius:10px;background:#fff;box-shadow:0 0 0 1px var(--line);color:var(--muted);font-size:14px}.db-search kbd{margin-left:auto;font:500 11px "Hanken Grotesk";opacity:.7}
+.db-side nav{display:flex;flex-direction:column;gap:4px}.db-side nav a{display:flex;align-items:center;gap:10px;height:38px;padding:0 12px;border-radius:10px;color:var(--muted);font-weight:500}.db-side nav a span{margin-left:auto;font-size:12px}
+.db-side nav a.on{background:#fff;color:var(--ink);box-shadow:0 0 0 1px var(--line)}
+.db-user{margin-top:auto;display:flex;gap:10px;align-items:center}.db-user img{width:34px;height:34px;border-radius:50%}.db-user span{font-size:13px;color:var(--muted);display:flex;flex-direction:column}.db-user b{color:var(--ink)}
+.db-main{padding:28px 36px;display:flex;flex-direction:column;gap:18px}
+.db-top{display:flex;justify-content:space-between;align-items:flex-end}.db-top h2{font:700 28px/1.1 "Hanken Grotesk";letter-spacing:-.03em}.db-actions{display:flex;gap:8px}
+.brief{display:flex;gap:16px;align-items:center;background:#fff;border-radius:var(--rad);padding:18px 20px;box-shadow:0 0 0 1px var(--line)}
+.brief-ic{width:40px;height:40px;border-radius:12px;background:var(--acc-soft);color:var(--acc-d);display:grid;place-items:center;flex:none}
+.brief p{font-size:14.5px;color:var(--muted);margin-top:4px;max-width:96ch}.brief u{color:var(--ink);text-decoration-color:var(--acc)}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.kpi{background:#fff;border-radius:var(--rad);padding:18px 20px;box-shadow:0 0 0 1px var(--line);position:relative;min-height:122px}
+.kpi span{font-size:13.5px;color:var(--muted)}.kpi b{display:block;font:700 30px/1.1 "Hanken Grotesk";letter-spacing:-.03em;margin:8px 0 4px}.kpi em{font-style:normal;font-size:13px;color:var(--muted)}.kpi em.up{color:var(--ok)}
+.bars{position:absolute;right:18px;bottom:18px;display:flex;gap:4px;align-items:flex-end;height:44px}.bars i{display:block;width:8px;border-radius:3px;background:var(--acc-soft)}.bars i:last-child{background:var(--acc)}
+.ring{position:absolute;right:20px;bottom:20px;width:52px;height:52px;border-radius:50%;background:conic-gradient(var(--acc) calc(var(--p,38)*1%),#ECEEF3 0)}.ring i{--p:38}
+.db-grid{display:grid;grid-template-columns:1.1fr 1fr 1fr;gap:14px;flex:1}
+.panel{background:#fff;border-radius:var(--rad);padding:18px 20px;box-shadow:0 0 0 1px var(--line);display:flex;flex-direction:column;gap:10px}
+.ph{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}.ph b{font-size:15px}.ph .muted{font-size:13px}
+.pipe{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;align-items:end;flex:1;min-height:200px}
+.pcol{display:flex;flex-direction:column;align-items:center;gap:6px;height:100%;justify-content:flex-end}.pbar{width:100%;border-radius:8px 8px 4px 4px;background:linear-gradient(var(--ink),#36436A)}.pcol:nth-child(6) .pbar{background:var(--ok)}.pcol b{font-size:16px}.pcol span{font-size:11.5px;color:var(--muted);text-align:center}
+.dl,.op,.fin,.val{display:flex;align-items:center;gap:12px;padding:10px 0;border-top:1px solid var(--line)}
+.date{width:52px;text-align:center;font:700 14px "Hanken Grotesk";background:var(--soft);border-radius:10px;padding:8px 0}.date.hot{background:var(--acc-soft);color:var(--acc-d)}
+.dlt{flex:1;min-width:0;display:flex;flex-direction:column}.dlt b{font-size:14px}.dlt span{font-size:13px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.dlt .q{font-size:14px}
+.score{width:42px;height:32px;border-radius:9px;background:var(--acc-soft);color:var(--acc-d);display:grid;place-items:center;font:700 14px "Hanken Grotesk"}
+/* espace client */
+.cs{background:var(--soft)}
+.cs-top{height:72px;display:flex;align-items:center;gap:20px;padding:0 48px;background:#fff;border-bottom:1px solid var(--line)}.cs-who{display:flex;gap:8px;align-items:center;margin-left:auto;font-size:14px;color:var(--muted)}
+.cs-body{padding:36px 48px;display:flex;flex-direction:column;gap:22px}
+.cs-head{display:flex;justify-content:space-between;align-items:flex-end;gap:40px}.cs-head h2{font:700 36px/1.1 "Hanken Grotesk";letter-spacing:-.035em}.cs-head .muted{margin-top:6px;font-size:16px}
+.cs-money{width:460px}.meter{height:10px;border-radius:99px;background:#E6E9EF;display:flex;overflow:hidden;margin-bottom:8px}.meter i{background:var(--ok)}.meter s{background:rgba(184,97,63,.45)}.cs-money span{font-size:14px;color:var(--muted)}.cs-money b{color:var(--ink)}
+.steps{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+.st{background:#fff;border-radius:var(--rad);padding:16px;box-shadow:0 0 0 1px var(--line);display:flex;flex-direction:column;gap:4px}.st i{width:26px;height:26px;border-radius:50%;background:var(--soft);display:grid;place-items:center;margin-bottom:6px}.st.done i{background:var(--ok);color:#fff}.st.now{box-shadow:0 0 0 2px var(--acc)}.st.now i{background:var(--acc)}.st b{font-size:15px}.st span{font-size:13px;color:var(--muted)}
+.cs-grid{display:grid;grid-template-columns:1fr 1.2fr 1fr;gap:14px}
+.panel.action{box-shadow:0 0 0 1px var(--acc-soft),0 12px 30px -16px rgba(184,97,63,.4)}
+.tl{list-style:none;display:flex;flex-direction:column;gap:10px;font-size:14.5px;color:var(--muted)}.tl b{color:var(--ink)}
+.link{color:var(--acc-d);font-weight:600;font-size:14px;margin-top:auto}
+
+:root{--ink:#1F2A44;--muted:#5B6478;--line:#E8E3D9;--bg:#FBFAF7;--soft:#F4F0E8;--acc:#B8613F;--acc-d:#9C4D2E;--acc-soft:#F8E9E0;--ok:#2C6E4C;--ok-soft:#E5F2EA;--card:#FFFFFF;--rad:22px;--side:#F4F0E8}
+h1,h2{font-family:"Spectral",Georgia,serif!important;font-weight:600!important;letter-spacing:-.02em!important}
+.lp h1{font-size:66px!important}
+</style></head><body>
+<div class="screen-label" style="margin-top:28px;font-size:22px"><b>Direction C · Levier humain (portrait, Spectral)</b></div>
+<div class="screen-label"><b>1 · Page publique</b> appui.levierconseil.ch · premier écran</div>
+<section class="frame lp">
+  <nav class="lp-nav"><a class="logo"><svg viewBox="0 0 64 64"><rect width="64" height="64" rx="16" fill="#1F2A44"/><path d="M22 16v32h20" stroke="#FFFFFF" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none"/><circle cx="47" cy="22" r="6" fill="#B8613F"/></svg><span>levier<b>.</b></span></a>
+    <div class="lp-links"><a>Méthode</a><a>Tarifs</a><a>Questions</a><a>À propos</a></div>
+    <div class="lp-right"><span class="lang"><b>FR</b> DE EN</span><a class="btn btn-sm">Réserver 15 min</a></div></nav>
+  <div class="lp-hero">
+    <div class="lp-copy">
+      <span class="badge"><svg class="i" viewBox="0 0 24 24"><path d="M3 21h18M5 18v-7M9.5 18v-7M14.5 18v-7M19 18v-7M12 3l9 5H3z"/></svg>14'980 fondations suisses analysées</span>
+      <h1>Trouvez les fondations faites pour votre projet.</h1>
+      <p class="sub">Levier lit le but de chaque fondation suisse, retient celles qui financent ce que vous faites et écrit à chacune une lettre sur mesure.</p>
+      <div class="lp-cta"><a class="btn">Réserver 15 minutes <svg class="i" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><a class="btn btn-ghost">Essayer avec mon projet</a></div>
+      <ul class="reassure"><li><svg class="i" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Honoraires fixes, jamais de pourcentage</li><li><svg class="i" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Vous signez : la demande reste la vôtre</li><li><svg class="i" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Français, allemand, anglais</li></ul>
+    </div>
+    <div class="lp-visual"><div class="portrait-card"><img src="alexandre.jpg" alt=""><div><b>Alexandre Cazes</b><span>Fondateur de Levier · ex-conseiller scientifique RTS · IHEID</span></div>
+        <p class="pc-fact">A sollicité <b>plus de cent fondations</b> romandes et alémaniques pour financer son propre master : il connaît ce que les fondations lisent, et ce qu'elles écartent.</p>
+        <div class="pc-proof"><span><b>CHF 100'000+</b> obtenus pour deux masters</span><span><b>FR · DE · EN</b> lettres sur mesure</span></div></div></div>
+  </div>
+  <div class="lp-strip"><div><b>63 h</b><span>de préparation en moyenne pour une demande acceptée*</span></div><div><b>42 %</b><span>des refus arrivent sans motif*</span></div><div><b>1 lettre</b><span>par fondation, jamais de modèle envoyé à plusieurs</span></div><div class="src">* Grantee Review Report, CEPS et SwissFoundations</div></div>
+</section><div class="screen-label"><b>2 · Tableau de bord d'Alexandre</b> l'outil interne</div>
+<section class="frame db">
+  <aside class="db-side"><a class="logo"><svg viewBox="0 0 64 64"><rect width="64" height="64" rx="16" fill="#1F2A44"/><path d="M22 16v32h20" stroke="#FFFFFF" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none"/><circle cx="47" cy="22" r="6" fill="#B8613F"/></svg><span>appui<b>.</b></span></a>
+    <div class="db-search"><svg class="i" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>Rechercher <kbd>⌘K</kbd></div>
+    <nav><a class="on"><svg class="i" viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>Tableau de bord</a><a><svg class="i" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>Clients<span>9</span></a><a><svg class="i" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8"/></svg>Demandes<span>31</span></a><a><svg class="i" viewBox="0 0 24 24"><path d="M3 21h18M5 18v-7M9.5 18v-7M14.5 18v-7M19 18v-7M12 3l9 5H3z"/></svg>Fondations</a><a><svg class="i" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>Échéances<span>6</span></a><a><svg class="i" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/></svg>Rapports</a></nav>
+    <div class="db-user"><img src="alexandre.jpg" alt=""><span><b>Alexandre</b>Levier</span></div></aside>
+  <main class="db-main">
+    <div class="db-top"><div><h2>Bonjour Alexandre</h2><p class="muted">Mercredi 22 octobre · 9 clients actifs</p></div><div class="db-actions"><a class="btn btn-ghost btn-sm"><svg class="i" viewBox="0 0 24 24"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9M10 21a2 2 0 0 0 4 0"/></svg></a><a class="btn btn-sm">+ Nouveau client</a></div></div>
+    <div class="brief"><div class="brief-ic"><svg class="i" viewBox="0 0 24 24"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M6 18l2.5-2.5M15.5 8.5 18 6"/></svg></div><div><b>Votre semaine, résumée par l'IA</b><p>3 dépôts avant vendredi, dont <u>Pédibus · Fondation vaudoise</u> qui attend encore la validation du client. 2 relances à faire (envoyées il y a 21 jours). 4 nouvelles fondations romandes au registre correspondent à vos clients culture.</p></div><a class="btn btn-sm">Voir les actions</a></div>
+    <div class="kpis">
+      <div class="kpi"><span>Demandes en cours</span><b>31</b><em class="up">+6 ce mois</em><div class="bars"><i style="height:30%"></i><i style="height:45%"></i><i style="height:40%"></i><i style="height:60%"></i><i style="height:70%"></i><i style="height:85%"></i></div></div>
+      <div class="kpi"><span>Montant demandé</span><b>CHF 412k</b><em>sur 9 campagnes</em><div class="bars"><i style="height:40%"></i><i style="height:50%"></i><i style="height:55%"></i><i style="height:62%"></i><i style="height:75%"></i><i style="height:90%"></i></div></div>
+      <div class="kpi"><span>Obtenu</span><b>CHF 65'500</b><em class="up">4 accords</em><div class="bars"><i style="height:10%"></i><i style="height:10%"></i><i style="height:30%"></i><i style="height:30%"></i><i style="height:55%"></i><i style="height:70%"></i></div></div>
+      <div class="kpi"><span>Taux de réponse</span><b>38 %</b><em>sur 21 envois</em><div class="ring"><i style="--p:38"></i></div></div>
+    </div>
+    <div class="db-grid">
+      <div class="panel"><div class="ph"><b>Pipeline</b><span class="muted">toutes campagnes</span></div>
+        <div class="pipe"><div class="pcol"><div class="pbar" style="height:80%"></div><b>12</b><span>À qualifier</span></div><div class="pcol"><div class="pbar" style="height:48%"></div><b>7</b><span>Rédaction</span></div><div class="pcol"><div class="pbar" style="height:22%"></div><b>3</b><span>Validation</span></div><div class="pcol"><div class="pbar" style="height:40%"></div><b>6</b><span>Envoyées</span></div><div class="pcol"><div class="pbar" style="height:16%"></div><b>2</b><span>Relancées</span></div><div class="pcol"><div class="pbar" style="height:28%"></div><b>4</b><span>Accordées</span></div></div></div>
+      <div class="panel"><div class="ph"><b>Échéances</b><span class="muted">14 prochains jours</span></div>
+        <div class="dl"><span class="date hot">23.10</span><span class="dlt"><b>Fondation vaudoise · enfance</b><span>Pédibus Riviera</span></span><span class="pill pill-acc">Validation client</span></div><div class="dl"><span class="date ">24.10</span><span class="dlt"><b>Fondation genevoise · santé</b><span>Aquavia</span></span><span class="pill ">Rédaction</span></div><div class="dl"><span class="date ">28.10</span><span class="dlt"><b>Fondation vaudoise · culture</b><span>Tréteaux du Jura</span></span><span class="pill pill-ok">Prête</span></div><div class="dl"><span class="date ">30.10</span><span class="dlt"><b>Fondation bernoise · formation</b><span>Léa M.</span></span><span class="pill ">À qualifier</span></div></div>
+      <div class="panel"><div class="ph"><b>Meilleures chances</b><span class="muted">repérées par l'IA</span></div>
+        <div class="op"><span class="score">94</span><span class="dlt"><b>Pour Atelier Mémoire</b><span class="q">« rompre la solitude des personnes âgées »</span></span></div><div class="op"><span class="score">91</span><span class="dlt"><b>Pour Basket Lausanne</b><span class="q">« promouvoir l'intégration par le sport »</span></span></div><div class="op"><span class="score">88</span><span class="dlt"><b>Pour Tréteaux du Jura</b><span class="q">« spectacles de théâtre en région »</span></span></div></div>
+    </div>
+  </main>
+</section><div class="screen-label"><b>3 · Espace client</b> ce que voit l'association (lien privé, sans compte)</div>
+<section class="frame cs">
+  <header class="cs-top"><a class="logo"><svg viewBox="0 0 64 64"><rect width="64" height="64" rx="16" fill="#1F2A44"/><path d="M22 16v32h20" stroke="#FFFFFF" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none"/><circle cx="47" cy="22" r="6" fill="#B8613F"/></svg><span>levier<b>.</b></span></a><span class="cs-who"><svg class="i" viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>Espace privé de <b>Pédibus Riviera</b></span><a class="btn btn-ghost btn-sm">Écrire à Alexandre</a></header>
+  <div class="cs-body">
+    <div class="cs-head"><div><h2>Votre recherche de fonds</h2><p class="muted">Dix nouvelles lignes de pédibus en 2027 · objectif CHF 45'000</p></div>
+      <div class="cs-money"><div class="meter"><i style="width:27%"></i><s style="width:48%"></s></div><span><b>CHF 12'000</b> obtenus · CHF 21'500 en attente de réponse</span></div></div>
+    <div class="steps"><div class="st done"><i><svg class="i" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></i><b>Analyse</b><span>07.10</span></div><div class="st done"><i><svg class="i" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></i><b>Carte des financeurs</b><span>22 fondations</span></div><div class="st now"><i></i><b>Lettres</b><span>8 sur 10 validées</span></div><div class="st "><i></i><b>Envois</b><span>dès le 28.10</span></div><div class="st "><i></i><b>Réponses</b><span>janvier à mars</span></div></div>
+    <div class="cs-grid">
+      <div class="panel action"><div class="ph"><b>À valider par vous</b><span class="pill pill-acc">2 lettres</span></div>
+        <div class="val"><span class="dlt"><b>Fondation vaudoise · enfance</b><span>CHF 15'000 · dépôt le 23.10</span></span><a class="btn btn-sm">Lire et valider</a></div>
+        <div class="val"><span class="dlt"><b>Fondation fribourgeoise · mobilité</b><span>CHF 8'000 · dépôt le 04.11</span></span><a class="btn btn-ghost btn-sm">Lire</a></div></div>
+      <div class="panel"><div class="ph"><b>Vos financeurs</b><span class="muted">22 fondations retenues</span></div>
+        <div class="fin"><span class="pill pill-ok">Accordé</span><span class="dlt"><b>Fondation vaudoise</b><span class="q">« venir en aide à l'enfance dans le canton de Vaud »</span></span></div><div class="fin"><span class="pill ">Envoyée</span><span class="dlt"><b>Fondation genevoise</b><span class="q">« promouvoir la santé par l'activité physique »</span></span></div><div class="fin"><span class="pill pill-acc">Lettre prête</span><span class="dlt"><b>Fondation jurassienne</b><span class="q">« promotion de la santé et prévention primaire »</span></span></div></div>
+      <div class="panel"><div class="ph"><b>Ce que Levier a fait ce mois</b></div>
+        <ul class="tl"><li><b>22 fondations</b> lues et vérifiées sur 14'980</li><li><b>10 lettres</b> écrites, une par fondation</li><li><b>3 relances</b> envoyées à temps</li><li><b>1 accord</b> : CHF 12'000</li></ul><a class="link">Télécharger le rapport d'octobre (PDF)</a></div>
+    </div>
+  </div>
+</section>
+<div class="screen-label" style="margin-bottom:60px">Données fictives de démonstration · noms de fondations masqués</div></body></html>

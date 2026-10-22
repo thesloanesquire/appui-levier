@@ -1,0 +1,18 @@
+@font-face{font-family:"Hanken Grotesk";font-weight:400;src:url("../../../src/assets/fonts/hanken-grotesk-400.woff2") format("woff2")}
+@font-face{font-family:"Hanken Grotesk";font-weight:500;src:url("../../../src/assets/fonts/hanken-grotesk-500.woff2") format("woff2")}
+@font-face{font-family:"Hanken Grotesk";font-weight:600;src:url("../../../src/assets/fonts/hanken-grotesk-600.woff2") format("woff2")}
+@font-face{font-family:"Hanken Grotesk";font-weight:700;src:url("../../../src/assets/fonts/hanken-grotesk-700.woff2") format("woff2")}
+@font-face{font-family:"Hanken Grotesk";font-weight:800;src:url("../../../src/assets/fonts/hanken-grotesk-800.woff2") format("woff2")}
+@font-face{font-family:"Spectral";font-style:normal;font-weight:400;src:url("../../../src/assets/fonts/spectral-400-normal.woff2") format("woff2")}
+@font-face{font-family:"Spectral";font-style:italic;font-weight:400;src:url("../../../src/assets/fonts/spectral-400-italic.woff2") format("woff2")}
+@font-face{font-family:"Spectral";font-style:normal;font-weight:600;src:url("../../../src/assets/fonts/spectral-600-normal.woff2") format("woff2")}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Hanken Grotesk",system-ui,sans-serif;-webkit-font-smoothing:antialiased;background:#E7E9EE;color:#1F2A44}
+.screen-label{width:1440px;margin:40px auto 12px;font:600 15px/1 "Hanken Grotesk";color:#4F5870;display:flex;gap:10px;align-items:center}
+.screen-label b{color:#1F2A44}
+.frame{width:1440px;height:900px;margin:0 auto 24px;overflow:hidden;position:relative;border-radius:14px;box-shadow:0 30px 80px -30px rgba(31,42,68,.35)}
+svg.i{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.logo{display:inline-flex;align-items:center;gap:9px;font:800 22px/1 "Hanken Grotesk";letter-spacing:-.045em;text-decoration:none;color:inherit}
+.logo svg{width:28px;height:28px}
+.logo b{color:#B8613F}
+.q{font-family:"Spectral",Georgia,serif;font-style:italic}

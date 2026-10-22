@@ -29,7 +29,7 @@
     refresh: '<path d="M21 12a9 9 0 1 1-2.6-6.4L21 8M21 3v5h-5"/>', send: '<path d="M22 2 11 13M22 2l-7 20-4-9-9-4z"/>',
     moon: '<path d="M21 13A9 9 0 1 1 11 3a7 7 0 0 0 10 10z"/>', lock: '<rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/>',
     alert: '<path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0zM12 9v4M12 17h.01"/>',
-    arrow: '<path d="M5 12h14M13 6l6 6-6 6"/>', link: '<path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/>',
+    arrow: '<path d="M5 12h14M13 6l6 6-6 6"/>', spark: '<path d="M12 3l1.8 4.9L19 9.7l-4.9 1.8L12 16.4l-1.8-4.9L5.3 9.7l4.9-1.8z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z"/>', link: '<path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/>',
   };
   const ic = (n) => `<svg class="i" viewBox="0 0 24 24" aria-hidden="true">${P[n] || ""}</svg>`;
   const MARK = `<svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="16" fill="var(--ink)"/><path d="M22 16v32h20" stroke="var(--bg)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none"/><circle cx="47" cy="22" r="6" fill="var(--accent)"/></svg>`;
@@ -196,27 +196,66 @@
       else if (d.statut === "qualifier") todo.push({ hot: false, h: `Qualifier ${f.n}`, s: `${c.nom} · score ${d.score}`, href: `#/clients/${c.id}/fondations/${f.id}`, o: 60 + (j || 0) });
     });
     todo.sort((a, b) => a.o - b.o);
-    const demande = S.demandes.reduce((t, d) => t + (d.statut !== "suggeree" && d.statut !== "refusee" ? d.montant : 0), 0);
+    const actives = S.demandes.filter((d) => !["suggeree", "refusee"].includes(d.statut));
+    const demande = actives.reduce((t, d) => t + (d.montant || 0), 0);
     const obtenu = S.demandes.reduce((t, d) => t + (d.obtenu || 0), 0);
-    const urg = open.filter((d) => daysTo(d.echeance) <= 3).length;
+    const envoyees = S.demandes.filter((d) => ["envoyee", "relancee", "accordee", "refusee"].includes(d.statut));
+    const repondu = S.demandes.filter((d) => ["accordee", "refusee"].includes(d.statut)).length;
+    const accords = S.demandes.filter((d) => d.statut === "accordee").length;
+    const taux = envoyees.length ? Math.round((repondu / envoyees.length) * 100) : 0;
+    const urg = open.filter((d) => daysTo(d.echeance) <= 7);
+    const valid = S.demandes.filter((d) => d.statut === "validation");
+    const relances = S.demandes.filter(relanceDue);
+    const nonAcc = S.demandes.filter((d) => OUVERTS.has(d.statut) && ENR[d.fondation] && ENR[d.fondation].demande.accepte_demandes === "non");
+    // Meilleures chances : fondations proposées par le bot ou le matching, pas encore dans une demande.
+    const chances = [];
+    S.clients.forEach((c) => {
+      const deja = new Set(demandesOf(c.id).map((d) => String(d.fondation)));
+      const b = BOT[c.id];
+      const cand = b ? b.resultats.filter((e) => e.verdict !== "ecarter" && !deja.has(String(e.id))).map((e) => ({ c, id: String(e.id), score: e.score, quote: e.citation }))
+                     : [];
+      cand.slice(0, 2).forEach((x) => chances.push(x));
+    });
+    chances.sort((a, b) => b.score - a.score);
+    const brief = [];
+    if (urg.length) brief.push(`<b>${urg.length} dépôt${urg.length > 1 ? "s" : ""}</b> dans les 7 prochains jours`);
+    if (valid.length) brief.push(`<b>${valid.length} lettre${valid.length > 1 ? "s" : ""}</b> en attente de validation client${valid[0] ? ` (dont <a href="#/lettre/${valid[0].id}">${esc(client(valid[0].client).nom)}</a>)` : ""}`);
+    if (relances.length) brief.push(`<b>${relances.length} relance${relances.length > 1 ? "s" : ""}</b> à faire (envoyées il y a plus de 3 semaines)`);
+    if (nonAcc.length) brief.push(`<b>${nonAcc.length} demande${nonAcc.length > 1 ? "s" : ""}</b> visent une fondation qui n'accepte pas de demandes : à revoir`);
+    if (chances.length) brief.push(`<b>${chances.length} fondation${chances.length > 1 ? "s" : ""}</b> prometteuse${chances.length > 1 ? "s" : ""} pas encore sollicitée${chances.length > 1 ? "s" : ""}`);
+    const etapes = [["qualifier", "À qualifier"], ["redaction", "Rédaction"], ["validation", "Validation"], ["prete", "Prêtes"], ["envoyee", "Envoyées"], ["relancee", "Relancées"], ["accordee", "Accordées"]];
+    const max = Math.max(1, ...etapes.map(([k]) => S.demandes.filter((d) => d.statut === k).length));
+    const bars = (vals) => `<div class="kbars" aria-hidden="true">${vals.map((v, i) => `<i style="height:${Math.max(8, v)}%" class="${i === vals.length - 1 ? "on" : ""}"></i>`).join("")}</div>`;
+    const heure = new Date().getHours();
     const body = `
-      <div class="page-head"><div><h1>Aperçu</h1></div>
-        <a class="btn primary" href="#/nouveau">${ic("plus")}Nouveau client</a>
-        <div class="stats">${urg ? `<span class="stat hot"><b>${urg}</b> dépôt${urg > 1 ? "s" : ""} sous 72 h</span>` : ""}<span class="stat"><b>${S.clients.length}</b> campagnes</span><span class="stat"><b>${open.length}</b> demandes ouvertes</span><span class="stat"><b>${E.chf(demande)}</b> demandés</span><span class="stat"><b>${E.chf(obtenu)}</b> obtenus</span></div></div>
-      <div class="overview">
-        <section class="panel" aria-labelledby="todo-h"><div class="panel-h"><h2 id="todo-h">À faire</h2><span class="muted">${todo.length} actions</span></div>
-          <ul class="todo">${todo.slice(0, 9).map((t) => `<li><span class="dot ${t.hot ? "hot" : ""}"></span><a href="${t.href}"><b>${esc(t.h)}</b><span class="sub">${esc(t.s)}</span></a>${ic("arrow")}</li>`).join("") || '<li><span></span><span class="sub">Rien d\'urgent aujourd\'hui.</span></li>'}</ul></section>
-        <div style="display:flex;flex-direction:column;gap:24px;min-width:0">
-          <section class="panel" aria-labelledby="dep-h"><div class="panel-h"><h2 id="dep-h">Dépôts à venir</h2><span class="muted">triés par échéance</span></div>
-            <div style="overflow:auto"><table class="t"><thead><tr><th>Échéance</th><th>Fondation</th><th class="hide-sm">Client</th><th class="r">Demandé</th><th>Statut</th></tr></thead><tbody>
-            ${open.slice(0, 10).map((d) => { const f = F(d.fondation), c = client(d.client), j = daysTo(d.echeance);
-              return `<tr class="clickable ${j <= 3 ? "urgent" : ""}" data-href="#/lettre/${d.id}"><td class="when">${dshort(d.echeance)}<div class="sub">${j <= 0 ? "aujourd'hui" : j === 1 ? "demain" : "dans " + j + " j"}</div></td><td style="max-width:0;width:auto"><div class="name clip" title="${esc(f.n)}">${esc(f.n)}</div><div class="sub clip">${esc(f.s || "")}${f.c ? " · " + f.c : ""}</div></td><td class="hide-sm cl"><span class="clip" style="max-width:150px" title="${esc(c.nom)}">${esc(c.nom)}</span></td><td class="r num">${E.chf(d.montant)}</td><td>${statusHtml(d.statut, flapOnce(d.id))}</td></tr>`; }).join("")}
-            </tbody></table></div></section>
-          <section class="panel" aria-labelledby="camp-h"><div class="panel-h"><h2 id="camp-h">Campagnes</h2><span class="muted">obtenu, puis demandé, sur l'objectif</span></div>
-            <div class="camps" style="border-top:0">${S.clients.map((c) => { const ds = demandesOf(c.id), ob = ds.reduce((t, d) => t + (d.obtenu || 0), 0), dm = ds.filter((d) => !["suggeree", "refusee", "accordee"].includes(d.statut)).reduce((t, d) => t + d.montant, 0), obj = c.projet.objectif || c.projet.montant;
-              return `<a class="camp" href="#/clients/${c.id}"><div class="name">${esc(c.nom)}</div><div class="sub">${typeLabel(c.type)} · ${c.canton} · ${ds.length} demandes</div><div class="meter" aria-hidden="true"><u style="width:${Math.min(100, E.pct(ob, obj))}%"></u><s style="width:${Math.min(100 - Math.min(100, E.pct(ob, obj)), E.pct(dm, obj))}%"></s></div><div class="sub num"><b style="color:var(--ink)">${E.chf(ob)}</b> obtenus · ${E.chf(dm)} en cours · objectif ${E.chf(obj)}</div></a>`; }).join("")}</div></section>
-        </div></div>`;
-    return shell("apercu", `<span>${today.toLocaleDateString("fr-CH", { weekday: "long", day: "numeric", month: "long" })}</span>`, body);
+      <div class="dash-head"><div><h1>${heure < 12 ? "Bonjour" : heure < 18 ? "Bon après-midi" : "Bonsoir"}${SERVEUR() && STORE.st.user && STORE.st.user.name ? " " + esc(STORE.st.user.name.split(" ")[0]) : ""}</h1><p class="lede">${today.toLocaleDateString("fr-CH", { weekday: "long", day: "numeric", month: "long" })} · ${S.clients.length} client${S.clients.length > 1 ? "s" : ""} actif${S.clients.length > 1 ? "s" : ""}</p></div>
+        <div class="head-actions"><a class="btn" href="#/demandes">${ic("cols")}Pipeline</a><a class="btn primary" href="#/nouveau">${ic("plus")}Nouveau client</a></div></div>
+      <section class="brief" aria-label="Résumé de la semaine"><div class="brief-ic">${ic("spark")}</div><div class="brief-txt"><b>Votre semaine</b><p>${brief.length ? brief.join(" · ") : "Rien d'urgent : bon moment pour qualifier de nouvelles fondations."}</p></div>
+        ${SERVEUR() && STORE.st.ia ? `<button class="btn sm" data-act="ia-brief">${ic("spark")}Priorités par l'IA</button>` : ""}</section>
+      <div id="ia-brief-out"></div>
+      <div class="kpis">
+        <div class="kpi"><span>Demandes en cours</span><b>${open.length + S.demandes.filter((d) => ["envoyee", "relancee"].includes(d.statut)).length}</b><em>${urg.length} dépôt${urg.length > 1 ? "s" : ""} cette semaine</em>${bars([30, 40, 45, 60, 70, 85])}</div>
+        <div class="kpi"><span>Montant demandé</span><b>${E.chf(demande).replace("CHF ", "CHF ")}</b><em>sur ${S.clients.length} campagne${S.clients.length > 1 ? "s" : ""}</em>${bars([40, 50, 55, 62, 75, 90])}</div>
+        <div class="kpi"><span>Obtenu</span><b>${E.chf(obtenu)}</b><em class="${accords ? "up" : ""}">${accords} accord${accords > 1 ? "s" : ""}</em>${bars([10, 10, 30, 30, 55, Math.min(100, 40 + accords * 10)])}</div>
+        <div class="kpi"><span>Taux de réponse</span><b>${taux} %</b><em>sur ${envoyees.length} envoi${envoyees.length > 1 ? "s" : ""}</em><div class="kring" style="--p:${taux}" aria-hidden="true"></div></div>
+      </div>
+      <div class="dash-grid">
+        <section class="panel"><div class="panel-h"><h2>Pipeline</h2><span class="muted">toutes campagnes</span></div>
+          <div class="pipe">${etapes.map(([k, l]) => { const n = S.demandes.filter((d) => d.statut === k).length; return `<a class="pcol" href="#/demandes"><span class="pbar ${k === "accordee" ? "ok" : ""}" style="height:${Math.max(4, (n / max) * 100)}%"></span><b>${n}</b><span>${l}</span></a>`; }).join("")}</div></section>
+        <section class="panel"><div class="panel-h"><h2>Échéances</h2><span class="muted">à venir</span></div>
+          ${open.slice(0, 6).map((d) => { const f = F(d.fondation), c = client(d.client), j = daysTo(d.echeance);
+            return `<a class="dl" href="#/lettre/${d.id}"><span class="date ${j <= 3 ? "hot" : ""}">${dshort(d.echeance)}</span><span class="dlt"><b class="clip">${esc(f.n)}</b><span class="clip">${esc(c.nom)}</span></span>${statusHtml(d.statut, flapOnce(d.id))}</a>`; }).join("") || '<p class="sub">Aucune échéance ouverte.</p>'}</section>
+        <section class="panel"><div class="panel-h"><h2>Meilleures chances</h2><span class="muted">${Object.keys(BOT).length ? "repérées par le bot" : "lancez le bot sur un client"}</span></div>
+          ${chances.slice(0, 5).map((x) => `<a class="op" href="#/clients/${x.c.id}/fondations/${x.id}">${scoreHtml(x.score)}<span class="dlt"><b class="clip">${esc(F(x.id).n)}</b><span class="cite one">${esc(x.quote)}</span><span class="sub">pour ${esc(x.c.nom)}</span></span></a>`).join("") || `<p class="sub">Le bot propose ici les fondations prometteuses pas encore sollicitées. Demandez à Claude Code : « lance le bot sur ce client ».</p>`}</section>
+      </div>
+      <div class="dash-grid two">
+        <section class="panel"><div class="panel-h"><h2>À faire</h2><span class="muted">${todo.length} actions</span></div>
+          <ul class="todo">${todo.slice(0, 7).map((t) => `<li><span class="dot ${t.hot ? "hot" : ""}"></span><a href="${t.href}"><b>${esc(t.h)}</b><span class="sub">${esc(t.s)}</span></a>${ic("arrow")}</li>`).join("") || '<li><span></span><span class="sub">Rien d\'urgent aujourd\'hui.</span></li>'}</ul></section>
+        <section class="panel"><div class="panel-h"><h2>Campagnes</h2><span class="muted">obtenu, puis en cours, sur l'objectif</span></div>
+          <div class="camps">${S.clients.map((c) => { const ds = demandesOf(c.id), ob = ds.reduce((t, d) => t + (d.obtenu || 0), 0), dm = ds.filter((d) => !["suggeree", "refusee", "accordee"].includes(d.statut)).reduce((t, d) => t + d.montant, 0), obj = c.projet.objectif || c.projet.montant || 1;
+            return `<a class="camp" href="#/clients/${c.id}"><div class="name clip">${esc(c.nom)}</div><div class="sub">${typeLabel(c.type)} · ${c.canton} · ${ds.length} demandes</div><div class="meter" aria-hidden="true"><u style="width:${Math.min(100, E.pct(ob, obj))}%"></u><s style="width:${Math.min(100 - Math.min(100, E.pct(ob, obj)), E.pct(dm, obj))}%"></s></div><div class="sub num"><b style="color:var(--ink)">${E.chf(ob)}</b> obtenus · objectif ${c.projet.objectif ? E.chf(obj) : "à définir"}</div></a>`; }).join("")}</div></section>
+      </div>`;
+    return shell("apercu", `<span>Tableau de bord</span>`, body);
   }
   const typeLabel = (t) => ({ association: "Association", startup: "Start-up", etudiant: "Étudiant·e", consultant: "Consultant·e" })[t] || t;
 
@@ -361,7 +400,9 @@
 
   function vClientDemandes(c) {
     const ds = demandesOf(c.id).filter((d) => d.statut !== "suggeree").sort((a, b) => new Date(a.echeance || a.envoi || 0) - new Date(b.echeance || b.envoi || 0));
-    const body = clientHead(c, "demandes") + `<div class="table-wrap"><table class="t"><thead><tr><th>Fondation</th><th>Échéance</th><th class="r">Demandé</th><th class="r hide-sm">Score</th><th>Statut</th><th></th></tr></thead><tbody>
+    const prep = ds.filter((d) => ["redaction", "validation", "prete"].includes(d.statut)).length;
+    const body = clientHead(c, "demandes") + `<div class="vague"><div><b>Publipostage singulier</b><span class="sub">Une lettre par fondation, à partir du modèle, avec 2 ou 3 phrases propres à chaque fondation. Export Word (une page par fondation) et CSV pour Gmail, Outlook ou Word.</span></div><button class="btn primary" data-act="vague" data-c="${c.id}" ${prep ? "" : "disabled"}>${ic("send")}Exporter la vague (${prep})</button></div>
+      <div class="table-wrap"><table class="t"><thead><tr><th>Fondation</th><th>Échéance</th><th class="r">Demandé</th><th class="r hide-sm">Score</th><th>Statut</th><th></th></tr></thead><tbody>
       ${ds.map((d) => { const f = F(d.fondation); return `<tr><td><div class="name">${esc(f.n)}</div><div class="sub">${esc(f.s)} · ${f.c}</div></td><td class="num">${OUVERTS.has(d.statut) ? dshort(d.echeance) : d.envoi ? "env. " + dshort(d.envoi) : "—"}</td><td class="r num">${E.chf(d.montant)}</td><td class="r num hide-sm">${d.score}</td><td>${statusHtml(d.statut, flapOnce(d.id))}</td><td class="r"><a class="btn sm" href="#/lettre/${d.id}">Lettre</a></td></tr>`; }).join("") || '<tr><td colspan="6"><div class="empty"><b>Pas encore de demande</b>Ouvrez l\'onglet Fondations et choisissez les premières.</div></td></tr>'}
       </tbody></table></div>`;
     return shell("clients", crumbsClient(c, "Demandes"), body);
@@ -410,6 +451,56 @@
   }
 
   const LETTRE = { lang: "fr", ton: "sobre" };
+  // Publipostage singulier : la structure vient du modèle (rédigé avec Claude), Qwen ajoute 2 ou 3 phrases propres à la fondation.
+  async function singulariser(did, btn) {
+    const d = S.demandes.find((x) => x.id === did), c = client(d.client), f = F(d.fondation), fiche = ENR[f.id], be = botEval(c.id, f.id);
+    const langue = { fr: "français", de: "allemand (orthographe suisse)", en: "anglais" }[LETTRE.lang];
+    const system = `Tu écris 2 ou 3 phrases, en ${langue}, à insérer dans une lettre de demande de soutien adressée à une fondation suisse. Elles relient précisément le projet du client à cette fondation : son but statutaire, ses soutiens passés, ses critères. Ton sobre, précis, sans flatterie ni superlatifs. N'invente aucun fait : n'utilise que les éléments fournis. Réponds uniquement par les 2 ou 3 phrases.`;
+    const prompt = JSON.stringify({ client: { nom: c.nom, mission: c.mission, canton: c.canton }, projet: { titre: c.projet.titre, resume: c.projet.resume, beneficiaires: c.projet.beneficiaires },
+      fondation: { nom: f.n, siege: f.s, but_statutaire: f.p, projets_soutenus: fiche ? fiche.projets_soutenus : [], criteres: fiche ? fiche.demande.criteres : [], resume: fiche ? fiche.resume : null }, angle: be ? be.angle_lettre : null });
+    btn.disabled = true; const old = btn.innerHTML; btn.textContent = "Qwen écrit…";
+    try {
+      const r = await STORE.ia({ system, prompt, client: c.id, usage: "singularisation " + f.n, temperature: 0.4, max_tokens: 400 });
+      const el = document.querySelector("#letter .sing") || document.querySelector("#letter p:nth-of-type(6)");
+      if (el) { el.textContent = r.texte.trim(); el.classList.add("sing-ia"); }
+      const t = $("#letter"); d.lettre = { html: t.innerHTML, lang: LETTRE.lang, ton: LETTRE.ton, ia: r.modele }; save();
+      btn.innerHTML = old; btn.disabled = false; toast("Phrases singulières ajoutées : relisez-les");
+    } catch (e) { btn.disabled = false; btn.innerHTML = old; toast(e.data && e.data.erreur ? e.data.erreur : "IA indisponible : " + e.message); }
+  }
+  function lettreHtml(d) {
+    const c = client(d.client), be = botEval(c.id, d.fondation);
+    if (d.lettre && d.lettre.html) return d.lettre.html;
+    return renderLetter(E.letter(c, d.fondation, d, Object.assign({}, LETTRE, be && be.citation_verifiee ? { quote: be.citation } : {})));
+  }
+  function exporterVague(cid) {
+    const c = client(cid);
+    const ds = demandesOf(cid).filter((d) => ["redaction", "validation", "prete"].includes(d.statut));
+    if (!ds.length) return toast("Aucune lettre en préparation dans cette campagne");
+    const txt = (h) => { const div = document.createElement("div"); div.innerHTML = h.replace(/<\/p>/g, "</p>\n\n").replace(/<br>/g, "\n"); return div.textContent.replace(/\n{3,}/g, "\n\n").trim(); };
+    const csvq = (v) => '"' + String(v ?? "").replace(/"/g, '""') + '"';
+    const lignes = [["fondation", "siege", "adresse", "email", "langue", "objet", "lettre"].join(";")];
+    let doc = "";
+    ds.forEach((d, i) => {
+      const f = F(d.fondation), fi = ENR[f.id], h = lettreHtml(d), tout = txt(h), objet = tout.split("\n")[0], corps = tout.slice(objet.length).trim();
+      lignes.push([f.n, f.s, fi && fi.contact ? fi.contact.adresse : "", fi && fi.contact ? fi.contact.email : "", LETTRE.lang, objet, corps].map(csvq).join(";"));
+      doc += `<div style="${i ? "page-break-before:always;" : ""}"><p style="font-size:11pt;color:#4F5870">${esc(c.nom)}<br>${esc(c.contact.nom || "")}</p><p style="text-align:right">${esc(f.n)}<br>${esc(fi && fi.contact && fi.contact.adresse ? fi.contact.adresse : f.s)}</p>${h}</div>`;
+    });
+    const dl = (blob, nom) => { const u = URL.createObjectURL(blob), a = document.createElement("a"); a.href = u; a.download = nom; a.click(); setTimeout(() => URL.revokeObjectURL(u), 3000); };
+    const base = `${new Date().toISOString().slice(0, 10)}_Vague_${c.nom}`.replace(/[\/:*?"<>|]+/g, "-");
+    dl(new Blob(["\ufeff", `<html><head><meta charset="utf-8"><style>body{font-family:Georgia,serif;font-size:12pt;line-height:1.5}p{margin:0 0 10pt}</style></head><body>${doc}</body></html>`], { type: "application/msword" }), base + ".doc");
+    dl(new Blob(["\ufeff" + lignes.join("\n")], { type: "text/csv;charset=utf-8" }), base + "_publipostage.csv");
+    S.journal.unshift({ t: new Date().toISOString(), client: cid, txt: `Vague exportée : ${ds.length} lettres (Word + CSV de publipostage)` }); save();
+    toast(`${ds.length} lettres exportées : Word + CSV de publipostage`);
+  }
+  async function iaBrief(btn) {
+    const resume = S.clients.map((c) => ({ client: c.nom, objectif: c.projet.objectif, demandes: demandesOf(c.id).map((d) => ({ fondation: F(d.fondation).n, statut: SL[d.statut], echeance: d.echeance ? d.echeance.slice(0, 10) : null, montant: d.montant, n_accepte_pas: !!(ENR[d.fondation] && ENR[d.fondation].demande.accepte_demandes === "non") })) }));
+    btn.disabled = true; btn.textContent = "Analyse en cours…";
+    try {
+      const r = await STORE.ia({ system: "Tu es le chef de projet d'une agence suisse de recherche de fonds. À partir de l'état des campagnes (JSON), donne les 5 priorités de la semaine pour le conseiller, en français, une ligne chacune, la plus urgente d'abord, avec le client et la fondation concernés. Pas d'introduction, pas de conclusion. N'invente rien.", prompt: JSON.stringify({ aujourdhui: today.toISOString().slice(0, 10), campagnes: resume }), usage: "priorités de la semaine", temperature: 0.2, max_tokens: 700 });
+      $("#ia-brief-out").innerHTML = `<section class="panel ia-out"><div class="panel-h"><h2>Priorités proposées par l'IA</h2><span class="muted">${esc((r.modele || "").split("/").pop())}</span></div><ol>${r.texte.split("\n").map((l) => l.replace(/^\s*[-*\d.)]+\s*/, "").trim()).filter(Boolean).map((l) => `<li>${esc(l)}</li>`).join("")}</ol></section>`;
+      btn.remove();
+    } catch (e) { btn.disabled = false; btn.textContent = "Priorités par l'IA"; toast(e.data && e.data.erreur ? e.data.erreur : "IA indisponible"); }
+  }
   async function lettreIA(did, btn) {
     const d = S.demandes.find((x) => x.id === did), c = client(d.client), f = F(d.fondation), be = botEval(c.id, f.id), fiche = ENR[f.id];
     const L = E.letter(c, f.id, d, Object.assign({}, LETTRE, be && be.citation_verifiee ? { quote: be.citation } : {}));
@@ -443,6 +534,7 @@
           <div class="seg" role="group" aria-label="Langue">${["fr", "de", "en"].map((l) => `<button data-act="lang" data-v="${l}" aria-pressed="${LETTRE.lang === l}">${l.toUpperCase()}</button>`).join("")}</div>
           <div class="seg" role="group" aria-label="Ton">${[["sobre", "Sobre"], ["chaleureux", "Chaleureux"]].map(([v, l]) => `<button data-act="ton" data-v="${v}" aria-pressed="${LETTRE.ton === v}">${l}</button>`).join("")}</div>
           <button class="btn sm ghost" data-act="regen" data-d="${d.id}">${ic("refresh")}Régénérer</button>
+          ${SERVEUR() ? `<button class="btn sm" data-act="singulariser" data-d="${d.id}" ${STORE.st.ia ? "" : 'disabled title="IA non configurée sur le serveur (INFOMANIAK_TOKEN)"'}>${ic("spark")}Singulariser (Qwen)</button>` : ""}
           ${SERVEUR() ? `<button class="btn sm ${STORE.st.ia ? "dark" : ""}" data-act="ia-lettre" data-d="${d.id}" ${STORE.st.ia ? "" : 'disabled title="IA non configurée sur le serveur (INFOMANIAK_TOKEN)"'}>${ic("send")}Rédiger avec l'IA</button>` : ""}
           <span class="grow" style="flex:1"></span>
           <button class="btn sm" data-act="copy">${ic("copy")}Copier</button><button class="btn sm" data-act="word" data-d="${d.id}">${ic("file")}Word</button><button class="btn sm" data-act="print">${ic("print")}PDF</button></div>
@@ -465,7 +557,7 @@
     return shell("demandes", `<a href="#/clients/${c.id}/demandes">${esc(c.nom)}</a><span>/</span><b>Lettre</b>`, body);
   }
   function renderLetter(L) {
-    return `<p class="obj">${esc(L.objet)}</p><p>${esc(L.salut)}</p>${L.paras.map((p) => `<p>${esc(p)}</p>`).join("")}<p>${L.signature.map(esc).join("<br>")}</p><p class="sub" style="font-family:var(--ui);font-size:13px">Annexes : ${L.annexes.map(esc).join(" · ")}</p>`;
+    return `<p class="obj">${esc(L.objet)}</p><p>${esc(L.salut)}</p>${L.paras.map((p, i) => `<p${i === L.sing ? ' class="sing"' : ""}>${esc(p)}</p>`).join("")}<p>${L.signature.map(esc).join("<br>")}</p><p class="sub" style="font-family:var(--ui);font-size:13px">Annexes : ${L.annexes.map(esc).join(" · ")}</p>`;
   }
 
   const FX = { q: "", canton: "", type: "donatrice_probable", dom: "", sv: "", n: 80 };
@@ -516,18 +608,33 @@
   function vPortail(id) {
     const c = client(id);
     if (!c) return vIntrouvable();
-    const ds = demandesOf(c.id).filter((d) => d.statut !== "suggeree" && d.statut !== "qualifier");
+    const tous = demandesOf(c.id);
+    const ds = tous.filter((d) => d.statut !== "suggeree" && d.statut !== "qualifier");
     const ob = ds.reduce((t, d) => t + (d.obtenu || 0), 0);
+    const attente = ds.filter((d) => ["envoyee", "relancee"].includes(d.statut)).reduce((t, d) => t + d.montant, 0);
+    const obj = c.projet.objectif || 0;
     const aValider = ds.filter((d) => d.statut === "validation");
-    const etape = ds.some((d) => ["accordee", "refusee"].includes(d.statut)) ? 4 : ds.some((d) => ["envoyee", "relancee"].includes(d.statut)) ? 3 : aValider.length ? 2 : 1;
-    const pub = { redaction: "En préparation", validation: "À valider par vous", prete: "Validée, prête à l'envoi", envoyee: "Envoyée", relancee: "Relancée", accordee: "Accordée", refusee: "Refusée" };
-    return `<div class="portal"><div class="portal-top"><span class="brand">${MARK}<b>levier<span>.</span></b></span><span class="ro">${ic("lock")}<span class="hide-sm">Espace de ${esc(c.nom)} · </span>consultation et validation</span></div>
-      <h1>Votre recherche de fonds</h1><p class="lede" style="font-size:15px;margin-top:6px">${esc(c.projet.titre)} · objectif ${E.chf(c.projet.objectif)} · ${E.chf(ob)} obtenus à ce jour</p>
-      <div class="steps" aria-label="Avancement">${["Analyse", "Carte des financeurs", "Rédaction et validation", "Envois et relances", "Réponses"].map((s, i) => `<div class="${i < etape ? "done" : i === etape ? "now" : ""}">${s}</div>`).join("")}</div>
-      ${aValider.map((d) => `<div class="validate"><p><b>Une lettre attend votre validation</b><br><span class="sub">${esc(F(d.fondation).n)} · ${E.chf(d.montant)} · dépôt prévu le ${dlong(d.echeance)}</span></p><a class="btn" href="#/portail/${c.id}/lettre/${d.id}">${ic("eye")}Lire la lettre</a><button class="btn primary" data-act="valider" data-d="${d.id}">${ic("check")}Je valide</button></div>`).join("")}
-      <div class="panel"><ul class="preqs">${ds.map((d) => { const f = F(d.fondation); return `<li class="preq"><span class="name">${esc(f.n)}</span><span class="num">${E.chf(d.montant)}</span><span class="status" data-s="${d.statut}">${pub[d.statut] || SL[d.statut]}</span><span class="cite two">${esc(E.explain(c, f.id).quote)}</span></li>`; }).join("") || '<li class="empty"><b>Votre carte des financeurs est en préparation</b>Vous serez averti·e dès que les premières lettres seront prêtes.</li>'}</ul></div>
-      <p class="sub" style="margin-top:24px">Une question ? ${esc(c.contact ? "Votre conseiller : Alexandre Cazes, Levier" : "")} · Honoraires fixes, jamais de pourcentage sur les fonds obtenus.</p>
-      <p class="sub no-print" style="margin-top:8px"><a href="#/clients/${c.id}">Retour à l'espace agence</a> (lien visible en démonstration seulement)</p></div>`;
+    const n = (st) => ds.filter((d) => st.includes(d.statut)).length;
+    const etape = n(["accordee", "refusee"]) ? 4 : n(["envoyee", "relancee"]) ? 3 : n(["validation", "prete", "redaction"]) ? 2 : tous.length ? 1 : 0;
+    const pub = { redaction: "En préparation", validation: "À valider par vous", prete: "Validée", envoyee: "Envoyée", relancee: "Relancée", accordee: "Accordée", refusee: "Refusée" };
+    const etapes = [["Analyse", "projet et besoins"], ["Carte des financeurs", `${tous.length} fondations retenues`], ["Lettres", `${n(["prete", "envoyee", "relancee", "accordee", "refusee"])} sur ${ds.length} validées`], ["Envois", `${n(["envoyee", "relancee", "accordee", "refusee"])} envoyées`], ["Réponses", `${n(["accordee"])} accord${n(["accordee"]) > 1 ? "s" : ""}`]];
+    return `<div class="cs"><header class="cs-top"><span class="brand">${MARK}<b>levier<span>.</span></b></span><span class="cs-who">${ic("lock")}<span class="hide-sm">Espace privé de </span><b>${esc(c.nom)}</b></span><a class="btn sm" href="mailto:levier.conseil@gmail.com?subject=${encodeURIComponent(c.nom)}">${ic("send")}Écrire à Alexandre</a></header>
+      <main class="cs-body">
+        <div class="cs-head"><div><h1>Votre recherche de fonds</h1><p class="lede">${esc(c.projet.titre)}${obj ? " · objectif " + E.chf(obj) : ""}</p></div>
+          <div class="cs-money"><div class="meter big" aria-hidden="true"><u style="width:${obj ? Math.min(100, E.pct(ob, obj)) : 0}%"></u><s style="width:${obj ? Math.min(100, E.pct(attente, obj)) : 0}%"></s></div><span><b>${E.chf(ob)}</b> obtenus · ${E.chf(attente)} en attente de réponse</span></div></div>
+        <ol class="cs-steps" aria-label="Avancement">${etapes.map(([t, sub], i) => `<li class="${i < etape ? "done" : i === etape ? "now" : ""}"><i>${i < etape ? ic("check") : ""}</i><b>${t}</b><span>${esc(sub)}</span></li>`).join("")}</ol>
+        <div class="cs-grid">
+          <section class="panel ${aValider.length ? "action" : ""}"><div class="panel-h"><h2>À valider par vous</h2>${aValider.length ? `<span class="tag acc">${aValider.length} lettre${aValider.length > 1 ? "s" : ""}</span>` : ""}</div>
+            ${aValider.map((d) => `<div class="val"><span class="dlt"><b class="clip">${esc(F(d.fondation).n)}</b><span>${E.chf(d.montant)} · dépôt le ${dshort(d.echeance)}</span></span><a class="btn sm primary" href="#/portail/${c.id}/lettre/${d.id}">Lire et valider</a></div>`).join("") || '<p class="sub">Rien à valider pour l\'instant. Nous vous écrivons dès qu\'une lettre est prête.</p>'}</section>
+          <section class="panel"><div class="panel-h"><h2>Vos financeurs</h2><span class="muted">${tous.length} fondations retenues</span></div>
+            ${ds.slice(0, 6).map((d) => { const f = F(d.fondation); return `<div class="fin"><span class="status" data-s="${d.statut}">${pub[d.statut] || SL[d.statut]}</span><span class="dlt"><b class="clip">${esc(f.n)}</b><span class="cite one">${esc(E.explain(c, f.id).quote)}</span></span><span class="num sub">${E.chf(d.montant)}</span></div>`; }).join("") || '<p class="sub">Votre carte des financeurs est en préparation.</p>'}</section>
+          <section class="panel"><div class="panel-h"><h2>Ce que Levier a fait</h2></div>
+            <ul class="cs-done"><li><b>${tous.length} fondations</b> lues et vérifiées sur ${(window.FONDATIONS || []).length.toLocaleString("fr-CH").replace(/\u202f|\s/g, "'")}</li><li><b>${ds.length} lettres</b> écrites, une par fondation</li><li><b>${n(["relancee"])} relance${n(["relancee"]) > 1 ? "s" : ""}</b> faites à temps</li><li><b>${n(["accordee"])} accord${n(["accordee"]) > 1 ? "s" : ""}</b> : ${E.chf(ob)}</li></ul>
+            <button class="btn sm" data-act="print">${ic("print")}Télécharger le rapport (PDF)</button></section>
+        </div>
+        <p class="sub cs-foot">Honoraires fixes, jamais de pourcentage sur les fonds obtenus. Chaque demande est signée et envoyée par votre organisation.</p>
+        <p class="sub no-print"><a href="#/clients/${c.id}">Retour à l'espace agence</a> (visible en démonstration seulement)</p>
+      </main></div>`;
   }
   function vPortailLettre(cid, did) {
     const c = client(cid), d = S.demandes.find((x) => x.id === did);
@@ -577,6 +684,9 @@
     else if (act === "mode") { UI.mode = a.dataset.v; rerender(); }
     else if (act === "logout") STORE.logout();
     else if (act === "ia-lettre") lettreIA(a.dataset.d, a);
+    else if (act === "ia-brief") iaBrief(a);
+    else if (act === "singulariser") singulariser(a.dataset.d, a);
+    else if (act === "vague") exporterVague(a.dataset.c);
     else if (act === "ecarter") { UI.ecarter = !UI.ecarter; rerender(); }
     else if (act === "copycmd") { try { await navigator.clipboard.writeText($("#botcmd").innerText); toast("Commande copiée : collez-la dans le Terminal"); } catch (er) { toast("Sélectionnez la commande pour la copier"); } }
     else if (act === "plus") { FX.n += 80; rerender(); }

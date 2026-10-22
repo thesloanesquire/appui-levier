@@ -20,3 +20,11 @@ scripts/deployer.sh
 .taste-skill/inspect/
 landing/assets/*.jpg
 landing/assets/*.png
+
+# Captures et journaux de travail
+.playwright-cli/
+.taste-skill/.playwright-cli/
+.taste-skill/*.png
+.impeccable/mocks/**/*.png
+.impeccable/mocks/**/*.jpg
+.impeccable/archive/
