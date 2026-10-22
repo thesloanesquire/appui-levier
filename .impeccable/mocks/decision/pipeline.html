@@ -1,0 +1,48 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Spectral:wght@400;600&family=Hanken+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#F5F1E8;--ink:#1F2A44;--soft:#4A5470;--acc:#B8613F;--tint:#EDE6D8;--rule:#D9D2C3}
+*{box-sizing:border-box;margin:0;padding:0}
+body{width:1440px;height:900px;overflow:hidden;background:var(--paper);color:var(--ink);font:14px/1.4 "Hanken Grotesk",sans-serif}
+header{height:64px;background:var(--ink);color:#EEE8DB;display:flex;align-items:center;gap:34px;padding:0 32px}
+.logo{font:600 28px "Spectral",serif}.logo b{color:#E08B66}
+header a{color:#B7B3A8}header a.on{color:#fff;border-bottom:2px solid #E08B66;padding-bottom:4px}
+header .sp{margin-left:auto;color:#B7B3A8}
+.bar{display:flex;gap:12px;align-items:center;padding:20px 32px;border-bottom:1px solid var(--rule)}
+h1{font:600 28px "Spectral",serif;margin-right:auto}
+.sel{border:1px solid var(--ink);padding:8px 12px;background:#fff}
+.btn{background:var(--acc);color:#fff;padding:9px 14px;font-weight:600}
+.board{display:grid;grid-template-columns:repeat(6,1fr);gap:0;height:760px}
+.col{border-right:1px solid var(--rule);padding:16px 12px}
+.col:nth-child(3){background:var(--tint)}
+.ch{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:8px;margin-bottom:12px}
+.ch b{font-size:11px;letter-spacing:.08em;text-transform:uppercase}.ch span{color:var(--soft);font-variant-numeric:tabular-nums;font-size:12px}
+.card{background:#fff;border:1px solid var(--rule);padding:10px 11px;margin-bottom:10px}
+.card .f{font:600 14px "Spectral",serif;line-height:1.25}
+.card .c{color:var(--soft);font-size:12px;margin:3px 0 8px}
+.card .m{display:flex;justify-content:space-between;font-size:12px;font-variant-numeric:tabular-nums}
+.late{border-left:3px solid var(--acc)}.late .m span:last-child{color:var(--acc);font-weight:600}
+.ok{border-left:3px solid #3F6B4E}
+.demo{position:absolute;right:16px;bottom:10px;font-size:11px;color:var(--soft)}
+</style></head><body>
+<header><div class="logo">Levier<b>.</b></div><a class="on">Demandes</a><a>Clients</a><a>Fondations</a><a>Lettres</a><a>Rapports</a><span class="sp">Alexandre Cazes</span></header>
+<div class="bar"><h1>Pipeline des demandes</h1><span class="sel">Tous les clients ▾</span><span class="sel">Tous les conseillers ▾</span><span class="btn">Nouvelle campagne</span></div>
+<div class="board">
+<div class="col"><div class="ch"><b>À qualifier</b><span>12 · 148k</span></div>
+<div class="card"><div class="f">Fondation ABS</div><div class="c">Léa M. · Master IHEID</div><div class="m"><span>CHF 9'500</span><span>30.10</span></div></div>
+<div class="card"><div class="f">Fondation AACTS</div><div class="c">Atelier Mémoire</div><div class="m"><span>CHF 7'000</span><span>15.11</span></div></div>
+<div class="card"><div class="f">Fondation Abraham Hermanjat</div><div class="c">Pédibus Riviera</div><div class="m"><span>CHF 5'000</span><span>—</span></div></div></div>
+<div class="col"><div class="ch"><b>En rédaction</b><span>7 · 96k</span></div>
+<div class="card late"><div class="f">4SD Foundation</div><div class="c">Aquavia Sàrl</div><div class="m"><span>CHF 40'000</span><span>24.10</span></div></div>
+<div class="card"><div class="f">FIBA Foundation</div><div class="c">Basket Lausanne Jeunesse</div><div class="m"><span>CHF 25'000</span><span>03.11</span></div></div></div>
+<div class="col"><div class="ch"><b>Validation client</b><span>3 · 41k</span></div>
+<div class="card late"><div class="f">Fondation Emma Muschamp</div><div class="c">Pédibus Riviera</div><div class="m"><span>CHF 18'000</span><span>23.10</span></div></div></div>
+<div class="col"><div class="ch"><b>Envoyée</b><span>6 · 88k</span></div>
+<div class="card ok"><div class="f">Fondation Enfance Emma Couvreu</div><div class="c">Pédibus Riviera</div><div class="m"><span>CHF 12'000</span><span>env. 14.10</span></div></div>
+<div class="card"><div class="f">Fondation EMS La Venoge</div><div class="c">Atelier Mémoire</div><div class="m"><span>CHF 6'000</span><span>env. 09.10</span></div></div></div>
+<div class="col"><div class="ch"><b>Relancée</b><span>2 · 30k</span></div>
+<div class="card"><div class="f">Fondation Emmanuel et M.-Th. Glutz de Reding</div><div class="c">Léa M.</div><div class="m"><span>CHF 10'000</span><span>J+21</span></div></div></div>
+<div class="col"><div class="ch"><b>Réponse</b><span>4 · 39k</span></div>
+<div class="card ok"><div class="f">Fondation EMS du Jorat</div><div class="c">Atelier Mémoire · Accordé</div><div class="m"><span>CHF 6'000</span><span>✓</span></div></div></div>
+</div><span class="demo">Données de démonstration</span>
+</body></html>

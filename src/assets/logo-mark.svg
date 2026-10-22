@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Levier">
+  <rect width="64" height="64" rx="16" fill="#1F2A44"/>
+  <path d="M22 16v32h20" stroke="#FFFFFF" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <circle cx="47" cy="22" r="6" fill="#B8613F"/>
+</svg>

@@ -1,0 +1,45 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Spectral:wght@400;600&family=Hanken+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#F5F1E8;--ink:#1F2A44;--soft:#4A5470;--acc:#B8613F;--tint:#EDE6D8;--rule:#D9D2C3}
+*{box-sizing:border-box;margin:0;padding:0}
+body{width:1440px;height:900px;overflow:hidden;background:var(--paper);color:var(--ink);font:14px/1.45 "Hanken Grotesk",sans-serif}
+header{height:64px;background:var(--ink);color:#EEE8DB;display:flex;align-items:center;gap:30px;padding:0 40px}
+.logo{font:600 28px "Spectral",serif}.logo b{color:#E08B66}
+header a{color:#C9C3B6}header a.on{color:#fff;border-bottom:2px solid #E08B66;padding-bottom:4px}
+.search{margin-left:auto;background:#2B3754;color:#C9C3B6;padding:8px 14px;width:300px;font-size:13px}
+main{padding:28px 40px}
+h1{font:600 30px "Spectral",serif}.sub{color:var(--soft);margin:2px 0 22px}
+.cols{display:grid;grid-template-columns:1fr 1fr 1.25fr;gap:24px}
+.col{background:#fff;border:1px solid var(--rule)}
+.col h2{font:600 18px "Spectral",serif;padding:14px 18px;border-bottom:1px solid var(--rule);display:flex;justify-content:space-between}
+.col h2 span{font:500 13px "Hanken Grotesk";color:var(--soft)}
+.it{padding:12px 18px;border-bottom:1px solid var(--rule);display:flex;gap:12px}
+.it i{width:8px;height:8px;margin-top:6px;flex:none;background:var(--rule)}.it i.r{background:var(--acc)}.it i.g{background:#3F6B4E}
+.it b{font-weight:600}.it p{color:var(--soft);font-size:13px}
+.cp{display:grid;grid-template-columns:1fr 90px;padding:12px 18px;border-bottom:1px solid var(--rule)}
+.cp .n{font:600 15px "Spectral",serif}.cp .c{color:var(--soft);font-size:13px}
+.pg{height:6px;background:var(--tint);margin-top:6px}.pg u{display:block;height:6px;background:var(--ink)}
+.cp .v{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}
+.demo{position:absolute;right:16px;bottom:10px;font-size:12px;color:var(--soft)}
+</style></head><body>
+<header><div class="logo">Levier<b>.</b></div><a class="on">Aperçu</a><a>Clients</a><a>Campagnes</a><a>Fondations</a><a>Lettres</a><span class="search">Rechercher une fondation, un client…</span></header>
+<main><h1>Bonjour Alexandre</h1><p class="sub">Mardi 21.10.2026 · 11 campagnes actives · 31 demandes ouvertes</p>
+<div class="cols">
+<div class="col"><h2>Aujourd'hui <span>5 actions</span></h2>
+<div class="it"><i class="r"></i><div><b>Relancer Pédibus Riviera</b><p>Validation de la lettre Emma Muschamp, dépôt le 23.10</p></div></div>
+<div class="it"><i class="r"></i><div><b>Finir la lettre 4SD Foundation</b><p>Aquavia Sàrl · dépôt le 24.10</p></div></div>
+<div class="it"><i></i><div><b>Qualifier 6 fondations suggérées</b><p>Léa M. · master IHEID</p></div></div>
+<div class="it"><i class="g"></i><div><b>Envoyer le bilan d'octobre</b><p>Atelier Mémoire · CHF 6'000 obtenus</p></div></div></div>
+<div class="col"><h2>Cette semaine <span>6 dépôts</span></h2>
+<div class="it"><i class="r"></i><div><b>23.10 · Fondation Emma Muschamp</b><p>Pédibus Riviera · CHF 18'000</p></div></div>
+<div class="it"><i class="r"></i><div><b>24.10 · 4SD Foundation</b><p>Aquavia Sàrl · CHF 40'000</p></div></div>
+<div class="it"><i></i><div><b>28.10 · Fondation Enfance Emma Couvreu</b><p>Pédibus Riviera · CHF 12'000</p></div></div>
+<div class="it"><i></i><div><b>30.10 · Fondation ABS</b><p>Léa M. · CHF 9'500</p></div></div></div>
+<div class="col"><h2>Campagnes <span>obtenu / objectif</span></h2>
+<div class="cp"><div><div class="n">Pédibus Riviera</div><div class="c">Association · 7 demandes</div><div class="pg"><u style="width:27%"></u></div></div><div class="v">12k / 45k</div></div>
+<div class="cp"><div><div class="n">Aquavia Sàrl</div><div class="c">Start-up · 4 demandes</div><div class="pg"><u style="width:0%"></u></div></div><div class="v">0 / 120k</div></div>
+<div class="cp"><div><div class="n">Atelier Mémoire</div><div class="c">Association · 5 demandes</div><div class="pg"><u style="width:60%"></u></div></div><div class="v">6k / 10k</div></div>
+<div class="cp"><div><div class="n">Léa M.</div><div class="c">Master IHEID · 6 demandes</div><div class="pg"><u style="width:0%"></u></div></div><div class="v">0 / 25k</div></div></div>
+</div></main><span class="demo">Données de démonstration</span>
+</body></html>

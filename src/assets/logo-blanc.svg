@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 236 64" role="img" aria-label="levier.">
+  <style>.w{font-family:"Hanken Grotesk",system-ui,-apple-system,"Segoe UI",sans-serif;font-weight:800;font-size:46px;letter-spacing:-2px;fill:#FFFFFF}</style>
+  <rect width="64" height="64" rx="16" fill="#B8613F"/>
+  <path d="M22 16v32h20" stroke="#FFFFFF" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <circle cx="47" cy="22" r="6" fill="#1F2A44"/>
+  <text x="80" y="47" class="w">levier</text>
+  <circle cx="222" cy="44" r="4.6" fill="#B8613F"/>
+</svg>

@@ -1,0 +1,57 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,600;1,400&family=Hanken+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#F5F1E8;--ink:#1F2A44;--soft:#4A5470;--acc:#B8613F;--tint:#EDE6D8;--rule:#D9D2C3}
+*{box-sizing:border-box;margin:0;padding:0}
+body{width:1440px;height:900px;overflow:hidden;background:var(--paper);color:var(--ink);font:14px/1.45 "Hanken Grotesk",sans-serif;display:grid;grid-template-columns:232px 1fr 300px}
+nav{background:var(--ink);color:#EEE8DB;padding:28px 22px;display:flex;flex-direction:column;gap:4px}
+.logo{font:600 30px "Spectral",serif;letter-spacing:-.01em;margin-bottom:28px}.logo b{color:#E08B66}
+nav a{display:flex;justify-content:space-between;padding:9px 10px;color:#B7B3A8;text-decoration:none;border-left:2px solid transparent}
+nav a.on{color:#fff;border-left-color:#E08B66;background:#2B3754}
+nav small{margin-top:auto;color:#B7B3A8;font-size:12px;border-top:1px solid #2F3A52;padding-top:14px}
+main{padding:30px 36px;overflow:hidden}
+h1{font:600 34px "Spectral",serif;letter-spacing:-.01em}
+.sub{color:var(--soft);margin:4px 0 20px}
+.alert{border:1px solid var(--acc);color:#8A4429;background:#F3E3D8;padding:10px 14px;margin-bottom:18px;display:flex;gap:12px}
+.alert b{font-weight:600}
+.tabs{display:flex;gap:22px;border-bottom:1px solid var(--rule);margin-bottom:0}
+.tabs span{padding:8px 0;color:var(--soft)}.tabs .on{color:var(--ink);border-bottom:2px solid var(--ink);font-weight:600}
+table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+th{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--soft);text-align:left;padding:12px 10px;border-bottom:1px solid var(--ink)}
+td{padding:12px 10px;border-bottom:1px solid var(--rule);vertical-align:top}
+td.d{font-weight:600;white-space:nowrap}td.m{text-align:right;white-space:nowrap}
+.f{font:600 15px "Spectral",serif}.c{color:var(--soft);font-size:12px}
+.st{font-size:11px;letter-spacing:.06em;text-transform:uppercase;padding:3px 7px;border:1px solid currentColor;white-space:nowrap}
+.r{color:var(--acc)}.g{color:#3F6B4E}.b{color:var(--soft)}
+tr.hot td.d{color:var(--acc)}
+.cite{font:italic 13px "Spectral",serif;color:var(--soft);padding:2px 0 0 0}
+aside{border-left:1px solid var(--rule);padding:30px 24px;background:var(--tint)}
+aside h2{font:600 18px "Spectral",serif;margin-bottom:12px}
+.k{display:flex;justify-content:space-between;border-bottom:1px solid var(--rule);padding:10px 0}
+.k b{font:600 22px "Spectral",serif}
+.bar{height:6px;background:var(--rule);margin:6px 0 14px}.bar i{display:block;height:6px;background:var(--ink)}
+.demo{position:absolute;right:16px;bottom:10px;font-size:11px;color:var(--soft)}
+</style></head><body>
+<nav><div class="logo">Levier<b>.</b></div>
+<a class="on">Échéancier <span>14</span></a><a>Clients <span>9</span></a><a>Campagnes <span>11</span></a><a>Fondations <span>3 812</span></a><a>Lettres <span>23</span></a><a>Relances <span>6</span></a>
+<small>Alexandre Cazes<br>Agence Levier</small></nav>
+<main><h1>Dépôts des 14 prochains jours</h1><p class="sub">Toutes campagnes · mardi 21.10.2026</p>
+<div class="alert"><b>2 dépôts dans moins de 72 h.</b> Fondation Emma Muschamp (Pédibus Riviera) attend encore la validation du client.</div>
+<div class="tabs"><span class="on">À déposer</span><span>Envoyées</span><span>À relancer</span><span>Réponses</span></div>
+<table><thead><tr><th>Échéance</th><th>Fondation</th><th>Client</th><th style="text-align:right">Demandé</th><th>Statut</th></tr></thead><tbody>
+<tr class="hot"><td class="d">23.10</td><td><div class="f">Fondation Emma Muschamp</div><div class="cite">[ « venir en aide à l'enfance… » ]</div></td><td>Pédibus Riviera<div class="c">Association · VD</div></td><td class="m">CHF 18'000</td><td><span class="st r">Validation client</span></td></tr>
+<tr class="hot"><td class="d">24.10</td><td><div class="f">4SD Foundation</div></td><td>Aquavia Sàrl<div class="c">Start-up · GE</div></td><td class="m">CHF 40'000</td><td><span class="st b">En rédaction</span></td></tr>
+<tr><td class="d">28.10</td><td><div class="f">Fondation Enfance Emma Couvreu</div></td><td>Pédibus Riviera<div class="c">Association · VD</div></td><td class="m">CHF 12'000</td><td><span class="st g">Prête</span></td></tr>
+<tr><td class="d">30.10</td><td><div class="f">Fondation ABS</div></td><td>Léa M.<div class="c">Master IHEID</div></td><td class="m">CHF 9'500</td><td><span class="st b">À qualifier</span></td></tr>
+<tr><td class="d">03.11</td><td><div class="f">FIBA Foundation</div></td><td>Basket Lausanne Jeunesse<div class="c">Association · VD</div></td><td class="m">CHF 25'000</td><td><span class="st b">En rédaction</span></td></tr>
+<tr><td class="d">04.11</td><td><div class="f">Fondation EMS du Jorat</div></td><td>Atelier Mémoire<div class="c">Association · VD</div></td><td class="m">CHF 6'000</td><td><span class="st g">Prête</span></td></tr>
+</tbody></table></main>
+<aside><h2>Semaine en cours</h2>
+<div class="k"><span>Demandes ouvertes</span><b>31</b></div>
+<div class="k"><span>Montant demandé</span><b>412k</b></div>
+<div class="k"><span>Réponses positives</span><b>4</b></div>
+<h2 style="margin-top:22px">Charge par conseiller</h2>
+<div>Alexandre · 9 dépôts</div><div class="bar"><i style="width:75%"></i></div>
+<div>Conseiller·ère 2 · 5 dépôts</div><div class="bar"><i style="width:42%"></i></div></aside>
+<span class="demo">Données de démonstration</span>
+</body></html>

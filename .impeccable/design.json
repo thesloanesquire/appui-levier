@@ -1,0 +1,593 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-21T19:16:01",
+  "title": "Design System: Levier",
+  "extensions": {
+    "colorMeta": {
+      "ink-navy": {
+        "role": "primary",
+        "displayName": "Encre marine",
+        "canonical": "#1F2A44",
+        "tonalRamp": [
+          "#182035",
+          "#2A385B",
+          "#3B5082",
+          "#4D68A8",
+          "#6F87BE",
+          "#96A7CF",
+          "#C0CAE2",
+          "#EDF0F7"
+        ]
+      },
+      "ink-2": {
+        "role": "neutral",
+        "displayName": "Encre 2",
+        "canonical": "#4F5870",
+        "tonalRamp": [
+          "#20232D",
+          "#373D4E",
+          "#4E576F",
+          "#657190",
+          "#848EA9",
+          "#A5ACC0",
+          "#C9CDD9",
+          "#F0F1F4"
+        ]
+      },
+      "ink-3": {
+        "role": "neutral",
+        "displayName": "Encre 3",
+        "canonical": "#5F6679",
+        "tonalRamp": [
+          "#22242B",
+          "#3A3F4A",
+          "#53596A",
+          "#6C7489",
+          "#8A91A3",
+          "#A9AEBC",
+          "#CCCFD7",
+          "#F1F2F4"
+        ]
+      },
+      "terracotta": {
+        "role": "secondary",
+        "displayName": "Terre cuite",
+        "canonical": "#B8613F",
+        "tonalRamp": [
+          "#391E14",
+          "#633422",
+          "#8D4A30",
+          "#B6603E",
+          "#CA8063",
+          "#D8A28D",
+          "#E8C7BB",
+          "#F8F0EC"
+        ]
+      },
+      "terracotta-strong": {
+        "role": "secondary",
+        "displayName": "Terre cuite appuyée",
+        "canonical": "#9C4D2E",
+        "tonalRamp": [
+          "#3B1D11",
+          "#66331E",
+          "#92482B",
+          "#BD5D38",
+          "#CF7E5E",
+          "#DCA089",
+          "#EAC6B8",
+          "#F9EFEB"
+        ]
+      },
+      "terracotta-ink": {
+        "role": "secondary",
+        "displayName": "Terre cuite encre",
+        "canonical": "#8A4429",
+        "tonalRamp": [
+          "#3B1D12",
+          "#66321E",
+          "#91482B",
+          "#BD5D38",
+          "#CF7D5E",
+          "#DCA089",
+          "#EAC6B8",
+          "#F9EFEB"
+        ]
+      },
+      "terracotta-soft": {
+        "role": "secondary",
+        "displayName": "Terre cuite douce",
+        "canonical": "#FBEEE7",
+        "tonalRamp": [
+          "#421E0B",
+          "#723413",
+          "#A24A1B",
+          "#D26023",
+          "#E1804C",
+          "#E9A27C",
+          "#F2C7B0",
+          "#FBF0E9"
+        ]
+      },
+      "on-accent": {
+        "role": "neutral",
+        "displayName": "Texte sur accent",
+        "canonical": "#FFFFFF",
+        "tonalRamp": [
+          "#262626",
+          "#424242",
+          "#5E5E5E",
+          "#7A7A7A",
+          "#969696",
+          "#B2B2B2",
+          "#D1D1D1",
+          "#F2F2F2"
+        ]
+      },
+      "canvas": {
+        "role": "neutral",
+        "displayName": "Fond de page",
+        "canonical": "#FAF9F7",
+        "tonalRamp": [
+          "#2F291D",
+          "#524733",
+          "#746649",
+          "#97845E",
+          "#AF9E7E",
+          "#C4B8A1",
+          "#DCD5C7",
+          "#F5F3EF"
+        ]
+      },
+      "rail": {
+        "role": "neutral",
+        "displayName": "Barre latérale",
+        "canonical": "#F3F1ED",
+        "tonalRamp": [
+          "#2E291F",
+          "#504735",
+          "#71654B",
+          "#938362",
+          "#AB9D82",
+          "#C2B8A3",
+          "#DAD4C8",
+          "#F5F3F0"
+        ]
+      },
+      "surface": {
+        "role": "neutral",
+        "displayName": "Surface",
+        "canonical": "#FFFFFF",
+        "tonalRamp": [
+          "#262626",
+          "#424242",
+          "#5E5E5E",
+          "#7A7A7A",
+          "#969696",
+          "#B2B2B2",
+          "#D1D1D1",
+          "#F2F2F2"
+        ]
+      },
+      "hover": {
+        "role": "neutral",
+        "displayName": "Survol",
+        "canonical": "#F5F3EF",
+        "tonalRamp": [
+          "#2F291D",
+          "#524733",
+          "#746649",
+          "#97845E",
+          "#AF9E7E",
+          "#C4B8A1",
+          "#DCD5C7",
+          "#F5F3EF"
+        ]
+      },
+      "sunk": {
+        "role": "neutral",
+        "displayName": "Creux",
+        "canonical": "#F1EEE9",
+        "tonalRamp": [
+          "#2F281E",
+          "#514634",
+          "#736449",
+          "#96815F",
+          "#AE9C7F",
+          "#C3B7A2",
+          "#DBD4C7",
+          "#F5F3EF"
+        ]
+      },
+      "line": {
+        "role": "neutral",
+        "displayName": "Filet",
+        "canonical": "#E9E5DE",
+        "tonalRamp": [
+          "#2E281F",
+          "#504635",
+          "#71634B",
+          "#938162",
+          "#AB9C82",
+          "#C2B7A3",
+          "#DAD4C8",
+          "#F5F3F0"
+        ]
+      },
+      "line-strong": {
+        "role": "neutral",
+        "displayName": "Filet appuyé",
+        "canonical": "#D9D3C9",
+        "tonalRamp": [
+          "#2D2820",
+          "#4E4537",
+          "#6F624E",
+          "#908065",
+          "#A99B84",
+          "#C0B6A5",
+          "#D9D3C9",
+          "#F4F3F0"
+        ]
+      },
+      "ok": {
+        "role": "tertiary",
+        "displayName": "Vert accordé",
+        "canonical": "#2C6E4C",
+        "tonalRamp": [
+          "#163726",
+          "#265F41",
+          "#36875D",
+          "#46AF79",
+          "#6AC395",
+          "#92D3B2",
+          "#BDE5D1",
+          "#EDF8F2"
+        ]
+      },
+      "ok-soft": {
+        "role": "tertiary",
+        "displayName": "Vert doux",
+        "canonical": "#E5F2EA",
+        "tonalRamp": [
+          "#1A3323",
+          "#2C583D",
+          "#3F7E57",
+          "#52A371",
+          "#74B98E",
+          "#99CCAD",
+          "#C2E0CE",
+          "#EEF6F1"
+        ]
+      },
+      "warn": {
+        "role": "tertiary",
+        "displayName": "Ambre relance",
+        "canonical": "#8C5A0E",
+        "tonalRamp": [
+          "#462D07",
+          "#794D0C",
+          "#AC6E11",
+          "#DF8F16",
+          "#ECA841",
+          "#F1BF74",
+          "#F7D9AC",
+          "#FDF4E8"
+        ]
+      },
+      "warn-soft": {
+        "role": "tertiary",
+        "displayName": "Ambre doux",
+        "canonical": "#FBF0DA",
+        "tonalRamp": [
+          "#453107",
+          "#78540D",
+          "#AA7812",
+          "#DD9B18",
+          "#EBB342",
+          "#F0C775",
+          "#F6DDAC",
+          "#FDF6E8"
+        ]
+      },
+      "info-soft": {
+        "role": "tertiary",
+        "displayName": "Bleu de rédaction",
+        "canonical": "#EBEEF6",
+        "tonalRamp": [
+          "#182035",
+          "#29375B",
+          "#3B4E82",
+          "#4C65A9",
+          "#6F84BE",
+          "#95A5D0",
+          "#C0C9E3",
+          "#EDF0F7"
+        ]
+      },
+      "dark-canvas": {
+        "role": "neutral",
+        "displayName": "Fond marine (sombre)",
+        "canonical": "#0F1422",
+        "tonalRamp": [
+          "#171F35",
+          "#29365C",
+          "#3A4D83",
+          "#4B64AA",
+          "#6E83BF",
+          "#95A4D0",
+          "#BFC9E3",
+          "#EDF0F7"
+        ]
+      },
+      "dark-surface": {
+        "role": "neutral",
+        "displayName": "Surface marine (sombre)",
+        "canonical": "#161D2E",
+        "tonalRamp": [
+          "#192134",
+          "#2B395A",
+          "#3D5080",
+          "#4F68A6",
+          "#7287BB",
+          "#97A7CE",
+          "#C1CAE1",
+          "#EEF0F7"
+        ]
+      },
+      "dark-ink": {
+        "role": "neutral",
+        "displayName": "Encre claire (sombre)",
+        "canonical": "#EEE8DB",
+        "tonalRamp": [
+          "#342B19",
+          "#5A4B2B",
+          "#806B3D",
+          "#A68B4F",
+          "#BCA471",
+          "#CEBD97",
+          "#E2D7C1",
+          "#F7F4EE"
+        ]
+      },
+      "dark-terracotta": {
+        "role": "secondary",
+        "displayName": "Terre cuite (sombre)",
+        "canonical": "#E08B66",
+        "tonalRamp": [
+          "#401C0D",
+          "#6E3116",
+          "#9D4620",
+          "#CC5A29",
+          "#DC7B51",
+          "#E59F80",
+          "#F0C5B3",
+          "#FBEFEA"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Titre de page ; 24px sous 760px, 34px dans le portail."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Nom de la fondation dans le panneau de détail."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Titres de panneaux."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Texte courant de l'interface."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "En-têtes de tableau, pastilles, libellés ; casse normale."
+      },
+      "quote": {
+        "displayName": "Citation",
+        "purpose": "But statutaire cité entre crochets terre cuite."
+      },
+      "letter": {
+        "displayName": "Lettre",
+        "purpose": "Corps de la lettre à la fondation."
+      },
+      "wordmark": {
+        "displayName": "Mot-symbole",
+        "purpose": "« levier » minuscule suivi du point terre cuite."
+      }
+    },
+    "shadows": [
+      {
+        "name": "sh-1",
+        "value": "0 1px 2px rgba(31,42,68,.05),0 0 0 1px rgba(31,42,68,.02)",
+        "purpose": "Repos : panneaux, boutons, champs, cartes."
+      },
+      {
+        "name": "sh-2",
+        "value": "0 1px 2px rgba(31,42,68,.04),0 6px 20px -6px rgba(31,42,68,.10)",
+        "purpose": "Soulevé : carte survolée, feuille de lettre."
+      },
+      {
+        "name": "sh-3",
+        "value": "0 24px 64px -16px rgba(31,42,68,.30),0 4px 12px -4px rgba(31,42,68,.10)",
+        "purpose": "Flottant : palette ⌘K, notification."
+      },
+      {
+        "name": "focus-halo",
+        "value": "0 0 0 3px color-mix(in srgb,var(--accent) 18%,transparent)",
+        "purpose": "Halo de focus des champs."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease",
+        "value": "cubic-bezier(.16,1,.3,1)",
+        "purpose": "Courbe unique des transitions et animations."
+      },
+      {
+        "name": "state",
+        "value": "120-150ms",
+        "purpose": "Survol et changement d'état des contrôles."
+      },
+      {
+        "name": "flap",
+        "value": "420ms, décalage 22ms par lettre, rotateX(-90deg) vers 0",
+        "purpose": "Retournement du libellé de statut au changement."
+      },
+      {
+        "name": "rise",
+        "value": "240ms, translateY(10px) scale(.98) vers repos",
+        "purpose": "Apparition de la palette et de la notification."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "animation et transition désactivées",
+        "purpose": "prefers-reduced-motion: reduce."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "stack",
+        "value": "1100px"
+      },
+      {
+        "name": "mobile",
+        "value": "760px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Bouton principal",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Action principale de la vue (Nouveau client, Analyser et classer, Je valide). Fond terre cuite appuyée #9C4D2E, texte blanc 5.98:1 (AA) ; jamais de blanc sur #B8613F.",
+      "html": "<button class=\"ds-btn ds-btn-primary\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M12 5v14M5 12h14\"/></svg>Nouveau client</button>",
+      "css": ":root{--ink:#1F2A44;--ink-2:#4F5870;--ink-3:#5F6679;--accent:#B8613F;--accent-strong:#9C4D2E;--accent-ink:#8A4429;--accent-soft:#FBEEE7;--on-accent:#FFFFFF;--bg:#FAF9F7;--surface:#FFFFFF;--hover:#F5F3EF;--sunk:#F1EEE9;--line:#E9E5DE;--line-strong:#D9D3C9;--ok:#2C6E4C;--ok-soft:#E5F2EA;--warn:#8C5A0E;--warn-soft:#FBF0DA;--info-soft:#EBEEF6;--ease:cubic-bezier(.16,1,.3,1);--sh-1:0 1px 2px rgba(31,42,68,.05),0 0 0 1px rgba(31,42,68,.02)}.ds-btn{font-family:'Hanken Grotesk',system-ui,-apple-system,'Segoe UI',sans-serif;display:inline-flex;align-items:center;gap:7px;height:34px;padding:0 14px;border-radius:8px;border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);font-weight:600;font-size:13.5px;box-shadow:var(--sh-1);cursor:pointer;transition:background .15s,border-color .15s,transform .15s var(--ease)}.ds-btn:hover{background:var(--hover)}.ds-btn:active{transform:translateY(1px)}.ds-btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}.ds-btn-primary{background:var(--accent-strong);border-color:transparent;color:var(--on-accent);box-shadow:0 1px 2px rgba(156,77,46,.3),inset 0 1px 0 rgba(255,255,255,.14)}.ds-btn-primary:hover{background:var(--accent-ink)}"
+    },
+    {
+      "name": "Bouton par défaut",
+      "kind": "button",
+      "refersTo": "button-default",
+      "description": "Action secondaire sur surface blanche à filet.",
+      "html": "<button class=\"ds-btn\">Voir comme le client</button>",
+      "css": ":root{--ink:#1F2A44;--ink-2:#4F5870;--ink-3:#5F6679;--accent:#B8613F;--accent-strong:#9C4D2E;--accent-ink:#8A4429;--accent-soft:#FBEEE7;--on-accent:#FFFFFF;--bg:#FAF9F7;--surface:#FFFFFF;--hover:#F5F3EF;--sunk:#F1EEE9;--line:#E9E5DE;--line-strong:#D9D3C9;--ok:#2C6E4C;--ok-soft:#E5F2EA;--warn:#8C5A0E;--warn-soft:#FBF0DA;--info-soft:#EBEEF6;--ease:cubic-bezier(.16,1,.3,1);--sh-1:0 1px 2px rgba(31,42,68,.05),0 0 0 1px rgba(31,42,68,.02)}.ds-btn{font-family:'Hanken Grotesk',system-ui,-apple-system,'Segoe UI',sans-serif;display:inline-flex;align-items:center;gap:7px;height:34px;padding:0 14px;border-radius:8px;border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);font-weight:600;font-size:13.5px;box-shadow:var(--sh-1);cursor:pointer;transition:background .15s,border-color .15s,transform .15s var(--ease)}.ds-btn:hover{background:var(--hover)}.ds-btn:active{transform:translateY(1px)}.ds-btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}"
+    },
+    {
+      "name": "Bouton sombre",
+      "kind": "button",
+      "refersTo": "button-dark",
+      "description": "Action de traitement dans un formulaire.",
+      "html": "<button class=\"ds-btn ds-btn-dark\">Lire le site</button>",
+      "css": ":root{--ink:#1F2A44;--ink-2:#4F5870;--ink-3:#5F6679;--accent:#B8613F;--accent-strong:#9C4D2E;--accent-ink:#8A4429;--accent-soft:#FBEEE7;--on-accent:#FFFFFF;--bg:#FAF9F7;--surface:#FFFFFF;--hover:#F5F3EF;--sunk:#F1EEE9;--line:#E9E5DE;--line-strong:#D9D3C9;--ok:#2C6E4C;--ok-soft:#E5F2EA;--warn:#8C5A0E;--warn-soft:#FBF0DA;--info-soft:#EBEEF6;--ease:cubic-bezier(.16,1,.3,1);--sh-1:0 1px 2px rgba(31,42,68,.05),0 0 0 1px rgba(31,42,68,.02)}.ds-btn{font-family:'Hanken Grotesk',system-ui,-apple-system,'Segoe UI',sans-serif;display:inline-flex;align-items:center;gap:7px;height:34px;padding:0 14px;border-radius:8px;border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);font-weight:600;font-size:13.5px;box-shadow:var(--sh-1);cursor:pointer;transition:background .15s,border-color .15s,transform .15s var(--ease)}.ds-btn:hover{background:var(--hover)}.ds-btn:active{transform:translateY(1px)}.ds-btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}.ds-btn-dark{background:var(--ink);border-color:transparent;color:var(--bg)}.ds-btn-dark:hover{opacity:.92}"
+    },
+    {
+      "name": "Champ",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Champ de 36px, focus en bordure et halo terre cuite.",
+      "html": "<label class=\"ds-field\"><span>Site web du client</span><input class=\"ds-input\" placeholder=\"https://\"></label>",
+      "css": ":root{--ink:#1F2A44;--ink-2:#4F5870;--ink-3:#5F6679;--accent:#B8613F;--accent-strong:#9C4D2E;--accent-ink:#8A4429;--accent-soft:#FBEEE7;--on-accent:#FFFFFF;--bg:#FAF9F7;--surface:#FFFFFF;--hover:#F5F3EF;--sunk:#F1EEE9;--line:#E9E5DE;--line-strong:#D9D3C9;--ok:#2C6E4C;--ok-soft:#E5F2EA;--warn:#8C5A0E;--warn-soft:#FBF0DA;--info-soft:#EBEEF6;--ease:cubic-bezier(.16,1,.3,1);--sh-1:0 1px 2px rgba(31,42,68,.05),0 0 0 1px rgba(31,42,68,.02)}.ds-field{font-family:'Hanken Grotesk',system-ui,-apple-system,'Segoe UI',sans-serif;display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:600;color:var(--ink)}.ds-input{font:400 14px 'Hanken Grotesk',system-ui,sans-serif;height:36px;padding:0 12px;border:1px solid var(--line-strong);border-radius:8px;background:var(--surface);color:var(--ink);transition:border-color .15s,box-shadow .15s}.ds-input:hover{border-color:var(--ink-3)}.ds-input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 18%,transparent)}.ds-input::placeholder{color:var(--ink-3)}"
+    },
+    {
+      "name": "Navigation latérale",
+      "kind": "nav",
+      "refersTo": "nav-item",
+      "description": "Entrées de 34px ; page active sur surface avec icône terre cuite.",
+      "html": "<nav class=\"ds-nav\"><a href=\"#\" aria-current=\"page\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z\"/></svg>Aperçu</a><a href=\"#\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2\"/><circle cx=\"9\" cy=\"7\" r=\"4\"/></svg>Clients<span class=\"ds-count\">4</span></a></nav>",
+      "css": ":root{--ink:#1F2A44;--ink-2:#4F5870;--ink-3:#5F6679;--accent:#B8613F;--accent-strong:#9C4D2E;--accent-ink:#8A4429;--accent-soft:#FBEEE7;--on-accent:#FFFFFF;--bg:#FAF9F7;--surface:#FFFFFF;--hover:#F5F3EF;--sunk:#F1EEE9;--line:#E9E5DE;--line-strong:#D9D3C9;--ok:#2C6E4C;--ok-soft:#E5F2EA;--warn:#8C5A0E;--warn-soft:#FBF0DA;--info-soft:#EBEEF6;--ease:cubic-bezier(.16,1,.3,1);--sh-1:0 1px 2px rgba(31,42,68,.05),0 0 0 1px rgba(31,42,68,.02)}.ds-nav{font-family:'Hanken Grotesk',system-ui,-apple-system,'Segoe UI',sans-serif;display:flex;flex-direction:column;gap:2px;width:224px;padding:12px;background:#F3F1ED;font-size:14px}.ds-nav a{display:flex;align-items:center;gap:10px;height:34px;padding:0 10px;border-radius:8px;color:var(--ink-2);text-decoration:none;font-weight:500;transition:background .12s,color .12s}.ds-nav a svg{color:var(--ink-3)}.ds-nav a:hover{background:var(--hover);color:var(--ink)}.ds-nav a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}.ds-nav a[aria-current=page]{background:var(--surface);color:var(--ink);box-shadow:var(--sh-1),0 0 0 1px var(--line)}.ds-nav a[aria-current=page] svg{color:var(--accent)}.ds-count{margin-left:auto;font-size:12px;color:var(--ink-3);font-variant-numeric:tabular-nums}"
+    },
+    {
+      "name": "Pastilles de statut et retournement",
+      "kind": "chip",
+      "refersTo": "status-pill",
+      "description": "Neuf statuts de demande ; au changement, chaque lettre se retourne avec 22ms de décalage (« Envoyée » animé ici).",
+      "html": "<div style=\"display:flex;flex-wrap:wrap;gap:6px\"><span class=\"ds-status\" data-s=\"suggeree\">Suggérée</span><span class=\"ds-status\" data-s=\"qualifier\">À qualifier</span><span class=\"ds-status\" data-s=\"redaction\">En rédaction</span><span class=\"ds-status\" data-s=\"validation\">Validation client</span><span class=\"ds-status\" data-s=\"prete\">Prête</span><span class=\"ds-status\" data-s=\"envoyee\"><span class=\"ds-flap\" style=\"animation-delay:0ms\">E</span><span class=\"ds-flap\" style=\"animation-delay:22ms\">n</span><span class=\"ds-flap\" style=\"animation-delay:44ms\">v</span><span class=\"ds-flap\" style=\"animation-delay:66ms\">o</span><span class=\"ds-flap\" style=\"animation-delay:88ms\">y</span><span class=\"ds-flap\" style=\"animation-delay:110ms\">é</span><span class=\"ds-flap\" style=\"animation-delay:132ms\">e</span></span><span class=\"ds-status\" data-s=\"relancee\">Relancée</span><span class=\"ds-status\" data-s=\"accordee\">Accordée</span><span class=\"ds-status\" data-s=\"refusee\">Refusée</span></div>",
+      "css": ":root{--ink:#1F2A44;--ink-2:#4F5870;--ink-3:#5F6679;--accent:#B8613F;--accent-strong:#9C4D2E;--accent-ink:#8A4429;--accent-soft:#FBEEE7;--on-accent:#FFFFFF;--bg:#FAF9F7;--surface:#FFFFFF;--hover:#F5F3EF;--sunk:#F1EEE9;--line:#E9E5DE;--line-strong:#D9D3C9;--ok:#2C6E4C;--ok-soft:#E5F2EA;--warn:#8C5A0E;--warn-soft:#FBF0DA;--info-soft:#EBEEF6;--ease:cubic-bezier(.16,1,.3,1);--sh-1:0 1px 2px rgba(31,42,68,.05),0 0 0 1px rgba(31,42,68,.02)}.ds-status{font-family:'Hanken Grotesk',system-ui,-apple-system,'Segoe UI',sans-serif;display:inline-flex;align-items:center;gap:6px;height:24px;padding:0 10px 0 8px;border-radius:99px;font-size:12px;font-weight:600;white-space:nowrap;background:var(--sunk);color:var(--ink-2);perspective:200px}.ds-status::before{content:'';width:6px;height:6px;border-radius:50%;background:currentColor}.ds-status[data-s=suggeree],.ds-status[data-s=qualifier]{background:transparent;box-shadow:inset 0 0 0 1px var(--line-strong)}.ds-status[data-s=redaction]{background:var(--info-soft);color:var(--ink)}.ds-status[data-s=validation]{background:var(--accent-soft);color:var(--accent-ink)}.ds-status[data-s=prete]{background:var(--ok-soft);color:var(--ok)}.ds-status[data-s=envoyee]{background:var(--ink);color:var(--bg)}.ds-status[data-s=relancee]{background:var(--warn-soft);color:var(--warn)}.ds-status[data-s=accordee]{background:var(--ok);color:#fff}.ds-status[data-s=refusee]{color:var(--ink-3);text-decoration:line-through}.ds-flap{display:inline-block;transform-origin:50% 60%;animation:ds-flap .42s var(--ease) both}@keyframes ds-flap{0%{transform:rotateX(-90deg);opacity:0}60%{opacity:1}100%{transform:none}}@media (prefers-reduced-motion:reduce){.ds-flap{animation:none}}"
+    },
+    {
+      "name": "Score de pertinence",
+      "kind": "custom",
+      "refersTo": "score-badge",
+      "description": "Trois paliers : 75+, 55-74, en dessous.",
+      "html": "<div style=\"display:flex;gap:8px\"><span class=\"ds-score\">86</span><span class=\"ds-score ds-mid\">64</span><span class=\"ds-score ds-lo\">41</span></div>",
+      "css": ":root{--ink:#1F2A44;--ink-2:#4F5870;--ink-3:#5F6679;--accent:#B8613F;--accent-strong:#9C4D2E;--accent-ink:#8A4429;--accent-soft:#FBEEE7;--on-accent:#FFFFFF;--bg:#FAF9F7;--surface:#FFFFFF;--hover:#F5F3EF;--sunk:#F1EEE9;--line:#E9E5DE;--line-strong:#D9D3C9;--ok:#2C6E4C;--ok-soft:#E5F2EA;--warn:#8C5A0E;--warn-soft:#FBF0DA;--info-soft:#EBEEF6;--ease:cubic-bezier(.16,1,.3,1);--sh-1:0 1px 2px rgba(31,42,68,.05),0 0 0 1px rgba(31,42,68,.02)}.ds-score{display:inline-grid;place-items:center;width:38px;height:28px;border-radius:8px;font:700 13.5px 'Hanken Grotesk',system-ui,sans-serif;font-variant-numeric:tabular-nums;background:var(--accent-soft);color:var(--accent-ink)}.ds-mid{background:var(--info-soft);color:var(--ink)}.ds-lo{background:var(--sunk);color:var(--ink-3)}"
+    },
+    {
+      "name": "Citation du but statutaire",
+      "kind": "custom",
+      "description": "But social du registre du commerce en Spectral italique, crochet terre cuite suspendu en marge.",
+      "html": "<div class=\"ds-purpose\">promouvoir l'accès à la formation des jeunes en Suisse romande, notamment par l'octroi de bourses</div>",
+      "css": ":root{--ink:#1F2A44;--ink-2:#4F5870;--ink-3:#5F6679;--accent:#B8613F;--accent-strong:#9C4D2E;--accent-ink:#8A4429;--accent-soft:#FBEEE7;--on-accent:#FFFFFF;--bg:#FAF9F7;--surface:#FFFFFF;--hover:#F5F3EF;--sunk:#F1EEE9;--line:#E9E5DE;--line-strong:#D9D3C9;--ok:#2C6E4C;--ok-soft:#E5F2EA;--warn:#8C5A0E;--warn-soft:#FBF0DA;--info-soft:#EBEEF6;--ease:cubic-bezier(.16,1,.3,1);--sh-1:0 1px 2px rgba(31,42,68,.05),0 0 0 1px rgba(31,42,68,.02)}.ds-purpose{position:relative;font:italic 400 17px/1.6 Spectral,Georgia,serif;color:var(--ink);margin-left:16px;max-width:62ch}.ds-purpose::before{content:'[';position:absolute;left:-14px;top:-1px;font:400 22px/1.4 Spectral,Georgia,serif;color:var(--accent)}.ds-purpose::after{content:' ]';font-style:normal;color:var(--accent)}"
+    },
+    {
+      "name": "Panneau",
+      "kind": "card",
+      "refersTo": "panel",
+      "description": "Surface blanche à filet, rayon 14px, ombre de repos.",
+      "html": "<section class=\"ds-panel\"><header><h2>Dépôts à venir</h2><span>7 jours</span></header><p>Fondation exemple · 12'000 CHF</p></section>",
+      "css": ":root{--ink:#1F2A44;--ink-2:#4F5870;--ink-3:#5F6679;--accent:#B8613F;--accent-strong:#9C4D2E;--accent-ink:#8A4429;--accent-soft:#FBEEE7;--on-accent:#FFFFFF;--bg:#FAF9F7;--surface:#FFFFFF;--hover:#F5F3EF;--sunk:#F1EEE9;--line:#E9E5DE;--line-strong:#D9D3C9;--ok:#2C6E4C;--ok-soft:#E5F2EA;--warn:#8C5A0E;--warn-soft:#FBF0DA;--info-soft:#EBEEF6;--ease:cubic-bezier(.16,1,.3,1);--sh-1:0 1px 2px rgba(31,42,68,.05),0 0 0 1px rgba(31,42,68,.02)}.ds-panel{font-family:'Hanken Grotesk',system-ui,-apple-system,'Segoe UI',sans-serif;background:var(--surface);border:1px solid var(--line);border-radius:14px;box-shadow:var(--sh-1);color:var(--ink);font-size:14px;max-width:420px}.ds-panel header{display:flex;align-items:center;padding:16px 18px 12px}.ds-panel h2{font:700 15px 'Hanken Grotesk',system-ui,sans-serif;letter-spacing:-.01em;margin:0}.ds-panel header span{margin-left:auto;color:var(--ink-3);font-size:13px}.ds-panel p{margin:0;padding:12px 18px 16px;border-top:1px solid var(--line)}"
+    }
+  ],
+  "narrative": {
+    "northStar": "Le registre tenu à jour",
+    "overview": "Levier est un poste de travail d'agence au niveau de Linear et Attio : clair, dense sans être serré, construit pour des sessions longues sur ordinateur portable. Le fond est un blanc à peine chaud, la barre latérale un ton plus bas, les surfaces de travail blanches et cernées d'un filet fin. La marque ne passe pas par la décoration mais par trois choses : l'encre marine, la terre cuite réservée à l'action et à l'urgence, et le point final du mot-symbole « levier. ».\n\nLe monde a deux voix typographiques et elles ne se mélangent pas. Hanken Grotesk porte toute l'interface, titres serrés en 700-800. Spectral, serif littéraire hérité du site levierconseil.ch, n'apparaît que lorsque le texte vient d'ailleurs : le but statutaire d'une fondation cité entre crochets, et le corps de la lettre. Une première version crème et serif a été rejetée comme « vieillotte » le 21.10.2026 ; le papier crème du site n'est donc pas repris dans l'application.\n\nLe mode sombre est marine profond, pas gris : mêmes rôles, valeurs inversées, terre cuite éclaircie.",
+    "keyCharacteristics": [
+      "Surfaces blanches à filet fin et ombre presque imperceptible ; profondeur par tons plutôt que par ombres.",
+      "Terre cuite rare : action principale, urgence, score élevé, crochets de citation.",
+      "Hanken Grotesk pour l'interface, Spectral seulement pour le texte cité ou rédigé.",
+      "Statuts en pastilles arrondies qui se retournent lettre par lettre quand ils changent.",
+      "Chiffres tabulaires partout où l'on compare (montants, échéances, scores)."
+    ],
+    "rules": [
+      {
+        "name": "The One Accent Rule",
+        "body": "La terre cuite signale une action, une urgence ou une pertinence élevée. Elle ne sert jamais de fond décoratif ni de couleur de titre.",
+        "section": "colors"
+      },
+      {
+        "name": "The No Cream Rule",
+        "body": "Les neutres restent dans la gamme #FAF9F7 / #F3F1ED / blanc. Le papier #F5F1E8 du site ne revient pas dans l'application : c'est la version rejetée.",
+        "section": "colors"
+      },
+      {
+        "name": "The Fixed Sheet Rule",
+        "body": "La feuille de lettre reste blanche et à l'encre marine dans les deux modes, parce qu'elle représente le document imprimé.",
+        "section": "colors"
+      },
+      {
+        "name": "The Two Voices Rule",
+        "body": "Spectral n'apparaît que pour du texte cité (but statutaire) ou rédigé (lettre). Aucun titre, bouton ou libellé en serif.",
+        "section": "typography"
+      },
+      {
+        "name": "The Tabular Rule",
+        "body": "Montants, dates, scores et compteurs sont en chiffres tabulaires.",
+        "section": "typography"
+      },
+      {
+        "name": "The Flat At Rest Rule",
+        "body": "Au repos, une surface n'a que son filet et l'ombre de repos. Le soulèvement est un retour d'état, pas un style.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "**Do** tenir la terre cuite pour l'action principale, l'urgence (échéance à 3 jours ou moins) et le score de 75 et plus.",
+      "**Do** citer le but statutaire entre crochets terre cuite en Spectral italique chaque fois qu'une fondation est proposée.",
+      "**Do** utiliser la pastille de statut et sa palette à neuf entrées pour tout état de demande, et retourner les lettres seulement au changement.",
+      "**Do** écrire les textes sur fond terre cuite doux en terre cuite encre (#8A4429), jamais en terre cuite pleine.",
+      "**Do** dessiner les icônes en SVG à trait (16px, trait 1.7, bouts arrondis).",
+      "**Do** marquer les données de démonstration avec le drapeau ambre de la barre supérieure."
+    ],
+    "donts": [
+      "**Don't** reprendre le papier crème, les filets beiges ou les titres en Spectral de la première version : rejetés comme « vieillots ».",
+      "**Don't** construire un tableau de bord à tuiles KPI : les chiffres de synthèse sont des pastilles en ligne sous le titre.",
+      "**Don't** mettre de libellés en capitales espacées ni de surtitres au-dessus des titres.",
+      "**Don't** utiliser d'ombres dures décalées ni de dégradés décoratifs.",
+      "**Don't** employer de caractères typographiques (flèches, puces, coches) en guise d'icônes."
+    ]
+  }
+}

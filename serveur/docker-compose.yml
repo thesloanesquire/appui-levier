@@ -1,0 +1,22 @@
+# Lancer depuis la racine du projet :  docker compose -f serveur/docker-compose.yml up -d --build
+services:
+  appui:
+    build: { context: .., dockerfile: serveur/Dockerfile }
+    restart: unless-stopped
+    env_file: ../.env            # INFOMANIAK_TOKEN, INFOMANIAK_PRODUCT_ID, INFOMANIAK_MODEL
+    volumes:
+      - appui_data:/pb/pb_data   # base de données et fichiers : à sauvegarder
+    expose: ["8090"]
+  caddy:                         # HTTPS automatique (Let's Encrypt) pour le sous-domaine
+    image: caddy:2.8-alpine
+    restart: unless-stopped
+    ports: ["80:80", "443:443"]
+    environment:
+      - APPUI_DOMAINE=${APPUI_DOMAINE:-appui.levierconseil.ch}
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+    depends_on: [appui]
+volumes:
+  appui_data:
+  caddy_data:

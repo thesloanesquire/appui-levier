@@ -1,0 +1,80 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "cream-palette",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/echeancier.html"
+        ],
+        "createdAt": "2026-10-21T16:26:36.601Z",
+        "reason": "brand commitment: papier #F5F1E8 is the existing levierconseil.ch charte, pinned in PRODUCT.md; Tim asked for congruence with the site"
+      },
+      {
+        "rule": "cream-palette",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/pipeline.html"
+        ],
+        "createdAt": "2026-10-21T16:26:36.623Z",
+        "reason": "brand commitment: papier #F5F1E8 is the existing levierconseil.ch charte, pinned in PRODUCT.md; Tim asked for congruence with the site"
+      },
+      {
+        "rule": "cream-palette",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/matching.html"
+        ],
+        "createdAt": "2026-10-21T16:26:36.642Z",
+        "reason": "brand commitment: papier #F5F1E8 is the existing levierconseil.ch charte, pinned in PRODUCT.md; Tim asked for congruence with the site"
+      },
+      {
+        "rule": "cream-palette",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/*.html"
+        ],
+        "createdAt": "2026-10-21T16:59:22.943Z",
+        "reason": "throwaway decision-round sketches, superseded by the shipped app (src/); not delivered"
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/*.html"
+        ],
+        "createdAt": "2026-10-21T16:59:22.964Z",
+        "reason": "throwaway decision-round sketches, superseded by the shipped app (src/); not delivered"
+      },
+      {
+        "rule": "skipped-heading",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/*.html"
+        ],
+        "createdAt": "2026-10-21T16:59:22.981Z",
+        "reason": "throwaway decision-round sketches, superseded by the shipped app (src/); not delivered"
+      },
+      {
+        "rule": "design-system-font",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/*.html"
+        ],
+        "createdAt": "2026-10-21T17:02:18.673Z",
+        "reason": "superseded decision sketches, not shipped"
+      },
+      {
+        "rule": "design-system-font",
+        "value": "*",
+        "files": [
+          "src/assets/logo-options.html"
+        ],
+        "createdAt": "2026-10-21T17:02:18.693Z",
+        "reason": "logo comparison sheet, not part of the app; Tim already chose option B"
+      }
+    ]
+  }
+}

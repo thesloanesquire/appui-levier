@@ -1,0 +1,48 @@
+{
+  "title": "Levier : organisation de l'outil d'agence",
+  "question": "La charte Levier est fixée (Spectral, Hanken Grotesk, papier, encre marine, terre cuite). Ce choix porte sur l'organisation de l'écran d'accueil et la navigation. Garde la première, prends une autre, ou relance.",
+  "options": [
+    {
+      "id": "echeancier",
+      "kind": "assigned",
+      "kicker": "THE ROLL",
+      "label": "L'échéancier des dépôts",
+      "lineage": "Tableau des départs + rail de navigation",
+      "thesis": "L'accueil est un tableau des dépôts classé par échéance, toutes campagnes confondues : ce qui part cette semaine est en haut, rien ne se perd.",
+      "palette": ["#F5F1E8", "#1F2A44", "#B8613F", "#EDE6D8", "#4A5470"],
+      "materials": ["filets d'un pixel", "colonnes fixes", "chiffres tabulaires"],
+      "viewport": "Rail gauche marine (Échéancier, Clients, Campagnes, Fondations, Lettres). Au centre, le tableau des dépôts à 14 jours : fondation, client, montant demandé, échéance, statut. Un bandeau d'alerte terre cuite pour les dépôts à moins de 72 h. À droite, la charge par conseiller.",
+      "risk": "Un client qui n'a pas encore de dépôt planifié est invisible depuis l'accueil.",
+      "raised": [
+        {"from": "signals-instruments-split-flap-concourse", "raise": "Les lignes sont classées par heure de départ, les colonnes ne bougent jamais : quand un statut change, il se retourne lettre par lettre sur place."},
+        {"from": "rw-centre-rail-reference-setting", "raise": "Toutes les séparations sont des filets d'un pixel, sans arrondi ; le but social de la fondation est cité en marge, entre crochets, à côté de chaque ligne ouverte."}
+      ],
+      "html": ".impeccable/mocks/decision/echeancier.html"
+    },
+    {
+      "id": "pipeline",
+      "kind": "dealt",
+      "label": "Le pipeline des demandes",
+      "lineage": "Tableau par étapes multi-clients",
+      "thesis": "Chaque demande (une fondation pour un client) avance en colonnes : à qualifier, en rédaction, validation client, envoyée, relancée, réponse.",
+      "palette": ["#F5F1E8", "#1F2A44", "#B8613F", "#EDE6D8", "#4A5470"],
+      "materials": ["cartes plates", "filets", "pastilles de client"],
+      "viewport": "Barre du haut avec sélecteur de client et filtre conseiller. Six colonnes d'étapes, cartes compactes (fondation, client, montant, échéance). Le compteur et le montant total en tête de chaque colonne.",
+      "risk": "Les délais se lisent moins bien que dans un tableau trié par date ; dense au-delà de 60 demandes.",
+      "html": ".impeccable/mocks/decision/pipeline.html"
+    },
+    {
+      "id": "matching",
+      "kind": "dealt",
+      "label": "Le matching d'abord",
+      "lineage": "Commande centrale : collez l'URL du client",
+      "thesis": "L'accueil est une seule question : quel client ? On colle son site, Levier lit, propose un profil puis la carte des financeurs classée et justifiée.",
+      "palette": ["#F5F1E8", "#1F2A44", "#B8613F", "#EDE6D8", "#4A5470"],
+      "materials": ["grand champ de saisie", "liste classée", "jauges de pertinence"],
+      "viewport": "Champ « Site web du client » au centre en Spectral, sous lui la dernière analyse : profil extrait à gauche, fondations classées à droite avec score, citation du but social et raison. Campagnes en cours en pied de page.",
+      "risk": "Excellent pour démarrer un client, faible pour piloter 10 campagnes au quotidien.",
+      "html": ".impeccable/mocks/decision/matching.html"
+    }
+  ],
+  "reroll": {"registers": ["safer", "bolder"]}
+}

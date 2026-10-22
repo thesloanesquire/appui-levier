@@ -1,0 +1,22 @@
+# Secrets et comptes
+.env
+serveur/.test-credentials
+# Données régénérables ou privées
+data/*
+!data/sources_enrichissement.json
+src/data/fondations.js
+src/data/bot.js
+serveur/pb_data/
+serveur/bin/
+site/
+deploy/
+.netlify/
+# Fichiers de travail
+.impeccable/review/
+.DS_Store
+__pycache__/
+scripts/deployer.sh
+.impeccable/hook.cache.json
+.taste-skill/inspect/
+landing/assets/*.jpg
+landing/assets/*.png

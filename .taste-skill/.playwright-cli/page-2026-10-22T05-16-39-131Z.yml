@@ -1,0 +1,131 @@
+- generic [ref=e1038]:
+  - complementary "Navigation principale" [ref=e1039]:
+    - link "levier." [ref=e1040] [cursor=pointer]:
+      - /url: "#/"
+    - button "Rechercher ⌘K" [ref=e1046] [cursor=pointer]:
+      - generic [ref=e1050]: Rechercher
+      - generic [ref=e1051]: ⌘K
+    - navigation [ref=e1052]:
+      - link "Aperçu" [ref=e1053] [cursor=pointer]:
+        - /url: "#/"
+      - link "Demandes 25" [ref=e1056] [cursor=pointer]:
+        - /url: "#/demandes"
+        - text: Demandes
+        - generic [ref=e1060]: "25"
+      - link "Clients 7" [ref=e1061] [cursor=pointer]:
+        - /url: "#/clients"
+        - text: Clients
+        - generic [ref=e1066]: "7"
+      - link "Fondations 14'980" [ref=e1067] [cursor=pointer]:
+        - /url: "#/fondations"
+        - text: Fondations
+        - generic [ref=e1070]: 14'980
+      - link "Nouveau client" [ref=e1071] [cursor=pointer]:
+        - /url: "#/nouveau"
+      - generic [ref=e1074]: Clients actifs
+      - link "Pédibus Riviera" [ref=e1075] [cursor=pointer]:
+        - /url: "#/clients/pedibus"
+      - link "Aquavia Sàrl" [ref=e1077] [cursor=pointer]:
+        - /url: "#/clients/aquavia"
+      - link "Léa Moret" [ref=e1079] [cursor=pointer]:
+        - /url: "#/clients/lea"
+      - link "Atelier Mémoire" [ref=e1081] [cursor=pointer]:
+        - /url: "#/clients/memoire"
+      - link "Basket Lausanne Jeunesse" [ref=e1083] [cursor=pointer]:
+        - /url: "#/clients/basket"
+      - link "Les Tréteaux du Jura" [ref=e1085] [cursor=pointer]:
+        - /url: "#/clients/treteaux"
+      - link "ATE Pedibus" [ref=e1087] [cursor=pointer]:
+        - /url: "#/clients/ate-pedibus"
+    - generic [ref=e1089]:
+      - generic [ref=e1090]: AC
+      - generic [ref=e1091]: Mode démo local
+      - button "Changer de thème" [ref=e1092] [cursor=pointer]
+  - generic [ref=e1095]:
+    - banner [ref=e1096]:
+      - generic [ref=e1097]: Analyse et matching
+      - generic "Clients et demandes fictifs ; fondations réelles (registre du commerce)" [ref=e1099]: Démo locale · clients fictifs
+    - main [ref=e1100]:
+      - generic [ref=e1102]:
+        - heading "Nouveau client" [level=1] [ref=e1103]
+        - paragraph [ref=e1104]: Collez le site du client et sa présentation. Levier en tire un profil et classe les fondations qui ont le plus de chances de le financer.
+      - generic [ref=e1105]:
+        - generic [ref=e1106]:
+          - generic [ref=e1107]:
+            - generic [ref=e1108]: Site web du client
+            - generic [ref=e1109]:
+              - textbox "Site web du client" [ref=e1110]:
+                - /placeholder: https://www.association.ch
+              - button "Lire le site" [ref=e1111] [cursor=pointer]
+            - generic [ref=e1114]:
+              - text: Le navigateur lit la page d'accueil quand le site l'autorise. Sinon, collez le texte de la page « À propos » ci-dessous, ou lancez
+              - code [ref=e1115]: scripts/analyser_site.py
+              - text: .
+          - generic [ref=e1116]:
+            - generic [ref=e1117]: Présentation du client
+            - textbox "Présentation du client" [ref=e1118]:
+              - /placeholder: Mission, publics, lieux, projets, chiffres clés…
+          - generic [ref=e1119]:
+            - generic [ref=e1120]:
+              - generic [ref=e1121]: Nom
+              - textbox "Nom" [ref=e1122]
+            - generic [ref=e1123]:
+              - generic [ref=e1124]: Type
+              - combobox "Type" [ref=e1125]:
+                - option "Association" [selected]
+                - option "Start-up"
+                - option "Étudiant·e"
+                - option "Consultant·e"
+          - generic [ref=e1126]:
+            - generic [ref=e1127]:
+              - generic [ref=e1128]: Canton
+              - combobox "Canton" [ref=e1129]:
+                - option "AG · Argovie"
+                - option "AI · Appenzell Rh.-Int."
+                - option "AR · Appenzell Rh.-Ext."
+                - option "BE · Berne"
+                - option "BL · Bâle-Campagne"
+                - option "BS · Bâle-Ville"
+                - option "FR · Fribourg"
+                - option "GE · Genève"
+                - option "GL · Glaris"
+                - option "GR · Grisons"
+                - option "JU · Jura"
+                - option "LU · Lucerne"
+                - option "NE · Neuchâtel"
+                - option "NW · Nidwald"
+                - option "OW · Obwald"
+                - option "SG · Saint-Gall"
+                - option "SH · Schaffhouse"
+                - option "SO · Soleure"
+                - option "SZ · Schwyz"
+                - option "TG · Thurgovie"
+                - option "TI · Tessin"
+                - option "UR · Uri"
+                - option "VD · Vaud" [selected]
+                - option "VS · Valais"
+                - option "ZG · Zoug"
+                - option "ZH · Zurich"
+            - generic [ref=e1130]:
+              - generic [ref=e1131]: Localité
+              - textbox "Localité" [ref=e1132]
+          - generic [ref=e1133]:
+            - generic [ref=e1134]: Projet à financer
+            - textbox "Projet à financer" [ref=e1135]:
+              - /placeholder: Ex. Un camp d'été pour 40 enfants
+          - generic [ref=e1136]:
+            - generic [ref=e1137]:
+              - generic [ref=e1138]: Budget total (CHF)
+              - textbox "Budget total (CHF)" [ref=e1139]: "50000"
+            - generic [ref=e1140]:
+              - generic [ref=e1141]: Montant par fondation (CHF)
+              - textbox "Montant par fondation (CHF)" [ref=e1142]: "10000"
+          - generic [ref=e1143]:
+            - generic [ref=e1144]: Lancer le bot IA (recherche complète, 3 à 6 min)
+            - paragraph [ref=e1145]: Le bot lit le site, établit les critères, cherche dans les 14'980 fondations et évalue les meilleures. Le client apparaît ensuite ici avec son classement.
+            - generic [ref=e1146]: cd "CONSULTING /Levier/scripts" && python3.12 bot_fondations.py --url https://site-du-client.ch --nom "Nom du client" --canton VD --type association
+            - button "Copier la commande" [ref=e1147] [cursor=pointer]
+          - button "Analyser et classer" [ref=e1152] [cursor=pointer]
+        - generic [ref=e1157]:
+          - generic [ref=e1158]: Le classement apparaîtra ici
+          - text: Il cite, pour chaque fondation, la phrase de son but qui rejoint la mission du client.

@@ -1,0 +1,42 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Spectral:wght@400;600&family=Hanken+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#F5F1E8;--ink:#1F2A44;--soft:#4A5470;--acc:#B8613F;--tint:#EDE6D8;--rule:#D9D2C3}
+*{box-sizing:border-box;margin:0;padding:0}
+body{width:1440px;height:900px;overflow:hidden;background:var(--paper);color:var(--ink);font:14px/1.45 "Hanken Grotesk",sans-serif;display:grid;grid-template-columns:224px 1fr}
+nav{background:var(--ink);color:#EEE8DB;padding:26px 18px;display:flex;flex-direction:column;gap:2px}
+.logo{font:600 30px "Spectral",serif;margin:0 0 26px 8px}.logo b{color:#E08B66}
+nav a{padding:9px 10px;color:#C9C3B6;display:flex;justify-content:space-between}nav a.on{background:#2B3754;color:#fff}
+nav small{margin-top:auto;color:#C9C3B6;font-size:13px;padding:12px 10px;border-top:1px solid #2F3A52}
+main{padding:26px 36px}
+.crumb{color:var(--soft);font-size:13px}
+.head{display:flex;align-items:flex-end;gap:16px;margin:6px 0 18px}
+h1{font:600 32px "Spectral",serif;margin-right:auto}
+.tag{border:1px solid var(--rule);padding:3px 9px;font-size:13px;background:#fff}
+.btn{background:var(--acc);color:#fff;padding:9px 16px;font-weight:600}.btn2{border:1px solid var(--ink);padding:8px 14px;font-weight:600}
+.kpi{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--rule);background:#fff;margin-bottom:20px}
+.kpi div{padding:14px 18px;border-right:1px solid var(--rule)}.kpi div:last-child{border:0}
+.kpi span{color:var(--soft);font-size:13px}.kpi b{display:block;font:600 26px "Spectral",serif;font-variant-numeric:tabular-nums}
+.tabs{display:flex;gap:26px;border-bottom:1px solid var(--rule)}
+.tabs span{padding:10px 0;color:var(--soft)}.tabs .on{color:var(--ink);font-weight:600;border-bottom:2px solid var(--acc)}
+table{width:100%;border-collapse:collapse;background:#fff;font-variant-numeric:tabular-nums}
+th{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--soft);text-align:left;padding:11px 14px;border-bottom:1px solid var(--rule)}
+td{padding:12px 14px;border-bottom:1px solid var(--rule)}
+.f{font:600 15px "Spectral",serif}.c{color:var(--soft);font-size:13px}
+.sc{font-weight:600}.st{font-size:12px;padding:3px 8px;background:var(--tint)}
+.r{color:#8A4429;background:#F3E3D8}.g{color:#2F5A3D;background:#DCE8DD}
+.demo{position:absolute;right:16px;bottom:10px;font-size:12px;color:var(--soft)}
+</style></head><body>
+<nav><div class="logo">Levier<b>.</b></div><a>Tableau de bord</a><a class="on">Clients <span>9</span></a><a>Campagnes <span>11</span></a><a>Fondations <span>3 812</span></a><a>Lettres <span>23</span></a><a>Échéances <span>14</span></a><small>Alexandre Cazes · Agence Levier</small></nav>
+<main><div class="crumb">Clients / Association</div>
+<div class="head"><h1>Pédibus Riviera</h1><span class="tag">Association · VD</span><span class="tag">Accès client actif</span><span class="btn2">Voir comme le client</span><span class="btn">Nouvelle demande</span></div>
+<div class="kpi"><div><span>Objectif</span><b>CHF 45'000</b></div><div><span>Demandé</span><b>CHF 52'000</b></div><div><span>Obtenu</span><b>CHF 12'000</b></div><div><span>Prochaine échéance</span><b>23.10</b></div></div>
+<div class="tabs"><span>Profil</span><span class="on">Fondations (38)</span><span>Demandes (7)</span><span>Lettres</span><span>Documents</span><span>Journal</span></div>
+<table><thead><tr><th>Pertinence</th><th>Fondation</th><th>Domaines</th><th>Échéance</th><th>Statut</th></tr></thead><tbody>
+<tr><td class="sc">92</td><td><div class="f">Fondation Enfance Emma Couvreu</div><div class="c">Lausanne · enfance, canton de Vaud</div></td><td>Enfance</td><td>28.10</td><td><span class="st g">Envoyée</span></td></tr>
+<tr><td class="sc">87</td><td><div class="f">Fondation Emma Muschamp</div><div class="c">Vaud · aide à l'enfance</div></td><td>Enfance, social</td><td>23.10</td><td><span class="st r">Validation client</span></td></tr>
+<tr><td class="sc">74</td><td><div class="f">Fondation AACTS</div><div class="c">Vaud · action communautaire</div></td><td>Social</td><td>15.11</td><td><span class="st">À qualifier</span></td></tr>
+<tr><td class="sc">71</td><td><div class="f">4SD Foundation</div><div class="c">Genève · santé publique, international</div></td><td>Santé</td><td>—</td><td><span class="st">Suggérée</span></td></tr>
+<tr><td class="sc">66</td><td><div class="f">Fondation ABS</div><div class="c">Vaud</div></td><td>Formation</td><td>30.10</td><td><span class="st">Suggérée</span></td></tr>
+</tbody></table></main><span class="demo">Données de démonstration</span>
+</body></html>

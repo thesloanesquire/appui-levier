@@ -1,0 +1,12 @@
+{$APPUI_DOMAINE} {
+	encode zstd gzip
+	header {
+		Referrer-Policy strict-origin-when-cross-origin
+		X-Content-Type-Options nosniff
+		Strict-Transport-Security "max-age=31536000"
+	}
+	# L'outil interne (/app) et l'administration (/_/) ne sont pas indexés ; la page publique oui.
+	@prive path /app* /_/* /api/*
+	header @prive X-Robots-Tag "noindex, nofollow"
+	reverse_proxy appui:8090
+}
