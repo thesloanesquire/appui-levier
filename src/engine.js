@@ -55,7 +55,7 @@
     animaux: { label: "Animaux", rx: /animaux|animal|faune|\btier/,
       fr: { cause: "la protection des animaux", pour: "les animaux" }, de: { cause: "den Tierschutz", pour: "Tiere" }, en: { cause: "animal welfare", pour: "animals" } },
     sport: { label: "Sport", rx: /\bsport|basket|football|athlet/,
-      fr: { cause: "le sport comme école de vie et de cohésion", pour: "les sportives et sportifs" },
+      fr: { cause: "la pratique du sport et la cohésion sociale", pour: "les sportives et sportifs" },
       de: { cause: "den Sport als Schule fürs Leben", pour: "Sportlerinnen und Sportler" },
       en: { cause: "sport as a school of life and cohesion", pour: "athletes" } },
     cooperation_internationale: { label: "Coopération internationale", rx: /pays en developpement|cooperation|humanitaire|tiers.monde|afrique|internation|entwicklungs/,
@@ -154,16 +154,16 @@
     else if (f.o === "romandie" && ROMANDS.has(cc)) { s += 8; reasons.push("Portée romande"); }
     else if (f.o === "suisse") { s += 5; reasons.push("Portée nationale"); }
     else if (f.o === "cantonal" && f.c !== cc) { s -= 16; risks.push("Soutient en priorité son propre canton (" + (CANTONS[f.c] || f.c) + ")"); }
-    else if (f.o === "international") { if (prof.intl) { s += 6; reasons.push("Portée internationale, comme le projet"); } else { s -= 6; risks.push("Portée internationale : vérifier qu'elle finance aussi en Suisse"); } }
+    else if (f.o === "international") { if (prof.intl) { s += 6; reasons.push("Portée internationale, comme le projet"); } else { s -= 6; risks.push("Portée internationale : vérifier qu'elle soutient aussi des projets en Suisse"); } }
     else if (ROMANDS.has(cc) && !ROMANDS.has(f.c)) { s -= 4; }
     if (!prof.intl && f.o !== "suisse" && f.o !== "romandie" && /\b(pays|monde|haiti|afrique|asie|amerique|etranger|tiers.monde|developpement|ausland|entwicklungslander)\b/.test(norm(f.p))) {
-      s -= 10; risks.push("Semble agir surtout hors de Suisse");
+      s -= 10; risks.push("Le but vise surtout l'étranger : vérifier sur son site");
     }
     const st = (f.st || []).join(" ");
     if (/Soutien financier/.test(st)) { s += 8; reasons.push("Classée « Soutien financier » par l'autorité de surveillance (As-So)"); }
     if (/Hôpitaux|Logements/.test(st) && !/Soutien financier/.test(st)) { s -= 10; risks.push("Classée « " + (f.st.find((x) => /Hôpitaux|Logements/.test(x)) || "") + " » par l'As-So : gère surtout sa propre institution"); }
     if (f.sv === "ASF" && ROMANDS.has(cc) && !ROMANDS.has(f.c)) reasons.push("Sous surveillance fédérale : portée nationale ou internationale");
-    if (c.exclusions && c.exclusions.length && c.exclusions.some((x) => x.length > 3 && norm(f.n + " " + f.p).includes(norm(x)))) { s -= 25; risks.push("Contient un critère que le client veut éviter"); }
+    if (c.exclusions && c.exclusions.length && c.exclusions.some((x) => x.length > 3 && norm(f.n + " " + f.p).includes(norm(x)))) { s -= 25; risks.push("Le but contient un mot que le client veut éviter"); }
     const fiche = (window.LEVIER_ENRICHI || {})[f.id];
     if (fiche && fiche.demande) {
       if (fiche.demande.accepte_demandes === "non") { s -= 35; risks.unshift("Fiche pratique : n'accepte pas de demandes de tiers"); }
@@ -178,7 +178,7 @@
     else s -= 2;
     const lang = langOf(f.p);
     if (lang !== (c.langue || "fr")) risks.push("But rédigé en " + ({ de: "allemand", it: "italien", fr: "français" })[lang] + " : prévoir une lettre dans cette langue");
-    if ((f.p || "").length < 90) risks.push("But très court : peu d'information, vérifier sur son site");
+    if ((f.p || "").length < 90) risks.push("But très court : vérifier ses critères sur son site");
     return { f, score: Math.max(0, Math.min(99, Math.round(s))), reasons, risks, common, lang, quote: quote(f, prof) };
   }
   function wordFor(stem, text) { const m = norm(text).match(new RegExp("\\b" + stem + "[a-z]*")); return m ? m[0] : stem; }
@@ -240,20 +240,20 @@
     if (L === "fr") {
       o = `Demande de soutien de ${chf(montant)} : ${P.titre}`;
       const depuis = c.fondee && !je ? `depuis ${c.fondee}` : "";
-      p.push(`Selon ses statuts, ${f.n} s'est donné pour mission : « ${m.quote} ». ` + (je
-        ? `C'est ce qui m'amène à vous écrire : ${c.mission}`
-        : `C'est précisément sur ce terrain que ${c.nom} agit ${depuis ? depuis + " " : ""}${memeCanton ? "dans le canton de " + CANTONS[c.canton] : "en Suisse romande"} : ${lcFirst(c.mission)}`));
+      p.push(`Selon ses statuts, votre fondation a pour but : « ${m.quote} ». ` + (je
+        ? `Mon projet s'inscrit dans ce but : ${c.mission}`
+        : `${c.nom} agit dans ce domaine ${depuis ? depuis + " " : ""}${memeCanton ? "dans le canton de " + CANTONS[c.canton] : "en Suisse romande"}. Sa mission : ${lcFirst(c.mission)}`));
       p.push((je ? `Je sollicite votre soutien pour ${lcFirst(P.titre)}. ` : `Nous sollicitons votre soutien pour ${lcFirst(P.titre)}. `) + ensureDot(P.resume) +
-        (P.beneficiaires ? ` ${je ? "Ce projet" : "Il"} bénéficiera directement ${aux(P.beneficiaires)}.` : "") + (P.debut ? ` Le démarrage est prévu ${P.debut}.` : ""));
+        (P.beneficiaires ? ` Ce projet bénéficiera directement ${aux(P.beneficiaires)}.` : "") + (P.debut ? ` Le démarrage est prévu ${P.debut}.` : ""));
       if (c.preuves && c.preuves.length) p.push((je ? "Quelques éléments de mon parcours : " : "Quelques repères sur notre action : ") + c.preuves.join(" ; ") + ".");
       if (P.budget) p.push(`Le budget total s'élève à ${chf(P.budget)}. ` + (je ? "Je vous demande" : "Nous vous demandons") + ` une contribution de ${chf(montant)}, soit ${pct(montant, P.budget)} % du budget` +
-        (P.autres ? `, le solde étant couvert par ${P.autres}.` : ". Les autres démarches de financement sont en cours."));
+        (P.autres ? `, le solde étant couvert par ${P.autres}.` : ". Le budget joint détaille les autres sources de financement."));
       sing = p.length;
-      p.push(`En ${je ? "me" : "nous"} soutenant, ${f.n} contribuerait concrètement à ${lex.cause}` + (memeCanton ? `, ici, dans le canton de ${CANTONS[c.canton]}` : "") +
-        (ton === "chaleureux" ? `. Votre engagement aurait aussi valeur de signal : il ${je ? "me" : "nous"} aiderait à convaincre d'autres partenaires de ${je ? "me" : "nous"} rejoindre.` : `. Un premier soutien de votre part aurait en outre un effet de levier auprès d'autres partenaires.`));
+      p.push(`Votre soutien servirait directement ${lex.cause}` + (memeCanton ? `, ici, dans le canton de ${CANTONS[c.canton]}` : "") +
+        (ton === "chaleureux" ? `. Ce serait un plaisir de vous compter parmi les premiers partenaires de ce projet.` : `. Votre décision compterait aussi pour les autres financeurs que ${je ? "je solliciterai" : "nous solliciterons"}.`));
       p.push(je ? "Je m'engage à vous transmettre un bref rapport à la fin de mes études et à mentionner votre soutien si vous le souhaitez."
-        : "Nous nous engageons à vous adresser un rapport d'activité et un décompte à l'issue du projet, et à mentionner votre soutien dans nos communications si vous le souhaitez.");
-      p.push((je ? "Je reste" : "Nous restons") + ` volontiers à votre disposition pour ${ton === "chaleureux" ? "vous présenter ce projet de vive voix, ou vous accueillir sur place" : "un entretien"}. En vous remerciant de l'attention portée à ${je ? "ma" : "notre"} demande, ${je ? "je vous prie" : "nous vous prions"} d'agréer, Madame, Monsieur, ${je ? "mes" : "nos"} salutations distinguées.`);
+        : "Nous vous adresserons un rapport d'activité et un décompte à la fin du projet, et mentionnerons votre soutien dans nos communications si vous le souhaitez.");
+      p.push((je ? "Je reste" : "Nous restons") + ` à votre disposition pour ${ton === "chaleureux" ? "vous présenter ce projet de vive voix ou vous accueillir sur place" : "un entretien"}, et ${je ? "vous remercie" : "vous remercions"} de l'attention portée à ${je ? "ma" : "notre"} demande. Avec ${je ? "mes" : "nos"} meilleures salutations.`);
     } else if (L === "de") {
       o = `Gesuch um Unterstützung von ${chf(montant)}: ${P.titre_de || P.titre}`;
       p.push(`Ihre Stiftung verfolgt den Zweck «${m.quote}». ` + (je ? "Genau deshalb wende ich mich an Sie." : `Genau in diesem Bereich engagiert sich ${c.nom}${c.fondee ? " seit " + c.fondee : ""}.`) + " " + (c.mission_de || c.mission));
@@ -274,11 +274,11 @@
       p.push((je ? "I would" : "We would") + " be glad to present the project in person. Yours faithfully,");
     }
     const salut = L === "de" ? "Sehr geehrte Damen und Herren" : L === "en" ? "Dear Sir or Madam," : "Madame, Monsieur,";
-    const verif = ["Vérifier sur le site de la fondation qu'elle accepte les demandes spontanées et ses délais",
-      "Vérifier le montant habituel de ses soutiens (rapport annuel)", "Faire relire et valider la lettre par le client"];
-    if (m.lang !== L) verif.unshift("Le but de la fondation est rédigé en " + ({ de: "allemand", it: "italien", fr: "français" })[m.lang] + " : envisager cette langue");
+    const verif = ["Vérifier sur le site de la fondation qu'elle accepte les demandes spontanées, et noter son délai",
+      "Vérifier le montant habituel de ses soutiens (rapport annuel)", "Faire relire, valider et signer la lettre par le client"];
+    if (m.lang !== L) verif.unshift("Le but de la fondation est rédigé en " + ({ de: "allemand", it: "italien", fr: "français" })[m.lang] + " : écrire de préférence dans cette langue");
     return { objet: o, salut, paras: p, sing, angles, verif, match: m, signature: [c.contact && c.contact.nom, c.contact && c.contact.fonction, je ? "" : c.nom].filter(Boolean),
-      annexes: je ? ["Curriculum vitae", "Attestation d'immatriculation", "Budget des études", "Lettre de recommandation"] : ["Budget détaillé", "Statuts", "Derniers comptes approuvés", "Rapport d'activité"] };
+      annexes: je ? ["Curriculum vitae", "Attestation d'immatriculation", "Budget des études", "Lettre de recommandation"] : ["Budget détaillé du projet", "Statuts datés et signés", "Derniers comptes approuvés", "Rapport d'activité"] };
   }
   const lcFirst = (s) => (s ? s.charAt(0).toLowerCase() + s.slice(1) : "");
   const ensureDot = (s) => (s ? (/[.!?]$/.test(s.trim()) ? s.trim() : s.trim() + ".") : "");

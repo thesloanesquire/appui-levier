@@ -85,7 +85,7 @@
   const STORE = window.AppuiStore;
   const SERVEUR = () => STORE && STORE.st.mode === "serveur";
   let SYNC = "ok";
-  const syncState = (s) => { SYNC = s; const el = document.getElementById("syncdot"); if (el) { el.dataset.s = s; el.title = s === "erreur" ? "Synchronisation impossible : vérifiez la connexion" : s === "sync" ? "Enregistrement…" : "Enregistré sur le serveur"; } };
+  const syncState = (s) => { SYNC = s; const el = document.getElementById("syncdot"); if (el) { el.dataset.s = s; el.title = s === "erreur" ? "Enregistrement impossible : vérifier la connexion internet" : s === "sync" ? "Enregistrement…" : "Enregistré sur le serveur"; } };
   const save = () => {
     if (SERVEUR()) return STORE.sync(S, syncState);
     try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) { /* stockage indisponible : l'état reste en mémoire */ }
@@ -176,10 +176,10 @@
 
   // ---------- Vues ----------
   function vBienvenue() {
-    const body = `<div class="page-head"><div><h1>Bienvenue dans Appui</h1><p class="lede">L'outil interne de Levier pour trouver les bonnes fondations et préparer une lettre sur mesure pour chacune.</p></div></div>
-      <div class="onboard">${[["1", "Ajouter un client", "Collez le site de l'association et sa présentation : Appui en tire un profil et classe les fondations.", "#/nouveau", "Nouveau client"],
-        ["2", "Lancer le bot IA (facultatif)", "Pour une recherche complète : critères établis par l'IA, 60 fondations évaluées, citations vérifiées. Demandez à Claude Code : « lance le bot sur ce client ».", "#/nouveau", "Voir la commande"],
-        ["3", "Explorer les fondations", "14'980 fondations actives du registre du commerce, filtrables par canton, domaine et autorité de surveillance.", "#/fondations", "Explorer"]]
+    const body = `<div class="page-head"><div><h1>Premiers pas dans Appui</h1><p class="lede">Trouver les fondations dont le but correspond au projet d'un client, puis préparer une lettre pour chacune.</p></div></div>
+      <div class="onboard">${[["1", "Ajouter un client", "Coller le site de l'association et sa présentation : Appui en tire un profil et classe les fondations.", "#/nouveau", "Nouveau client"],
+        ["2", "Lancer le bot IA (facultatif)", "Recherche complète : l'IA établit les critères, évalue 60 fondations et vérifie chaque citation. Dans Claude Code, écrire : « lance le bot sur ce client ».", "#/nouveau", "Voir la commande"],
+        ["3", "Explorer les fondations", "14'980 fondations actives du registre du commerce, filtrables par canton, domaine et autorité de surveillance.", "#/fondations", "Explorer la base"]]
         .map(([n, h, p, href, cta]) => `<a class="onboard-step" href="${href}"><span class="mono">${n}</span><span><b>${h}</b><span class="sub">${p}</span></span><span class="btn sm">${cta}</span></a>`).join("")}</div>`;
     return shell("apercu", `<span>${today.toLocaleDateString("fr-CH", { weekday: "long", day: "numeric", month: "long" })}</span>`, body);
   }
@@ -191,7 +191,7 @@
       const c = client(d.client), f = F(d.fondation), j = daysTo(d.echeance);
       if (d.statut === "validation") todo.push({ hot: j !== null && j <= 3, h: `Obtenir la validation de ${c.nom}`, s: `${f.n} · dépôt ${j <= 0 ? "aujourd'hui" : "dans " + j + " j"}`, href: `#/lettre/${d.id}`, o: j });
       else if (d.statut === "redaction" && j !== null && j <= 7) todo.push({ hot: j <= 3, h: `Finir la lettre à ${f.n}`, s: `${c.nom} · dépôt le ${dshort(d.echeance)}`, href: `#/lettre/${d.id}`, o: j });
-      else if (d.statut === "prete") todo.push({ hot: false, h: `Envoyer la demande à ${f.n}`, s: `${c.nom} · lettre validée`, href: `#/lettre/${d.id}`, o: j ?? 50 });
+      else if (d.statut === "prete") todo.push({ hot: false, h: `Vérifier l'envoi à ${f.n}`, s: `${c.nom} · lettre validée, à signer et envoyer`, href: `#/lettre/${d.id}`, o: j ?? 50 });
       else if (relanceDue(d)) todo.push({ hot: false, h: `Relancer ${f.n}`, s: `${c.nom} · envoyée le ${dlong(d.envoi)}`, href: `#/lettre/${d.id}`, o: 40 });
       else if (d.statut === "qualifier") todo.push({ hot: false, h: `Qualifier ${f.n}`, s: `${c.nom} · score ${d.score}`, href: `#/clients/${c.id}/fondations/${f.id}`, o: 60 + (j || 0) });
     });
@@ -229,24 +229,24 @@
     const heure = new Date().getHours();
     const body = `
       <div class="dash-head"><div><h1>${heure < 12 ? "Bonjour" : heure < 18 ? "Bon après-midi" : "Bonsoir"}${SERVEUR() && STORE.st.user && STORE.st.user.name ? " " + esc(STORE.st.user.name.split(" ")[0]) : ""}</h1><p class="lede">${today.toLocaleDateString("fr-CH", { weekday: "long", day: "numeric", month: "long" })} · ${S.clients.length} client${S.clients.length > 1 ? "s" : ""} actif${S.clients.length > 1 ? "s" : ""}</p></div>
-        <div class="head-actions"><a class="btn" href="#/demandes">${ic("cols")}Pipeline</a><a class="btn primary" href="#/nouveau">${ic("plus")}Nouveau client</a></div></div>
-      <section class="brief" aria-label="Résumé de la semaine"><div class="brief-ic">${ic("spark")}</div><div class="brief-txt"><b>Votre semaine</b><p>${brief.length ? brief.join(" · ") : "Rien d'urgent : bon moment pour qualifier de nouvelles fondations."}</p></div>
-        ${SERVEUR() && STORE.st.ia ? `<button class="btn sm" data-act="ia-brief">${ic("spark")}Priorités par l'IA</button>` : ""}</section>
+        <div class="head-actions"><a class="btn" href="#/demandes">${ic("cols")}Toutes les demandes</a><a class="btn primary" href="#/nouveau">${ic("plus")}Nouveau client</a></div></div>
+      <section class="brief" aria-label="Résumé de la semaine"><div class="brief-ic">${ic("spark")}</div><div class="brief-txt"><b>Cette semaine</b><p>${brief.length ? brief.join(" · ") : "Rien d'urgent : le moment de qualifier de nouvelles fondations."}</p></div>
+        ${SERVEUR() && STORE.st.ia ? `<button class="btn sm" data-act="ia-brief">${ic("spark")}Classer les priorités (IA)</button>` : ""}</section>
       <div id="ia-brief-out"></div>
       <div class="kpis">
-        <div class="kpi"><span>Demandes en cours</span><b>${open.length + S.demandes.filter((d) => ["envoyee", "relancee"].includes(d.statut)).length}</b><em>${urg.length} dépôt${urg.length > 1 ? "s" : ""} cette semaine</em>${bars([30, 40, 45, 60, 70, 85])}</div>
+        <div class="kpi"><span>Demandes en cours</span><b>${open.length + S.demandes.filter((d) => ["envoyee", "relancee"].includes(d.statut)).length}</b><em>${urg.length} dépôt${urg.length > 1 ? "s" : ""} dans les 7 jours</em>${bars([30, 40, 45, 60, 70, 85])}</div>
         <div class="kpi"><span>Montant demandé</span><b>${E.chf(demande).replace("CHF ", "CHF ")}</b><em>sur ${S.clients.length} campagne${S.clients.length > 1 ? "s" : ""}</em>${bars([40, 50, 55, 62, 75, 90])}</div>
         <div class="kpi"><span>Obtenu</span><b>${E.chf(obtenu)}</b><em class="${accords ? "up" : ""}">${accords} accord${accords > 1 ? "s" : ""}</em>${bars([10, 10, 30, 30, 55, Math.min(100, 40 + accords * 10)])}</div>
         <div class="kpi"><span>Taux de réponse</span><b>${taux} %</b><em>sur ${envoyees.length} envoi${envoyees.length > 1 ? "s" : ""}</em><div class="kring" style="--p:${taux}" aria-hidden="true"></div></div>
       </div>
       <div class="dash-grid">
-        <section class="panel"><div class="panel-h"><h2>Pipeline</h2><span class="muted">toutes campagnes</span></div>
+        <section class="panel"><div class="panel-h"><h2>Étapes</h2><span class="muted">toutes campagnes</span></div>
           <div class="pipe">${etapes.map(([k, l]) => { const n = S.demandes.filter((d) => d.statut === k).length; return `<a class="pcol" href="#/demandes"><span class="pbar ${k === "accordee" ? "ok" : ""}" style="height:${Math.max(4, (n / max) * 100)}%"></span><b>${n}</b><span>${l}</span></a>`; }).join("")}</div></section>
         <section class="panel"><div class="panel-h"><h2>Échéances</h2><span class="muted">à venir</span></div>
           ${open.slice(0, 6).map((d) => { const f = F(d.fondation), c = client(d.client), j = daysTo(d.echeance);
-            return `<a class="dl" href="#/lettre/${d.id}"><span class="date ${j <= 3 ? "hot" : ""}">${dshort(d.echeance)}</span><span class="dlt"><b class="clip">${esc(f.n)}</b><span class="clip">${esc(c.nom)}</span></span>${statusHtml(d.statut, flapOnce(d.id))}</a>`; }).join("") || '<p class="sub">Aucune échéance ouverte.</p>'}</section>
-        <section class="panel"><div class="panel-h"><h2>Meilleures chances</h2><span class="muted">${Object.keys(BOT).length ? "repérées par le bot" : "lancez le bot sur un client"}</span></div>
-          ${chances.slice(0, 5).map((x) => `<a class="op" href="#/clients/${x.c.id}/fondations/${x.id}">${scoreHtml(x.score)}<span class="dlt"><b class="clip">${esc(F(x.id).n)}</b><span class="cite one">${esc(x.quote)}</span><span class="sub">pour ${esc(x.c.nom)}</span></span></a>`).join("") || `<p class="sub">Le bot propose ici les fondations prometteuses pas encore sollicitées. Demandez à Claude Code : « lance le bot sur ce client ».</p>`}</section>
+            return `<a class="dl" href="#/lettre/${d.id}"><span class="date ${j <= 3 ? "hot" : ""}">${dshort(d.echeance)}</span><span class="dlt"><b class="clip">${esc(f.n)}</b><span class="clip">${esc(c.nom)}</span></span>${statusHtml(d.statut, flapOnce(d.id))}</a>`; }).join("") || '<p class="sub">Aucun dépôt prévu. La date se fixe depuis chaque lettre.</p>'}</section>
+        <section class="panel"><div class="panel-h"><h2>Meilleures chances</h2><span class="muted">${Object.keys(BOT).length ? "repérées par le bot" : "lancer le bot sur un client"}</span></div>
+          ${chances.slice(0, 5).map((x) => `<a class="op" href="#/clients/${x.c.id}/fondations/${x.id}">${scoreHtml(x.score)}<span class="dlt"><b class="clip">${esc(F(x.id).n)}</b><span class="cite one">${esc(x.quote)}</span><span class="sub">pour ${esc(x.c.nom)}</span></span></a>`).join("") || `<p class="sub">Ici apparaissent les fondations prometteuses pas encore sollicitées. Pour les obtenir, écrire dans Claude Code : « lance le bot sur ce client ».</p>`}</section>
       </div>
       <div class="dash-grid two">
         <section class="panel"><div class="panel-h"><h2>À faire</h2><span class="muted">${todo.length} actions</span></div>
@@ -261,7 +261,7 @@
 
   function vDemandes() {
     const cols = ["qualifier", "redaction", "validation", "prete", "envoyee", "relancee", "accordee"];
-    const body = `<div class="page-head"><div><h1>Demandes</h1><p class="lede">Une demande = une fondation pour un client. Changez le statut depuis la lettre ou la fiche.</p></div></div>
+    const body = `<div class="page-head"><div><h1>Demandes</h1><p class="lede">Une demande = une fondation pour un client. Le statut se change depuis la lettre.</p></div></div>
       <div class="board">${cols.map((s) => { const ds = S.demandes.filter((d) => d.statut === s).sort((a, b) => new Date(a.echeance || 0) - new Date(b.echeance || 0));
         return `<section class="col" aria-label="${SL[s]}"><div class="col-h"><b>${SL[s]}</b><span>${ds.length} · ${k(ds.reduce((t, d) => t + d.montant, 0))}</span></div>
           ${ds.map((d) => { const f = F(d.fondation), c = client(d.client), j = daysTo(d.echeance);
@@ -308,7 +308,7 @@
         <div class="list-tools">${b ? modeSeg() : ""}<span class="sub" style="margin-right:auto">${list.length} fondations · score ≥ ${UI.min}</span>
           <select class="select" data-ui="canton" aria-label="Canton"><option value="">Tous cantons</option>${cantons.map((x) => `<option ${UI.canton === x ? "selected" : ""}>${x}</option>`).join("")}</select>
           <select class="select" data-ui="type" aria-label="Type"><option value="">Tous types</option><option value="donatrice_probable" ${UI.type === "donatrice_probable" ? "selected" : ""}>Donatrices</option><option value="mixte" ${UI.type === "mixte" ? "selected" : ""}>Mixtes</option></select></div>
-        ${list.map((r) => { const d = dem(r.f.id); return `<button class="match" role="option" aria-selected="${sel && sel.f.id === r.f.id}" data-href="#/clients/${c.id}/fondations/${r.f.id}">${scoreHtml(r.score)}<span style="min-width:0"><span class="name clip">${esc(r.f.n)}</span><span class="cite one">${esc(r.quote)}</span><span class="meta"><span class="sub">${esc(r.f.s)} · ${r.f.c}</span>${d ? statusHtml(d.statut) : ""}</span></span></button>`; }).join("") || '<div class="empty"><b>Aucune fondation au-dessus du seuil</b>Baissez le seuil ou complétez le profil du client.</div>'}
+        ${list.map((r) => { const d = dem(r.f.id); return `<button class="match" role="option" aria-selected="${sel && sel.f.id === r.f.id}" data-href="#/clients/${c.id}/fondations/${r.f.id}">${scoreHtml(r.score)}<span style="min-width:0"><span class="name clip">${esc(r.f.n)}</span><span class="cite one">${esc(r.quote)}</span><span class="meta"><span class="sub">${esc(r.f.s)} · ${r.f.c}</span>${d ? statusHtml(d.statut) : ""}</span></span></button>`; }).join("") || '<div class="empty"><b>Aucune fondation au-dessus du seuil</b>Baisser le seuil ou compléter le profil du client (mission, publics, lieux).</div>'}
         ${list.length ? `<div style="padding:12px"><button class="btn sm" data-act="seuil">${UI.min > 30 ? "Afficher les scores plus faibles" : "Revenir au seuil normal"}</button></div>` : ""}
       </div>
       <div class="detail">${sel ? detailFondation(c, sel, dem(sel.f.id)) : ""}</div></div>`;
@@ -331,7 +331,7 @@
         <div class="list-tools">${modeSeg()}<span class="sub" style="margin-right:auto">${list.length} fondations</span><button class="btn sm ghost" data-act="ecarter">${UI.ecarter ? "Masquer les écartées" : "Voir les écartées"}</button></div>
         ${list.map((e) => { const d = dem(e.id); return `<button class="match" role="option" aria-selected="${sel && sel.id === e.id}" data-href="#/clients/${c.id}/fondations/${e.id}">${scoreHtml(e.score)}<span style="min-width:0"><span class="name clip">${esc(e.nom)}</span><span class="cite one">${esc(e.citation)}</span><span class="meta"><span class="sub">${esc(e.siege)} · ${e.canton}</span>${ENR[e.id] && ENR[e.id].demande.accepte_demandes === "non" ? '<span class="tag" style="background:var(--accent-soft);color:var(--accent-ink)">N\'accepte pas de demandes</span>' : ""}${d ? statusHtml(d.statut) : `<span class="tag ${e.verdict === "prioritaire" ? "on" : ""}">${VERDICT[e.verdict]}</span>`}</span></span></button>`; }).join("")}
       </div>
-      <div class="detail">${sel ? detailBot(c, sel, dem(sel.id)) : '<div class="empty"><b>Aucune fondation retenue</b>Relancez le bot avec plus de candidates.</div>'}</div></div>`;
+      <div class="detail">${sel ? detailBot(c, sel, dem(sel.id)) : '<div class="empty"><b>Aucune fondation retenue</b>Relancer le bot avec davantage de fondations candidates.</div>'}</div></div>`;
     return shell("clients", crumbsClient(c, "Fondations"), body);
   }
   function detailBot(c, e, d) {
@@ -372,7 +372,7 @@
     const m = memo(fid), autres = S.demandes.filter((d) => d.fondation === String(fid) && d.client !== c.id);
     const hist = autres.map((d) => `${esc(client(d.client)?.nom || "")} : ${SL[d.statut]}${d.motif ? " (" + esc(d.motif) + ")" : ""}`);
     const f = F(fid);
-    return `${autres.some((d) => OUVERTS.has(d.statut) || d.statut === "envoyee") ? `<p class="alert-soft">${ic("alert")}Déjà sollicitée pour un autre client : ${hist.join(" · ")}. Évitez deux demandes Levier le même mois.</p>` : ""}
+    return `${autres.some((d) => OUVERTS.has(d.statut) || d.statut === "envoyee") ? `<p class="alert-soft">${ic("alert")}Déjà sollicitée pour un autre client : ${hist.join(" · ")}. Éviter deux demandes de Levier à cette fondation le même mois.</p>` : ""}
       ${f.st || f.sv ? `<div class="h3">Autorité de surveillance</div><div class="tags">${f.sv ? '<span class="tag">Surveillance fédérale (ASF)</span>' : ""}${(f.st || []).map((x) => `<span class="tag ${/Soutien financier/.test(x) ? "on" : ""}">As-So : ${esc(x)}</span>`).join("")}</div>` : ""}
       <details class="memo" ${m.notes || m.delai || m.montant ? "open" : ""}><summary>Mémoire de l'agence${hist.length && !autres.some((d) => OUVERTS.has(d.statut)) ? " · " + hist.length + " demande(s) passée(s)" : ""}</summary>
         <form data-form="memo" data-f="${esc(fid)}" class="memo-grid">
@@ -401,9 +401,9 @@
   function vClientDemandes(c) {
     const ds = demandesOf(c.id).filter((d) => d.statut !== "suggeree").sort((a, b) => new Date(a.echeance || a.envoi || 0) - new Date(b.echeance || b.envoi || 0));
     const prep = ds.filter((d) => ["redaction", "validation", "prete"].includes(d.statut)).length;
-    const body = clientHead(c, "demandes") + `<div class="vague"><div><b>Publipostage singulier</b><span class="sub">Une lettre par fondation, à partir du modèle, avec 2 ou 3 phrases propres à chaque fondation. Export Word (une page par fondation) et CSV pour Gmail, Outlook ou Word.</span></div><button class="btn primary" data-act="vague" data-c="${c.id}" ${prep ? "" : "disabled"}>${ic("send")}Exporter la vague (${prep})</button></div>
+    const body = clientHead(c, "demandes") + `<div class="vague"><div><b>Exporter la vague de lettres</b><span class="sub">Une lettre par fondation : la structure du modèle, plus 2 ou 3 phrases propres à chaque fondation. Export Word (une page par fondation) et CSV pour Gmail, Outlook ou Word.</span></div><button class="btn primary" data-act="vague" data-c="${c.id}" ${prep ? "" : "disabled"}>${ic("send")}Exporter la vague (${prep})</button></div>
       <div class="table-wrap"><table class="t"><thead><tr><th>Fondation</th><th>Échéance</th><th class="r">Demandé</th><th class="r hide-sm">Score</th><th>Statut</th><th></th></tr></thead><tbody>
-      ${ds.map((d) => { const f = F(d.fondation); return `<tr><td><div class="name">${esc(f.n)}</div><div class="sub">${esc(f.s)} · ${f.c}</div></td><td class="num">${OUVERTS.has(d.statut) ? dshort(d.echeance) : d.envoi ? "env. " + dshort(d.envoi) : "—"}</td><td class="r num">${E.chf(d.montant)}</td><td class="r num hide-sm">${d.score}</td><td>${statusHtml(d.statut, flapOnce(d.id))}</td><td class="r"><a class="btn sm" href="#/lettre/${d.id}">Lettre</a></td></tr>`; }).join("") || '<tr><td colspan="6"><div class="empty"><b>Pas encore de demande</b>Ouvrez l\'onglet Fondations et choisissez les premières.</div></td></tr>'}
+      ${ds.map((d) => { const f = F(d.fondation); return `<tr><td><div class="name">${esc(f.n)}</div><div class="sub">${esc(f.s)} · ${f.c}</div></td><td class="num">${OUVERTS.has(d.statut) ? dshort(d.echeance) : d.envoi ? "env. " + dshort(d.envoi) : "—"}</td><td class="r num">${E.chf(d.montant)}</td><td class="r num hide-sm">${d.score}</td><td>${statusHtml(d.statut, flapOnce(d.id))}</td><td class="r"><a class="btn sm" href="#/lettre/${d.id}">Lettre</a></td></tr>`; }).join("") || '<tr><td colspan="6"><div class="empty"><b>Pas encore de demande</b>Ouvrir l\'onglet Fondations et choisir les premières.</div></td></tr>'}
       </tbody></table></div>`;
     return shell("clients", crumbsClient(c, "Demandes"), body);
   }
@@ -417,8 +417,8 @@
       <div class="field"><label for="p-res">Résumé du projet</label><textarea class="input" id="p-res" name="resume" rows="3">${esc(c.projet.resume)}</textarea></div>
       <div class="row2"><div class="field"><label for="p-bud">Budget total (CHF)</label><input class="input num" id="p-bud" name="budget" inputmode="numeric" value="${c.projet.budget}"></div><div class="field"><label for="p-mt">Montant type par fondation (CHF)</label><input class="input num" id="p-mt" name="montant" inputmode="numeric" value="${c.projet.montant}"></div></div>
       <div class="row2"><div class="field"><label for="p-ex">À éviter (mots séparés par des virgules)</label><input class="input" id="p-ex" name="exclusions" value="${esc((c.exclusions || []).join(", "))}" placeholder="ex. église, paroisse"><span class="help">Les fondations dont le but contient ces mots sont reléguées.</span></div>
-        <div class="field"><label for="p-fi">Exonération fiscale (utilité publique)</label><select class="select" id="p-fi" name="exonere">${[["", "À vérifier"], ["oui", "Oui, exonéré"], ["non", "Non"]].map(([v, l]) => `<option value="${v}" ${c.exonere === v ? "selected" : ""}>${l}</option>`).join("")}</select><span class="help">Beaucoup de fondations ne financent que des organisations exonérées.</span></div></div>
-      <div class="field"><label for="p-pr">Preuves (une par ligne)</label><textarea class="input" id="p-pr" name="preuves" rows="3">${esc((c.preuves || []).join("\n"))}</textarea></div>
+        <div class="field"><label for="p-fi">Exonération fiscale (utilité publique)</label><select class="select" id="p-fi" name="exonere">${[["", "À vérifier"], ["oui", "Oui, exonéré"], ["non", "Non"]].map(([v, l]) => `<option value="${v}" ${c.exonere === v ? "selected" : ""}>${l}</option>`).join("")}</select><span class="help">Certaines fondations l'exigent (Ernst Göhner, par exemple).</span></div></div>
+      <div class="field"><label for="p-pr">Faits vérifiables (chiffres, partenaires, un par ligne)</label><textarea class="input" id="p-pr" name="preuves" rows="3">${esc((c.preuves || []).join("\n"))}</textarea></div>
       <div><button class="btn dark" type="submit">${ic("refresh")}Enregistrer et recalculer le matching</button></div></form>
       <section class="profile panel" style="padding:16px 18px"><h2 class="name" style="font-size:15px;margin-bottom:10px">Ce que Levier en retient</h2><dl>
         <dt>Domaines</dt><dd><div class="tags">${prof.domaines.map((d) => `<span class="tag on">${esc(E.DOMAINES[d].label)}</span>`).join("")}</div></dd>
@@ -434,14 +434,14 @@
   function vClientLoro(c) {
     const r = E.loro(c, 15);
     const body = clientHead(c, "loro") + `<div class="overview" style="grid-template-columns:minmax(280px,340px) 1fr">
-      <section class="panel" style="padding:18px 20px"><h2 class="name" style="font-size:16px;margin-bottom:8px">Un canal à ne pas oublier</h2>
-        <p style="font-size:13.5px;color:var(--ink-2)">La Loterie Romande reverse l'intégralité de ses bénéfices à des projets d'utilité publique romands. La demande se dépose auprès de l'organe de répartition du canton : <b>${esc(ORGANES[c.canton] || "organe cantonal de répartition")}</b>.</p>
+      <section class="panel" style="padding:18px 20px"><h2 class="name" style="font-size:16px;margin-bottom:8px">La demande cantonale</h2>
+        <p style="font-size:13.5px;color:var(--ink-2)">La Loterie Romande a versé CHF 252 millions à près de 5'000 projets romands en 2025. La demande se dépose auprès de l'organe de répartition du canton : <b>${esc(ORGANES[c.canton] || "organe cantonal de répartition")}</b>.</p>
         ${r.list.length ? `<div class="h3">Montants accordés à des projets comparables en 2025</div><div class="stats" style="margin:0"><span class="stat"><b>${E.chf(r.median)}</b> médiane</span><span class="stat">de <b>${E.chf(r.min)}</b> à <b>${E.chf(r.max)}</b></span></div>
         <p class="sub" style="margin-top:12px">Repère pour calibrer la demande : ${r.total} soutiens proches du projet dans le canton ou à l'échelle romande.</p>` : ""}
         <p class="sub" style="margin-top:12px">Source : Loterie Romande, Répartition des bénéfices 2025 (soutien-loro.ch), extraite le 21.10.2026.</p></section>
       <section class="panel"><div class="panel-h"><h2>Soutiens comparables en 2025</h2><span class="muted">${esc(E.CANTONS[c.canton] || c.canton)} et Suisse romande</span></div>
         ${r.list.length ? `<div style="overflow:auto"><table class="t"><thead><tr><th>Bénéficiaire</th><th class="hide-sm">Type de soutien</th><th class="r">Montant</th></tr></thead><tbody>${r.list.map((x) => `<tr><td><div class="name">${esc(x.n)}</div><div class="sub">${esc(x.l || "")}${x.c === "CH-R" ? " · projet romand" : ""}</div></td><td class="hide-sm sub">${esc(x.t || "—")}</td><td class="r num">${E.chf(x.m)}</td></tr>`).join("")}</tbody></table></div>`
-          : '<div class="empty"><b>Aucun soutien comparable trouvé</b>Complétez la description du client (publics, activités, lieux) dans l\'onglet Profil.</div>'}</section></div>`;
+          : '<div class="empty"><b>Aucun soutien comparable trouvé</b>Compléter la description du client (publics, activités, lieux) dans l\'onglet Profil.</div>'}</section></div>`;
     return shell("clients", crumbsClient(c, "Loterie Romande"), body);
   }
   function vClientJournal(c) {
@@ -455,7 +455,7 @@
   async function singulariser(did, btn) {
     const d = S.demandes.find((x) => x.id === did), c = client(d.client), f = F(d.fondation), fiche = ENR[f.id], be = botEval(c.id, f.id);
     const langue = { fr: "français", de: "allemand (orthographe suisse)", en: "anglais" }[LETTRE.lang];
-    const system = `Tu écris 2 ou 3 phrases, en ${langue}, à insérer dans une lettre de demande de soutien adressée à une fondation suisse. Elles relient précisément le projet du client à cette fondation : son but statutaire, ses soutiens passés, ses critères. Ton sobre, précis, sans flatterie ni superlatifs. N'invente aucun fait : n'utilise que les éléments fournis. Réponds uniquement par les 2 ou 3 phrases.`;
+    const system = `Tu écris 2 ou 3 phrases, en ${langue}, à insérer dans une lettre de demande de soutien adressée à une fondation suisse. Elles relient précisément le projet du client à cette fondation : son but statutaire, ses soutiens passés, ses critères. Ton sobre, précis, sans flatterie ni superlatifs. N'invente aucun fait : n'utilise que les éléments fournis. Réponds uniquement par les 2 ou 3 phrases.` + REGLES_REDACTION;
     const prompt = JSON.stringify({ client: { nom: c.nom, mission: c.mission, canton: c.canton }, projet: { titre: c.projet.titre, resume: c.projet.resume, beneficiaires: c.projet.beneficiaires },
       fondation: { nom: f.n, siege: f.s, but_statutaire: f.p, projets_soutenus: fiche ? fiche.projets_soutenus : [], criteres: fiche ? fiche.demande.criteres : [], resume: fiche ? fiche.resume : null }, angle: be ? be.angle_lettre : null });
     btn.disabled = true; const old = btn.innerHTML; btn.textContent = "Qwen écrit…";
@@ -464,8 +464,8 @@
       const el = document.querySelector("#letter .sing") || document.querySelector("#letter p:nth-of-type(6)");
       if (el) { el.textContent = r.texte.trim(); el.classList.add("sing-ia"); }
       const t = $("#letter"); d.lettre = { html: t.innerHTML, lang: LETTRE.lang, ton: LETTRE.ton, ia: r.modele }; save();
-      btn.innerHTML = old; btn.disabled = false; toast("Phrases singulières ajoutées : relisez-les");
-    } catch (e) { btn.disabled = false; btn.innerHTML = old; toast(e.data && e.data.erreur ? e.data.erreur : "IA indisponible : " + e.message); }
+      btn.innerHTML = old; btn.disabled = false; toast("Phrases propres à la fondation ajoutées : à relire");
+    } catch (e) { btn.disabled = false; btn.innerHTML = old; toast(e.data && e.data.erreur ? e.data.erreur : "IA indisponible, lettre inchangée : " + e.message); }
   }
   function lettreHtml(d) {
     const c = client(d.client), be = botEval(c.id, d.fondation);
@@ -475,7 +475,7 @@
   function exporterVague(cid) {
     const c = client(cid);
     const ds = demandesOf(cid).filter((d) => ["redaction", "validation", "prete"].includes(d.statut));
-    if (!ds.length) return toast("Aucune lettre en préparation dans cette campagne");
+    if (!ds.length) return toast("Aucune lettre à exporter : passer d'abord une demande en rédaction");
     const txt = (h) => { const div = document.createElement("div"); div.innerHTML = h.replace(/<\/p>/g, "</p>\n\n").replace(/<br>/g, "\n"); return div.textContent.replace(/\n{3,}/g, "\n\n").trim(); };
     const csvq = (v) => '"' + String(v ?? "").replace(/"/g, '""') + '"';
     const lignes = [["fondation", "siege", "adresse", "email", "langue", "objet", "lettre"].join(";")];
@@ -492,20 +492,22 @@
     S.journal.unshift({ t: new Date().toISOString(), client: cid, txt: `Vague exportée : ${ds.length} lettres (Word + CSV de publipostage)` }); save();
     toast(`${ds.length} lettres exportées : Word + CSV de publipostage`);
   }
+  // Règles de style transmises à l'IA (miroir de .claude/skills/copywriting-fr et de scripts/controle_texte.py)
+  const REGLES_REDACTION = " Style : phrases concrètes, sujet humain, verbes précis, une idée par phrase. N'écris jamais : « ce n'est pas X, c'est Y », « non seulement… mais », « sans X, sans Y, sans Z », « dans un monde où », « à l'ère de », « n'hésitez pas à », « découvrez », « imaginez », ni de question qui se répond elle-même. Évite : solution innovante, sur mesure, expertise, clé en main, au cœur de, synergie, véritable, incontournable, unique, exceptionnel. Pas de tiret long, pas de point d'exclamation, pas d'emoji. Pas d'anglicisme (écris échéance, retour, soutenir, se rendre compte). Typographie française : espace insécable avant : ; ! ? et dans « ». Montants CHF 3'500, dates 22.10.2026.";
   async function iaBrief(btn) {
     const resume = S.clients.map((c) => ({ client: c.nom, objectif: c.projet.objectif, demandes: demandesOf(c.id).map((d) => ({ fondation: F(d.fondation).n, statut: SL[d.statut], echeance: d.echeance ? d.echeance.slice(0, 10) : null, montant: d.montant, n_accepte_pas: !!(ENR[d.fondation] && ENR[d.fondation].demande.accepte_demandes === "non") })) }));
     btn.disabled = true; btn.textContent = "Analyse en cours…";
     try {
-      const r = await STORE.ia({ system: "Tu es le chef de projet d'une agence suisse de recherche de fonds. À partir de l'état des campagnes (JSON), donne les 5 priorités de la semaine pour le conseiller, en français, une ligne chacune, la plus urgente d'abord, avec le client et la fondation concernés. Pas d'introduction, pas de conclusion. N'invente rien.", prompt: JSON.stringify({ aujourdhui: today.toISOString().slice(0, 10), campagnes: resume }), usage: "priorités de la semaine", temperature: 0.2, max_tokens: 700 });
+      const r = await STORE.ia({ system: "Tu es le chef de projet d'une agence suisse de recherche de fonds. À partir de l'état des campagnes (JSON), donne les 5 priorités de la semaine pour le conseiller, en français, une ligne chacune, la plus urgente d'abord, avec le client et la fondation concernés. Pas d'introduction, pas de conclusion. N'invente rien." + REGLES_REDACTION, prompt: JSON.stringify({ aujourdhui: today.toISOString().slice(0, 10), campagnes: resume }), usage: "priorités de la semaine", temperature: 0.2, max_tokens: 700 });
       $("#ia-brief-out").innerHTML = `<section class="panel ia-out"><div class="panel-h"><h2>Priorités proposées par l'IA</h2><span class="muted">${esc((r.modele || "").split("/").pop())}</span></div><ol>${r.texte.split("\n").map((l) => l.replace(/^\s*[-*\d.)]+\s*/, "").trim()).filter(Boolean).map((l) => `<li>${esc(l)}</li>`).join("")}</ol></section>`;
       btn.remove();
-    } catch (e) { btn.disabled = false; btn.textContent = "Priorités par l'IA"; toast(e.data && e.data.erreur ? e.data.erreur : "IA indisponible"); }
+    } catch (e) { btn.disabled = false; btn.textContent = "Classer les priorités (IA)"; toast(e.data && e.data.erreur ? e.data.erreur : "IA indisponible : réessayer dans un instant"); }
   }
   async function lettreIA(did, btn) {
     const d = S.demandes.find((x) => x.id === did), c = client(d.client), f = F(d.fondation), be = botEval(c.id, f.id), fiche = ENR[f.id];
     const L = E.letter(c, f.id, d, Object.assign({}, LETTRE, be && be.citation_verifiee ? { quote: be.citation } : {}));
     const langue = { fr: "français", de: "allemand", en: "anglais" }[LETTRE.lang];
-    const system = `Tu rédiges, pour l'agence suisse Levier, une lettre de demande de soutien adressée à une fondation, au nom du client. Langue : ${langue}${LETTRE.lang === "de" ? " (orthographe suisse, ss au lieu de ß)" : ""}. Ton ${LETTRE.ton}, sobre, précis, sans superlatifs ni formules creuses. 300 à 420 mots. Règles : n'invente AUCUN fait, chiffre, date ou partenaire ; utilise seulement les faits fournis. Relie explicitement le projet au but statutaire cité (cite-le entre guillemets). Structure : objet, appel, lien avec le but de la fondation, le client et sa légitimité, le projet, le budget et la demande chiffrée, l'impact et le suivi promis, la formule de politesse, la signature. Réponds uniquement avec la lettre, en texte brut, paragraphes séparés par une ligne vide.`;
+    const system = `Tu rédiges, pour l'agence suisse Levier, une lettre de demande de soutien adressée à une fondation, au nom du client. Langue : ${langue}${LETTRE.lang === "de" ? " (orthographe suisse, ss au lieu de ß)" : ""}. Ton ${LETTRE.ton}, sobre, précis, sans superlatifs ni formules creuses. 300 à 420 mots. Règles : n'invente AUCUN fait, chiffre, date ou partenaire ; utilise seulement les faits fournis. Relie explicitement le projet au but statutaire cité (cite-le entre guillemets). Structure : objet (montant et projet), appel « Madame, Monsieur, », lien avec le but de la fondation, le client et sa légitimité, le projet, le budget et la part demandée, l'effet concret et le suivi promis, la formule finale « Avec nos meilleures salutations », la signature. Réponds uniquement avec la lettre, en texte brut, paragraphes séparés par une ligne vide.` + REGLES_REDACTION;
     const prompt = JSON.stringify({ client: { nom: c.nom, type: c.type, ville: c.ville, canton: c.canton, fondee: c.fondee, mission: c.mission, description: c.description, preuves: c.preuves, contact: c.contact },
       projet: c.projet, montant_demande: d.montant, fondation: { nom: f.n, siege: f.s, but_statutaire: f.p, citation_retenue: L.match.quote, raisons: L.match.reasons, risques: L.match.risks },
       angle_conseille: be ? be.angle_lettre : null, fiche_pratique: fiche ? { modalites: fiche.demande.modalites, montants: fiche.demande.montants, criteres: fiche.demande.criteres } : null,
@@ -514,8 +516,8 @@
     try {
       const r = await STORE.ia({ system, prompt, client: c.id, usage: "lettre " + f.n, temperature: 0.5 });
       const html = r.texte.trim().split(/\n\s*\n/).map((p) => `<p>${esc(p).replace(/\n/g, "<br>")}</p>`).join("");
-      d.lettre = { html, lang: LETTRE.lang, ton: LETTRE.ton, ia: r.modele }; save(); rerender(); toast("Lettre rédigée par " + (r.modele || "l'IA").split("/").pop() + " : relisez-la avant l'envoi");
-    } catch (e) { btn.disabled = false; btn.innerHTML = old; toast(e.data && e.data.erreur ? e.data.erreur : "IA indisponible : " + e.message); }
+      d.lettre = { html, lang: LETTRE.lang, ton: LETTRE.ton, ia: r.modele }; save(); rerender(); toast("Lettre rédigée par " + (r.modele || "l'IA").split("/").pop() + " : à relire avant l'envoi");
+    } catch (e) { btn.disabled = false; btn.innerHTML = old; toast(e.data && e.data.erreur ? e.data.erreur : "IA indisponible, lettre inchangée : " + e.message); }
   }
   function vLettre(id) {
     const d = S.demandes.find((x) => x.id === id);
@@ -552,7 +554,7 @@
           <div class="box"><h3>Angles retenus</h3><ul>${L.angles.slice(1).map((a) => `<li>${ic("check")}<span class="angle"><b>${esc(a.k)}</b> : ${esc(a.v)}</span></li>`).join("")}</ul></div>
           <div class="box"><h3>Faits du client utilisés</h3><ul>${[c.projet.titre, ...(c.preuves || [])].slice(0, 4).map((p) => `<li>${ic("check")}<span>${esc(p)}</span></li>`).join("")}</ul></div>
           <div class="box"><h3>Avant l'envoi</h3><ul>${L.verif.map((v) => `<li><span style="color:var(--accent)">${ic("alert")}</span><span>${esc(v)}</span></li>`).join("")}</ul></div>
-          <p class="sub">Brouillon généré par règles, à partir du profil du client et du but de la fondation. Il se modifie directement ; les changements sont gardés.</p>
+          <p class="sub">Brouillon établi par règles, à partir du profil du client et du but de la fondation. Le texte se modifie ici ; chaque changement est enregistré.</p>
         </aside></div>`;
     return shell("demandes", `<a href="#/clients/${c.id}/demandes">${esc(c.nom)}</a><span>/</span><b>Lettre</b>`, body);
   }
@@ -575,7 +577,7 @@
         <select class="select" data-fx="dom" aria-label="Domaine"><option value="">Tous domaines</option>${Object.entries(E.DOMAINES).map(([v, o]) => `<option value="${v}" ${FX.dom === v ? "selected" : ""}>${o.label}</option>`).join("")}</select>
         <select class="select" data-fx="sv" aria-label="Autorité de surveillance"><option value="">Toutes surveillances</option><option value="asf" ${FX.sv === "asf" ? "selected" : ""}>Surveillance fédérale (ASF)</option><option value="soutien" ${FX.sv === "soutien" ? "selected" : ""}>As-So : soutien financier</option></select></div>
       <div class="table-wrap" style="border-radius:0 0 14px 14px"><table class="t"><thead><tr><th>Fondation</th><th class="hide-sm">But social</th><th>Canton</th><th class="hide-sm">Domaines</th></tr></thead><tbody>
-      ${list.slice(0, FX.n).map((f) => `<tr><td style="min-width:220px"><div class="name">${esc(f.n)}</div><div class="sub">${esc(f.s)}</div></td><td class="hide-sm"><div class="sub" style="max-width:62ch;color:var(--ink)">${esc(f.p.length > 240 ? f.p.slice(0, 240).replace(/\s+\S*$/, "") + " …" : f.p)}</div></td><td>${f.c}</td><td class="hide-sm"><div class="tags">${ENR[f.id] && ENR[f.id].site_web ? `<a class="tag" href="${esc(ENR[f.id].site_web)}" target="_blank" rel="noopener">site</a>` : ""}${f.sv ? '<span class="tag">ASF</span>' : ""}${(f.st || []).some((x) => /Soutien financier/.test(x)) ? '<span class="tag on">Soutien financier</span>' : ""}${f.d.slice(0, 3).map((x) => `<span class="tag">${esc((E.DOMAINES[x] || { label: x }).label)}</span>`).join("")}</div></td></tr>`).join("") || '<tr><td colspan="4"><div class="empty"><b>Aucun résultat</b>Élargissez les filtres ou cherchez un autre mot.</div></td></tr>'}
+      ${list.slice(0, FX.n).map((f) => `<tr><td style="min-width:220px"><div class="name">${esc(f.n)}</div><div class="sub">${esc(f.s)}</div></td><td class="hide-sm"><div class="sub" style="max-width:62ch;color:var(--ink)">${esc(f.p.length > 240 ? f.p.slice(0, 240).replace(/\s+\S*$/, "") + " …" : f.p)}</div></td><td>${f.c}</td><td class="hide-sm"><div class="tags">${ENR[f.id] && ENR[f.id].site_web ? `<a class="tag" href="${esc(ENR[f.id].site_web)}" target="_blank" rel="noopener">site</a>` : ""}${f.sv ? '<span class="tag">ASF</span>' : ""}${(f.st || []).some((x) => /Soutien financier/.test(x)) ? '<span class="tag on">Soutien financier</span>' : ""}${f.d.slice(0, 3).map((x) => `<span class="tag">${esc((E.DOMAINES[x] || { label: x }).label)}</span>`).join("")}</div></td></tr>`).join("") || '<tr><td colspan="4"><div class="empty"><b>Aucun résultat</b>Élargir les filtres ou chercher un autre mot.</div></td></tr>'}
       </tbody></table></div>
       <p class="sub" style="margin-top:12px">${Math.min(FX.n, list.length)} sur ${list.length.toLocaleString("fr-CH").replace(/ |\s/g, "'")} résultats${list.length > FX.n ? ` · <button class="btn sm" data-act="plus">Afficher 80 de plus</button>` : ""}</p>`;
     return shell("fondations", "<span>Registre du commerce · LINDAS</span>", body);
@@ -584,9 +586,9 @@
   const NV = { url: "", texte: "", nom: "", type: "association", canton: "VD", ville: "", titre: "", montant: 10000, budget: 50000, res: null, prof: null };
   function vNouveau() {
     const r = NV.res;
-    const body = `<div class="page-head"><div><h1>Nouveau client</h1><p class="lede">Collez le site du client et sa présentation. Levier en tire un profil et classe les fondations qui ont le plus de chances de le financer.</p></div></div>
+    const body = `<div class="page-head"><div><h1>Nouveau client</h1><p class="lede">Coller l'adresse du site et la présentation du client : Appui en tire un profil et classe les fondations dont le but correspond.</p></div></div>
       <div class="intake"><form data-form="nouveau">
-        <div class="field"><label for="n-url">Site web du client</label><div class="urlbar"><input id="n-url" name="url" type="url" placeholder="https://www.association.ch" value="${esc(NV.url)}"><button class="btn dark" type="button" data-act="lire">${ic("link")}Lire le site</button></div><span class="help" id="lire-msg">Le navigateur lit la page d'accueil quand le site l'autorise. Sinon, collez le texte de la page « À propos » ci-dessous, ou lancez <code>scripts/analyser_site.py</code>.</span></div>
+        <div class="field"><label for="n-url">Site web du client</label><div class="urlbar"><input id="n-url" name="url" type="url" placeholder="https://www.association.ch" value="${esc(NV.url)}"><button class="btn dark" type="button" data-act="lire">${ic("link")}Lire le site</button></div><span class="help" id="lire-msg">Le navigateur lit la page d'accueil quand le site l'autorise. Sinon, coller ci-dessous le texte de la page « À propos », ou lancer <code>scripts/analyser_site.py</code>.</span></div>
         <div class="field"><label for="n-txt">Présentation du client</label><textarea class="input" id="n-txt" name="texte" rows="6" placeholder="Mission, publics, lieux, projets, chiffres clés…">${esc(NV.texte)}</textarea></div>
         <div class="row2"><div class="field"><label for="n-nom">Nom</label><input class="input" id="n-nom" name="nom" value="${esc(NV.nom)}" required></div>
           <div class="field"><label for="n-type">Type</label><select class="select" id="n-type" name="type">${["association", "startup", "etudiant", "consultant"].map((t) => `<option value="${t}" ${NV.type === t ? "selected" : ""}>${typeLabel(t)}</option>`).join("")}</select></div></div>
@@ -595,11 +597,11 @@
         <div class="field"><label for="n-t">Projet à financer</label><input class="input" id="n-t" name="titre" value="${esc(NV.titre)}" placeholder="Ex. Un camp d'été pour 40 enfants"></div>
         <div class="row2"><div class="field"><label for="n-b">Budget total (CHF)</label><input class="input num" id="n-b" name="budget" inputmode="numeric" value="${NV.budget}"></div><div class="field"><label for="n-m">Montant par fondation (CHF)</label><input class="input num" id="n-m" name="montant" inputmode="numeric" value="${NV.montant}"></div></div>
         <div class="botcmd"><div class="h3" style="margin:0 0 6px">Lancer le bot IA (recherche complète, 3 à 6 min)</div>
-          <p class="sub" style="margin-bottom:8px">Le bot lit le site, établit les critères, cherche dans les ${(window.FONDATIONS || []).length.toLocaleString("fr-CH").replace(/\u202f|\s/g, "'")} fondations et évalue les meilleures. Le client apparaît ensuite ici avec son classement.</p>
+          <p class="sub" style="margin-bottom:8px">Le bot lit le site, établit les critères, cherche dans les ${(window.FONDATIONS || []).length.toLocaleString("fr-CH").replace(/\u202f|\s/g, "'")} fondations et évalue les plus pertinentes. Le client apparaît ensuite dans la liste, avec son classement.</p>
           <pre id="botcmd">cd "CONSULTING /Levier/scripts" && python3.12 bot_fondations.py --url ${esc(NV.url || "https://site-du-client.ch")} --nom "${esc(NV.nom || "Nom du client")}" --canton ${esc(NV.canton)} --type ${esc(NV.type)}</pre>
           <button class="btn sm" type="button" data-act="copycmd">${ic("copy")}Copier la commande</button></div>
         <div style="display:flex;gap:8px"><button class="btn primary" type="submit">${ic("search")}Analyser et classer</button>${r ? `<button class="btn" type="button" data-act="creer">${ic("plus")}Créer le client avec les 8 premières</button>` : ""}</div></form>
-      <section class="panel" aria-live="polite">${r ? `<div class="panel-h"><h2>${r.length} fondations pertinentes</h2><span class="muted">${NV.prof.domaines.map((d) => E.DOMAINES[d].label).join(" · ") || "domaines non détectés"}</span></div>
+      <section class="panel" aria-live="polite">${r ? `<div class="panel-h"><h2>${r.length} fondations classées</h2><span class="muted">${NV.prof.domaines.map((d) => E.DOMAINES[d].label).join(" · ") || "domaines non détectés"}</span></div>
         ${r.slice(0, 12).map((m) => `<div class="match" style="cursor:default">${scoreHtml(m.score)}<span><span class="name">${esc(m.f.n)}</span><span class="sub" style="display:block">${esc(m.f.s)} · ${m.f.c}</span><span class="cite" style="display:block;margin-top:4px">${esc(m.quote)}</span><span class="sub" style="display:block;margin-top:4px">${esc(m.reasons.slice(0, 2).join(" · "))}${m.risks[0] ? " · " + esc(m.risks[0]) : ""}</span></span></div>`).join("")}`
         : `<div class="empty"><b>Le classement apparaîtra ici</b>Il cite, pour chaque fondation, la phrase de son but qui rejoint la mission du client.</div>`}</section></div>`;
     return shell("nouveau", "<span>Analyse et matching</span>", body);
@@ -629,7 +631,7 @@
           <section class="panel"><div class="panel-h"><h2>Vos financeurs</h2><span class="muted">${tous.length} fondations retenues</span></div>
             ${ds.slice(0, 6).map((d) => { const f = F(d.fondation); return `<div class="fin"><span class="status" data-s="${d.statut}">${pub[d.statut] || SL[d.statut]}</span><span class="dlt"><b class="clip">${esc(f.n)}</b><span class="cite one">${esc(E.explain(c, f.id).quote)}</span></span><span class="num sub">${E.chf(d.montant)}</span></div>`; }).join("") || '<p class="sub">Votre carte des financeurs est en préparation.</p>'}</section>
           <section class="panel"><div class="panel-h"><h2>Ce que Levier a fait</h2></div>
-            <ul class="cs-done"><li><b>${tous.length} fondations</b> lues et vérifiées sur ${(window.FONDATIONS || []).length.toLocaleString("fr-CH").replace(/\u202f|\s/g, "'")}</li><li><b>${ds.length} lettres</b> écrites, une par fondation</li><li><b>${n(["relancee"])} relance${n(["relancee"]) > 1 ? "s" : ""}</b> faites à temps</li><li><b>${n(["accordee"])} accord${n(["accordee"]) > 1 ? "s" : ""}</b> : ${E.chf(ob)}</li></ul>
+            <ul class="cs-done"><li><b>${tous.length} fondations</b> retenues parmi ${(window.FONDATIONS || []).length.toLocaleString("fr-CH").replace(/\u202f|\s/g, "'")}</li><li><b>${ds.length} lettres</b> écrites, une par fondation</li><li><b>${n(["relancee"])} relance${n(["relancee"]) > 1 ? "s" : ""}</b> envoyée${n(["relancee"]) > 1 ? "s" : ""}</li><li><b>${n(["accordee"])} accord${n(["accordee"]) > 1 ? "s" : ""}</b> : ${E.chf(ob)}</li></ul>
             <button class="btn sm" data-act="print">${ic("print")}Télécharger le rapport (PDF)</button></section>
         </div>
         <p class="sub cs-foot">Honoraires fixes, jamais de pourcentage sur les fonds obtenus. Chaque demande est signée et envoyée par votre organisation.</p>
@@ -643,7 +645,7 @@
     return `<div class="portal"><div class="portal-top"><span class="brand">${MARK}<b>levier<span>.</span></b></span><span class="ro">${ic("lock")}Consultation et validation</span></div>
       <p><a href="#/portail/${c.id}" style="display:inline-flex;gap:6px;align-items:center"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" style="transform:scaleX(-1)">${P.arrow}</svg>Votre recherche de fonds</a></p><h1 style="font-size:28px;margin:14px 0 18px">Lettre à ${esc(F(d.fondation).n)}</h1>
       <article class="sheet"><div class="letter-body">${d.lettre ? d.lettre.html : renderLetter(L)}</div></article>
-      ${d.statut === "validation" ? `<div class="validate" style="margin-top:20px"><p><b>Cette lettre vous convient ?</b><br><span class="sub">Si quelque chose doit changer, répondez simplement à notre dernier e-mail.</span></p><button class="btn primary" data-act="valider" data-d="${d.id}">${ic("check")}Je valide</button></div>` : ""}</div>`;
+      ${d.statut === "validation" ? `<div class="validate" style="margin-top:20px"><p><b>Cette lettre vous convient ?</b><br><span class="sub">Pour demander une modification, répondez à notre dernier e-mail : nous corrigeons la lettre avant l'envoi.</span></p><button class="btn primary" data-act="valider" data-d="${d.id}">${ic("check")}Valider cette lettre</button></div>` : ""}</div>`;
   }
   function vIntrouvable() { return shell("", "<b>Introuvable</b>", `<div class="empty"><b>Cette page n'existe pas ou plus</b><a class="btn" href="#/">Revenir à l'aperçu</a></div>`); }
 
@@ -688,7 +690,7 @@
     else if (act === "singulariser") singulariser(a.dataset.d, a);
     else if (act === "vague") exporterVague(a.dataset.c);
     else if (act === "ecarter") { UI.ecarter = !UI.ecarter; rerender(); }
-    else if (act === "copycmd") { try { await navigator.clipboard.writeText($("#botcmd").innerText); toast("Commande copiée : collez-la dans le Terminal"); } catch (er) { toast("Sélectionnez la commande pour la copier"); } }
+    else if (act === "copycmd") { try { await navigator.clipboard.writeText($("#botcmd").innerText); toast("Commande copiée : la coller dans le Terminal"); } catch (er) { toast("Copie impossible : sélectionner la commande à la main"); } }
     else if (act === "plus") { FX.n += 80; rerender(); }
     else if (act === "ajouter") {
       const cid = location.hash.split("/")[2], c = client(cid), fid = a.dataset.f, m = E.explain(c, fid);
@@ -700,7 +702,7 @@
     else if (act === "valider") { const d = S.demandes.find((x) => x.id === a.dataset.d); setStatut(d, "prete", "validée par le client"); toast("Merci, la lettre est validée."); rerender(); }
     else if (act === "lang" || act === "ton") { LETTRE[act] = a.dataset.v; rerender(); }
     else if (act === "regen") { const d = S.demandes.find((x) => x.id === a.dataset.d); d.lettre = null; save(); rerender(); toast("Lettre régénérée"); }
-    else if (act === "copy") { const t = $("#letter").innerText; try { await navigator.clipboard.writeText(t); toast("Lettre copiée"); } catch (er) { toast("Copie impossible : sélectionnez le texte"); } }
+    else if (act === "copy") { const t = $("#letter").innerText; try { await navigator.clipboard.writeText(t); toast("Lettre copiée"); } catch (er) { toast("Copie impossible : sélectionner le texte à la main"); } }
     else if (act === "print") window.print();
     else if (act === "word") {
       const d = S.demandes.find((x) => x.id === a.dataset.d), f = F(d.fondation), c = client(d.client);
@@ -752,11 +754,11 @@
     NV.res.slice(0, 8).forEach((m) => S.demandes.push({ id: c.id + "-" + m.f.id, client: c.id, fondation: m.f.id, statut: "qualifier", montant: c.projet.montant, obtenu: 0, echeance: inDays(28).toISOString(), envoi: null, score: m.score, lettre: null }));
     S.journal.unshift({ t: new Date().toISOString(), client: c.id, txt: "Client créé, 8 fondations à qualifier" }); save();
     Object.assign(NV, { url: "", texte: "", nom: "", titre: "", res: null, prof: null });
-    location.hash = `#/clients/${c.id}/profil`; toast("Client créé : complétez son profil");
+    location.hash = `#/clients/${c.id}/profil`; toast("Client créé : compléter son profil");
   }
   async function lireSite() {
     const url = $("#n-url").value.trim(), msg = $("#lire-msg");
-    if (!/^https?:\/\//.test(url)) { msg.textContent = "Saisissez une adresse complète, qui commence par https://"; msg.style.color = "var(--accent-ink)"; return; }
+    if (!/^https?:\/\//.test(url)) { msg.textContent = "Adresse incomplète : elle doit commencer par https://"; msg.style.color = "var(--accent-ink)"; return; }
     NV.url = url; msg.textContent = "Lecture en cours…"; msg.style.color = "";
     try {
       const r = await fetch(url, { mode: "cors" }); const html = await r.text();
@@ -764,7 +766,7 @@
       const txt = (doc.querySelector("main") || doc.body).innerText.replace(/\s+/g, " ").trim().slice(0, 3000);
       NV.texte = txt; NV.nom = NV.nom || (doc.title || "").split(/[|·–-]/)[0].trim(); rerender(); toast("Page d'accueil lue");
     } catch (er) {
-      msg.innerHTML = "Ce site ne se laisse pas lire depuis le navigateur (protection CORS). Collez le texte de sa page « À propos », ou lancez <code>python3.12 scripts/analyser_site.py " + esc(url) + "</code>.";
+      msg.innerHTML = "Ce site bloque la lecture depuis le navigateur (protection CORS). Coller le texte de sa page « À propos », ou lancer <code>python3.12 scripts/analyser_site.py " + esc(url) + "</code>.";
       msg.style.color = "var(--accent-ink)";
     }
   }
@@ -802,7 +804,7 @@
 
   // ---------- Démarrage ----------
   try { const t = localStorage.getItem("levier.theme"); if (t) document.documentElement.dataset.theme = t; } catch (e) { /* ignore */ }
-  if (!window.FONDATIONS) { $("#root").innerHTML = '<div class="empty" style="padding:80px"><b>Base des fondations absente</b>Lancez <code>python3.12 scripts/lindas_fondations.py</code> pour créer src/data/fondations.js.</div>'; return; }
+  if (!window.FONDATIONS) { $("#root").innerHTML = '<div class="empty" style="padding:80px"><b>Base des fondations absente</b>Lancer <code>python3.12 scripts/lindas_fondations.py</code> pour la créer (src/data/fondations.js).</div>'; return; }
   function vLogin(msg) {
     $("#root").innerHTML = `<div class="login"><form class="login-card" data-form="login">
       <div class="brand" style="padding:0 0 18px">${MARK}<b>appui<span>.</span></b></div>
@@ -811,7 +813,7 @@
       <div class="field"><label for="l-pw">Mot de passe</label><input class="input" id="l-pw" name="password" type="password" autocomplete="current-password" required></div>
       ${msg ? `<p class="alert-soft" role="alert">${ic("alert")}${esc(msg)}</p>` : ""}
       <button class="btn primary" type="submit" style="width:100%;height:40px">Se connecter</button>
-      <p class="sub" style="margin-top:14px">Pas de compte ? L'administrateur de l'agence le crée depuis l'administration du serveur.</p></form></div>`;
+      <p class="sub" style="margin-top:14px">Pas encore de compte : l'administrateur de l'agence le crée depuis l'administration du serveur.</p></form></div>`;
     $("#l-email").focus();
   }
   async function demarrer() {
@@ -823,7 +825,7 @@
         S = { v: 1, clients: D.clients, demandes: D.demandes, journal: D.journal, memo: D.memo, analyses: D.analyses };
         window.LEVIER_BOT = BOT = D.analyses;
         window.LEVIER_ENRICHI = ENR = Object.assign({}, window.LEVIER_ENRICHI || {}, D.fiches);
-      } catch (e) { return vLogin("Session expirée ou serveur injoignable : reconnectez-vous."); }
+      } catch (e) { return vLogin("Session expirée ou serveur injoignable : se reconnecter."); }
     } else {
       load();
     }
@@ -836,7 +838,7 @@
     e.preventDefault(); e.stopImmediatePropagation();
     const d = Object.fromEntries(new FormData(e.target));
     try { await STORE.login(d.email, d.password); location.reload(); }
-    catch (err) { vLogin(err.status === 400 ? "E-mail ou mot de passe incorrect." : "Serveur injoignable : réessayez dans un instant."); }
+    catch (err) { vLogin(err.status === 400 ? "E-mail ou mot de passe incorrect." : "Serveur injoignable : réessayer dans un instant."); }
   }, true);
   demarrer();
   window.LevierReset = () => { try { localStorage.removeItem(KEY); } catch (e) { /* ignore */ } location.reload(); };

@@ -33,5 +33,8 @@ Un outil **interne** qui rend Alexandre ultra efficace : il trouve les fondation
 ## Design
 Charte dans `DESIGN.md` et `PRODUCT.md` (marine #1F2A44, terre cuite #B8613F, Hanken Grotesk, Spectral pour lettres et citations). Toute modification d'interface suit ces fichiers.
 
+## Rédaction (page, kit de vente, lettres, e-mails)
+Toute rédaction pour Levier suit la skill `.claude/skills/copywriting-fr/` (douleur d'abord, preuves vérifiables, français de Suisse romande, pas de tics d'IA). Avant de publier un texte : `python3 scripts/controle_texte.py <fichier ou dossier>`. Les moteurs d'IA d'Appui reçoivent les mêmes règles (`REGLES_REDACTION` dans `src/app.js`). Régénérer le kit : `python3 scripts/construire_kit.py`.
+
 ## Où en est le projet
 `docs/` contient l'audit de Spheriq, les sources de données, l'architecture IA, l'audit de la plateforme et l'étude de marché (`docs/etude/`). La feuille de route est dans `docs/FEUILLE_DE_ROUTE.md`.

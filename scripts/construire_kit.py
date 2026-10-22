@@ -38,8 +38,8 @@ def page(title, lang, body):
 # ---------------------------------------------------------------- Prospectus
 K = {
  "fr": dict(tag="Recherche de fonds auprès des fondations suisses", tl=[("Aujourd'hui", "on prépare"), ("Dossier prêt", "carte et lettres"), ("Dépôt", "≈ 4 mois avant"), ("Séance", "2 à 4 par an"), ("Début du projet", "")],
-            met_sub="Des livrables et des dates fixés le premier jour.", off_note="Montants indicatifs, devis écrit avant de commencer. Honoraires fixes, liés au travail : jamais de pourcentage.",
-            contact="Écrivez-nous ou appelez :", file="Prospectus", title="Levier · Prospectus"),
+            met_sub="Livrables et dates écrits dans le devis, avant de commencer.", off_note="Montants indicatifs. Devis écrit avant de commencer, honoraires fixes liés au travail, aucun pourcentage.",
+            contact="Écrire ou appeler Alexandre Cazes :", file="Prospectus", title="Levier · Prospectus"),
  "de": dict(tag="Fundraising bei Schweizer Stiftungen", tl=[("Heute", "Vorbereitung"), ("Dossier bereit", "Karte und Briefe"), ("Eingabe", "≈ 4 Monate vorher"), ("Sitzung", "2- bis 4-mal pro Jahr"), ("Projektbeginn", "")],
             met_sub="Ergebnisse und Termine stehen ab dem ersten Tag fest.", off_note="Richtpreise, schriftliche Offerte vor Beginn. Festes Honorar nach Aufwand: nie ein Prozentsatz.",
             contact="Schreiben oder rufen Sie uns an:", file="Prospekt", title="Levier · Prospekt"),
@@ -133,46 +133,46 @@ def barometre():
     c1 = f'''<section class="a4 cover">
   <div class="cover-img" style="background-image:url('{img}')"></div>
   <div class="cover-in"><span class="kick">BAROMÈTRE LEVIER · {AUJ.strftime("%m.%Y")}</span>
-    <h1>Les fondations romandes, vues de près.</h1>
-    <p class="lead">Ce que disent les {fmt(s["rom"])} fondations inscrites au registre du commerce dans les six cantons romands, et ce que cela change pour une association qui cherche des fonds.</p></div>
+    <h1>Les fondations romandes, en chiffres.</h1>
+    <p class="lead">Ce que disent les {fmt(s["rom"])} fondations inscrites au registre du commerce dans les six cantons romands, et ce que cela change pour une association qui prépare ses demandes.</p></div>
   <div class="kpis">
     <div class="kpi"><b>{fmt(s["rom"])}</b><span>fondations actives inscrites à Genève, Vaud, Valais, Fribourg, Neuchâtel et Jura</span></div>
     <div class="kpi"><b>{fmt(don)}</b><span>ont un but qui prévoit de soutenir des tiers (classement Levier)</span></div>
     <div class="kpi"><b>{pct(p["non_precise"])} %</b><span>de ces fondations ne précisent aucune zone géographique dans leur but</span></div>
-    <div class="kpi"><b>{pct(loc)} %</b><span>seulement visent explicitement un canton ou la Suisse romande</span></div>
+    <div class="kpi"><b>{pct(loc)} %</b><span>seulement nomment un canton ou la Suisse romande dans leur but</span></div>
   </div>
-  <div class="toc"><div><b>Où elles sont</b>Les fondations qui soutiennent des projets, canton par canton.</div><div><b>Ce qu'elles financent</b>Vingt domaines repérés dans leurs buts statutaires.</div><div><b>Ce que cela change</b>Cinq enseignements et {len(s["fiches"])} fiches vérifiées une à une.</div></div>
+  <div class="toc"><div><b>Où elles sont</b>Les fondations qui soutiennent des projets, canton par canton.</div><div><b>Ce qu'elles financent</b>Vingt domaines repérés dans leurs buts statutaires.</div><div><b>Ce que cela change</b>Cinq enseignements et {len(s["fiches"])} fiches vérifiées sur le site de chaque fondation.</div></div>
   <div class="cover-foot">{logo(light=True)}<span>Données : registre du commerce (OFJ, LINDAS), état au {AUJ.strftime("%d.%m.%Y")}.<br>Image : Vevey et la Dent du Midi, Photochrom, vers 1895, domaine public.</span></div>
 </section>'''
     c2 = f'''<section class="a4">
   <div class="b-head">{logo()}<span>Baromètre des fondations romandes · {AUJ.strftime("%m.%Y")}</span></div>
   <div class="b-sec"><h2>Où sont les fondations qui soutiennent des projets</h2>
-    <p>Sur {fmt(s["rom"])} fondations romandes actives, {fmt(don)} ({pct(don, s["rom"])} %) ont un but statutaire qui prévoit d'aider des personnes, des projets ou d'autres organisations. Les autres gèrent leur propre institution (école, EMS, musée), une caisse de prévoyance ou un patrimoine. Genève et Vaud en réunissent près de deux sur trois.</p>
+    <p>Sur {fmt(s["rom"])} fondations romandes actives, {fmt(don)} ({pct(don, s["rom"])} %) ont un but statutaire qui prévoit d'aider des personnes, des projets ou d'autres organisations. Les autres gèrent surtout leur propre institution (école, EMS, musée) ou un patrimoine. Genève et Vaud en réunissent près de deux sur trois.</p>
     {bars(cant, don)}</div>
   <div class="b-sec"><h2>Ce qu'elles financent</h2>
-    <p>Domaines repérés dans le but statutaire des {fmt(don)} fondations qui soutiennent des tiers. Une fondation peut couvrir plusieurs domaines : le total dépasse 100 %.</p>
+    <p>Domaines repérés dans le but statutaire des {fmt(don)} fondations qui soutiennent des tiers. Une fondation peut couvrir plusieurs domaines : le total dépasse donc le nombre de fondations.</p>
     {bars(dom, don, hl=("enfance_jeunesse", "social_precarite", "culture_arts"))}</div>
-  <p class="pad note" style="margin-top:auto;padding-bottom:10mm">Méthode : extraction du registre du commerce (forme juridique « fondation », sans fondations en liquidation), puis classement du texte du but par Levier (soutien à des tiers, domaines, portée géographique). Le classement est automatique : il guide la recherche, il ne remplace pas la lecture de chaque but.</p>
+  <p class="pad note" style="margin-top:auto;padding-bottom:10mm">Méthode : extraction du registre du commerce (forme juridique « fondation », sans fondations en liquidation), puis classement du texte du but par Levier (soutien à des tiers, domaines, portée géographique). Le classement est automatique : il oriente la recherche, et chaque but retenu est ensuite lu en entier.</p>
 </section>'''
     lessons = [
-        ("La plupart des fondations ne sont pas pour vous, et ce n'est écrit nulle part.",
-         f"{fmt(s['rom'] - don)} fondations romandes sur {fmt(s['rom'])} ne financent pas de projets extérieurs. Parmi les autres, chaque but est un texte libre de plusieurs centaines de mots. Écrire à toutes, c'est surtout écrire à celles qui ne peuvent pas dire oui."),
-        ("La géographie est le premier filtre, et le plus souvent implicite.",
-         f"{pct(p['non_precise'])} % des fondations qui soutiennent des tiers ne nomment aucune zone dans leur but, {pct(intl)} % visent l'international. Il faut lire le reste (siège, projets soutenus, site) pour savoir si un projet lausannois a ses chances."),
-        ("La demande se joue d'abord sur le but exact, mot pour mot.",
-         "Les fondations écartent d'abord ce qui sort de leur but. Citer la phrase précise qui rejoint votre projet montre que vous avez lu ; c'est aussi ce qui distingue une lettre d'un envoi de masse."),
+        ("Pour un projet donné, la plupart des fondations ne sont pas une piste.",
+         f"{fmt(s['rom'] - don)} fondations romandes sur {fmt(s['rom'])} ne financent pas de projets extérieurs. Parmi les autres, chaque but est un texte libre, sans grille commune. Écrire à toutes, c'est surtout écrire à celles qui ne peuvent pas dire oui."),
+        ("La zone géographique filtre d'abord, souvent sans être écrite.",
+         f"{pct(p['non_precise'])} % des fondations qui soutiennent des tiers ne nomment aucune zone dans leur but, {pct(intl)} % visent l'international (registre du commerce, classement Levier). Le siège, les projets déjà soutenus et le site disent si un projet lausannois a ses chances."),
+        ("La demande se joue d'abord sur le but exact.",
+         "Les fondations écartent d'abord ce qui sort de leur but. Citer la phrase qui rejoint votre projet montre que vous l'avez lu, et distingue votre lettre d'un envoi de masse."),
         ("La Suisse romande écrit aussi en allemand.",
-         f"{fmt(s['allemand'])} fondations romandes environ qui soutiennent des tiers ont un but rédigé en allemand (Valais et Fribourg surtout). Une lettre dans leur langue est simplement mieux lue."),
+         f"{fmt(s['allemand'])} fondations romandes environ qui soutiennent des tiers ont un but rédigé en allemand (Valais et Fribourg surtout). Une lettre en allemand leur évite une traduction."),
         ("Le calendrier compte autant que le dossier.",
-         "Beaucoup de fondations décident deux à quatre fois par an et demandent le dossier environ quatre mois avant le début du projet. Un projet déjà commencé n'est en général plus financé."),
+         "Plusieurs grandes fondations décident deux à quatre fois par an et veulent le dossier environ quatre mois avant le début du projet. Un projet déjà commencé n'est en général plus financé."),
     ]
     c3 = f'''<section class="a4">
   <div class="b-head">{logo()}<span>Baromètre des fondations romandes · {AUJ.strftime("%m.%Y")}</span></div>
   <div class="b-sec"><h2>Cinq enseignements pour les associations</h2>
     <ol class="lessons">{"".join(f"<li><div><h3>{a}</h3><p>{b}</p></div></li>" for a, b in lessons)}</ol></div>
   <div class="b-sec"><div class="method"><h3>Comment Levier s'en sert</h3>
-    <p>Pour chaque projet, Levier part des {fmt(s["total"])} fondations inscrites en Suisse, lit les buts qui correspondent, vérifie sur le site de la fondation qu'elle accepte les demandes, ses délais et les pièces exigées, puis écrit une lettre propre à chacune. L'association relit, signe et envoie.</p></div></div>
-  <p class="pad note" style="margin-top:auto;padding-bottom:10mm">Sources du calendrier : règles publiées par plusieurs fondations romandes ; Grantee Review Report (CEPS, Université de Bâle, et SwissFoundations, données 2019).</p>
+    <p>Pour chaque projet, Levier part des {fmt(s["total"])} fondations inscrites en Suisse, lit les buts qui correspondent, vérifie sur le site de chaque fondation qu'elle accepte les demandes, son délai et les pièces exigées, puis écrit une lettre pour chacune. L'association relit, signe et envoie.</p></div></div>
+  <p class="pad note" style="margin-top:auto;padding-bottom:10mm">Sources du calendrier : règles publiées par la FASC, Leenaards, la Fondation Sandoz et Ernst Göhner ; Grantee Review Report (CEPS, Université de Bâle, et SwissFoundations, données 2019).</p>
 </section>'''
     exemple = ""
     ex = RACINE / "data/enrichi/1205902.json"
@@ -185,19 +185,19 @@ def barometre():
       <p class="note" style="margin-top:3mm">Exemple de fiche, vérifiée le {datetime.date.fromisoformat(x["date"]).strftime("%d.%m.%Y")} sur le site de la fondation ({x.get("site_web") or ""}).</p></div></div>'''
     if n:
         c4_pilot = f'''<div class="b-sec"><h2>Ce que montrent {n} fiches vérifiées</h2>
-    <p>Levier a vérifié en ligne {n} fondations romandes parmi les plus susceptibles de soutenir des projets (site officiel, conditions, délais). Échantillon choisi, pas tiré au hasard : les chiffres décrivent ces fondations, pas l'ensemble.</p>
+    <p>Levier a vérifié en ligne {n} fondations romandes parmi les plus susceptibles de soutenir des projets (site officiel, conditions, délais). Échantillon choisi, pas tiré au hasard : ces chiffres décrivent ces {n} fondations, pas l'ensemble.</p>
     <div class="big3"><div><b>{fp(n - site)} %</b><span>n'ont aucun site officiel trouvable</span></div>
       <div><b>{fp(acc.get("non", 0))} %</b><span>indiquent ne pas accepter de demandes spontanées</span></div>
       <div><b>{fp(delais)} %</b><span>publient des délais de dépôt</span></div></div>
     <p class="note" style="margin-top:3mm">Accepte les demandes : oui {acc.get("oui", 0)}, non {acc.get("non", 0)}, inconnu {acc.get("inconnu", 0)}. Formulaire en ligne : {form}. Vérification du {AUJ.strftime("%d.%m.%Y")}.</p></div>
   {exemple}
-  <div class="b-sec"><div class="method"><h3>Pourquoi c'est important</h3><p>Une fondation sans site ni délai publié n'est pas fermée : elle se contacte par écrit, à son siège, au bon moment. Une fondation qui écrit « pas de demandes spontanées » doit en revanche être retirée de la liste, ce que les annuaires ne font pas toujours.</p></div></div>'''
+  <div class="b-sec"><div class="method"><h3>Pourquoi c'est important</h3><p>Une fondation sans site ni délai publié n'est pas fermée : elle se contacte par écrit, à son siège, au bon moment. Une fondation qui écrit « pas de demandes spontanées » doit en revanche sortir de la liste. Un extrait du registre du commerce ne le dit pas.</p></div></div>'''
     else:
         c4_pilot = ""
     c4 = f'''<section class="a4">
   <div class="b-head">{logo()}<span>Baromètre des fondations romandes · {AUJ.strftime("%m.%Y")}</span></div>
   {c4_pilot}
-  <div class="cta" style="margin-top:auto"><div><h2>Votre projet a-t-il ses fondations ?</h2><p>15 minutes en visio, gratuites. Nous vous disons franchement si des fondations ont des chances de le financer, et lesquelles regarder en premier.</p></div><div class="ct"><span>Levier · Alexandre Cazes</span>{EMAIL}<br>{TEL}<br>{SITE}</div></div>
+  <div class="cta" style="margin-top:auto"><div><h2>Votre projet a-t-il ses fondations ?</h2><p>15 minutes en visio, gratuites. Nous vous disons si des fondations peuvent le financer, et lesquelles regarder en premier.</p></div><div class="ct"><span>Levier · Alexandre Cazes</span>{EMAIL}<br>{TEL}<br>{SITE}</div></div>
   <p class="legal">Ce baromètre peut être librement partagé. Données ouvertes du registre du commerce (OFJ, via LINDAS) ; classement et vérifications : Levier. Aucune donnée personnelle de membres de conseil n'est utilisée.</p>
 </section>'''
     return page("Baromètre des fondations romandes", "fr", c1 + c2 + c3 + c4), s
@@ -214,15 +214,15 @@ def presentation(s):
         return f'<section class="slide {cls}">{inner}{brand}<span class="num">{N[0]:02d}</span></section>'
     out = []
     out.append(sl("dark s-title", f'''{logo(light=True)}<h1>Financer votre projet par les fondations.</h1>
-      <p class="sub">Premier échange · 15 minutes pour savoir si des fondations ont des chances de le soutenir, et lesquelles.</p>
+      <p class="sub">Premier échange · 15 minutes pour savoir si des fondations peuvent le soutenir, et lesquelles.</p>
       <div class="meta"><span>[Nom de l'association]</span><span>[Date]</span></div>'''))
-    out.append(sl("", f'''<h2>Ce que nous entendons, presque mot pour mot.</h2>
+    out.append(sl("", f'''<h2>Trois difficultés, chiffrées par les enquêtes.</h2>
       <div class="grid3">{"".join(f'<div class="tile"><p class="say">{t[f"pain{i}_say"]}</p><p>{t[f"pain{i}_real"]}</p></div>' for i in (1, 2, 3))}</div>'''))
     out.append(sl("dark", f'''<h2>Le coût réel d'une demande.</h2><p class="sub">{t["cause"]}</p>
       <div class="grid3"><div class="tile"><b class="n">63 h</b><p>{t["stat1"]}</p></div><div class="tile"><b class="n">42 %</b><p>{t["stat2"]}</p></div><div class="tile"><b class="n">2–4</b><p>{t["stat3"]}</p></div></div>
       <p class="sub" style="font-size:9pt;margin-top:5mm">{t["stat_src"]}</p>'''))
     out.append(sl("", f'''<h2>{fmt(s["rom"])} fondations romandes. Peu sont pour vous.</h2>
-      <p class="sub">{fmt(don)} ont un but qui prévoit de soutenir des tiers. {pct(p["non_precise"])} % ne nomment aucune zone géographique, {pct(p["international"])} % visent l'international. Le travail consiste à trouver les quelques dizaines qui peuvent dire oui.</p>
+      <p class="sub">{fmt(don)} ont un but qui prévoit de soutenir des tiers. {pct(p["non_precise"])} % ne nomment aucune zone géographique, {pct(p["international"])} % visent l'international. Le travail : trouver les quelques dizaines qui peuvent dire oui.</p>
       <div class="grid4"><div class="tile"><b class="n">{fmt(s["rom"])}</b><p>fondations actives dans les 6 cantons romands</p></div><div class="tile"><b class="n">{fmt(don)}</b><p>soutiennent des tiers selon leur but</p></div><div class="tile"><b class="n">20–30</b><p>retenues pour un projet type</p></div><div class="tile"><b class="n">10</b><p>lettres écrites une par une</p></div></div>'''))
     out.append(sl("", f'''<h2>{t["urg_t"]}</h2><p class="sub">{t["urg_lead"]}</p>
       <div class="dtl"><div>Aujourd'hui<small>on prépare</small></div><div>Dossier prêt<small>carte et lettres</small></div><div class="k">Dépôt<small>≈ 4 mois avant le début</small></div><div>Séance<small>2 à 4 par an</small></div><div class="k">Début du projet<small>&nbsp;</small></div></div>
@@ -239,16 +239,16 @@ def presentation(s):
         <div class="fc"><div><h4>Critères</h4><ul>{li(d.get("criteres"), 4)}</ul></div><div><h4>Échéances</h4><ul>{li(d.get("delais"), 5)}</ul></div>
         <div><h4>Pièces demandées</h4><ul>{li(d.get("documents_requis"), 5)}</ul></div><div><h4>Ce qu'elle refuse</h4><ul>{li(d.get("exclusions"), 4)}</ul></div></div></div>'''))
     out.append(sl("", '''<div class="split" style="margin-top:0;align-items:start;height:100%">
-      <div><h2>Une lettre par fondation.</h2><p class="sub">La structure est solide et commune ; le paragraphe surligné est écrit pour cette fondation seulement, à partir de son but, de ce qu'elle a déjà soutenu et de ses critères.</p>
-        <p class="sub" style="font-size:11pt">Vous relisez, vous signez, vous envoyez. Rien ne part sans vous.</p></div>
+      <div><h2>Une lettre par fondation.</h2><p class="sub">La structure est commune. Le paragraphe surligné est écrit pour cette fondation seulement, à partir de son but, de ce qu'elle a déjà soutenu et de ses critères.</p>
+        <p class="sub" style="font-size:11pt">Vous relisez, signez et envoyez. Aucune lettre ne part sans votre signature.</p></div>
       <div class="letter"><p><b>Demande de soutien de CHF 15'000 : dix nouvelles lignes de pédibus scolaires en 2027</b></p><p>Madame, Monsieur,</p>
-        <p>Selon ses statuts, votre fondation s'est donné pour mission de « venir en aide à l'enfance dans le canton de Vaud ». C'est précisément sur ce terrain que notre association agit depuis 2019.</p>
-        <p><span class="mark">Votre soutien récent à des projets de mobilité scolaire à Vevey montre l'importance que vous accordez à la sécurité des enfants sur le chemin de l'école ; nos lignes de pédibus prolongent ce travail dans les communes voisines.</span></p>
+        <p>Selon ses statuts, votre fondation a pour but de « venir en aide à l'enfance dans le canton de Vaud ». Notre association agit sur ce terrain depuis 2019, à Vevey.</p>
+        <p><span class="mark">Votre fondation a soutenu en 2025 des projets de mobilité scolaire à Vevey ; nos lignes de pédibus prolongent ce travail dans les communes voisines.</span></p>
         <p>Le budget total est de CHF 45'000 …</p><p class="muted" style="font-size:8.5pt;font-family:var(--ui)">Extrait d'exemple, association et fondation fictives.</p></div></div>'''))
     qs = [("Quel est le projet, en deux phrases ?", "Ce qu'il change, pour qui, où."), ("Quand commence-t-il ?", "Fixe les dates de dépôt possibles."),
-          ("Quel est le budget total, et le montant manquant ?", "Les fondations financent rarement 100 %."), ("Qui finance déjà ?", "Commune, canton, Loterie Romande, fonds propres."),
-          ("L'association est-elle exonérée d'impôt pour utilité publique ?", "Beaucoup de fondations l'exigent."), ("Avez-vous déjà déposé des demandes ?", "Auprès de qui, avec quelles réponses."),
-          ("Statuts, comptes, rapport d'activité : sont-ils à jour ?", "Les pièces que chaque fondation demande."), ("Qui signera les demandes ?", "Présidence ou direction.")]
+          ("Quel est le budget total, et le montant manquant ?", "Une fondation complète d'autres financements."), ("Qui finance déjà ?", "Commune, canton, Loterie Romande, fonds propres."),
+          ("L'association est-elle exonérée d'impôt pour utilité publique ?", "Ernst Göhner, par exemple, l'exige."), ("Avez-vous déjà déposé des demandes ?", "Auprès de qui, avec quelles réponses."),
+          ("Statuts, comptes, rapport d'activité : sont-ils à jour ?", "Un dossier incomplet est écarté sans examen."), ("Qui signera les demandes ?", "Présidence ou direction.")]
     out.append(sl("", f'''<h2>Pour aujourd'hui : huit questions.</h2>
       <ol class="qs">{"".join(f"<li><div>{a}<small>{b}</small></div></li>" for a, b in qs)}</ol>'''))
     out.append(sl("", f'''<h2>{t["off_t"]}</h2><p class="sub">{t["off_lead"]}</p>
@@ -264,7 +264,7 @@ def presentation(s):
         <div class="grid3" style="margin-top:8mm"><div><b style="font:600 22pt/1 var(--display)">CHF 100'000+</b><p class="muted">{t["qui_f1"]}</p></div><div><b style="font:600 22pt/1 var(--display)">100+</b><p class="muted">{t["qui_f2"]}</p></div><div><b style="font:600 22pt/1 var(--display)">FR · DE · EN</b><p class="muted">{t["qui_f3"]}</p></div></div></div></div>'''))
     out.append(sl("dark", f'''<h2>Prochaines étapes.</h2>
       <ol class="next"><li><b>Sous 48 h</b><span>Devis écrit, avec les heures prévues et les livrables datés.</span></li>
-        <li><b>Jour 1</b><span>Vous envoyez budget, statuts, comptes et présentation. Nous fixons le calendrier de dépôt.</span></li>
+        <li><b>Jour 1</b><span>Vous envoyez budget, statuts, comptes et présentation. Nous fixons les dates de dépôt.</span></li>
         <li><b>Semaine 2</b><span>Carte des financeurs : 20 à 30 fondations, avec délais et pièces.</span></li>
         <li><b>Semaine 4</b><span>Les lettres, prêtes à relire et à signer.</span></li></ol>
       <p class="sub" style="margin-top:8mm">{EMAIL} · {TEL}</p>'''))
