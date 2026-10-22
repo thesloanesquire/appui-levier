@@ -18,9 +18,11 @@ esac
 if [ ! -x serveur/bin/pocketbase ]; then
   mkdir -p serveur/bin && cd serveur/bin
   URL=https://github.com/pocketbase/pocketbase/releases/download/v$PB_VERSION
-  curl -sfLO $URL/pocketbase_${PB_VERSION}_${ARCH}.zip && curl -sfLO $URL/checksums.txt
-  grep "pocketbase_${PB_VERSION}_${ARCH}.zip" checksums.txt | shasum -a 256 -c -
-  unzip -oq pocketbase_${PB_VERSION}_${ARCH}.zip pocketbase && rm pocketbase_${PB_VERSION}_${ARCH}.zip checksums.txt
+  ZIP=pocketbase_${PB_VERSION}_${ARCH}.zip
+  curl -fsSL --retry 3 -o "$ZIP" "$URL/$ZIP" || { echo "Téléchargement de PocketBase impossible : vérifie la connexion et relance."; exit 1; }
+  curl -fsSL --retry 3 -o checksums.txt "$URL/checksums.txt" || { echo "Téléchargement des sommes de contrôle impossible."; exit 1; }
+  grep "$ZIP" checksums.txt | shasum -a 256 -c - || { echo "Somme de contrôle invalide : fichier refusé."; exit 1; }
+  unzip -oq "$ZIP" pocketbase && mv "$ZIP" checksums.txt /tmp/ 2>/dev/null || true
   cd ../..
 fi
 echo "PocketBase : $(serveur/bin/pocketbase --version)"
