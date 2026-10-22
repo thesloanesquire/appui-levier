@@ -84,7 +84,7 @@ section{padding:120px 0 0}
 .pain{background:var(--white);border-radius:var(--r);padding:28px;box-shadow:0 0 0 1px var(--line);display:flex;flex-direction:column;gap:14px}
 .pain-say{font:italic 400 22px/1.35 var(--display);color:var(--ink)}
 .pain p:last-child{color:var(--ink-2);font-size:16px}
-.cause{margin-top:32px;font:600 clamp(20px,2vw,26px)/1.4 var(--display);max-width:44ch;padding-left:20px;border-left:4px solid var(--acc)}
+.cause{margin-top:32px;font:600 clamp(20px,2vw,26px)/1.4 var(--display);max-width:44ch;color:var(--acc-d)}
 
 /* Urgence */
 .urgence .urg-in{display:grid;grid-template-columns:1fr 440px;gap:56px;align-items:center;background:var(--ink);color:#fff;border-radius:32px;padding:56px}
