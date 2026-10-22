@@ -16,7 +16,7 @@ Usage
   python3.12 enrichir_fondations.py --client ate-pedibus --top 10 # les 10 meilleures d'un client analysé par le bot
   python3.12 enrichir_fondations.py --nouvelles --cantons VD,GE,FR,NE,VS,JU --max 30
                                    # nouvelles fondations donatrices depuis la dernière extraction LINDAS
-Options : --force (ré-enrichir même si une fiche récente existe), --modele sonnet|opus
+Options : --force (ré-enrichir même si une fiche récente existe), --modele haiku|sonnet|opus (haiku : le moins cher, conseillé pour les lots)
 """
 import argparse, datetime, json, subprocess, sys, time
 from pathlib import Path
