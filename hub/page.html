@@ -32,7 +32,7 @@
 <main>
 <section id="pieces">
   <h2>Les quatre pièces</h2>
-  <p class="lead">Chacune se consulte ici. Les documents de fond ne sont pas publiés sur Internet : ils sont dans le dossier du projet, sur GitHub (dépôt privé).</p>
+  <p class="lead">Chacune se consulte ici. Les documents de fond ne sont pas publiés sur Internet : ils sont dans le dossier du projet, sur GitHub (dépôt public pendant la remise : Tim le refermera quand tu auras installé le projet).</p>
   <div class="cards">
     <article class="card"><div class="top-row"><h3>La page publique</h3><span class="pill ok">Prête, sauf 3 mentions</span></div>
       <p>Elle part de la douleur des associations (63 heures par demande acceptée, refus sans motif), calcule la date limite de dépôt, laisse essayer le matching sur 2'000 fondations romandes, puis présente l'offre, la garantie, Alexandre et 10 questions. En français, allemand et anglais.</p>
@@ -134,7 +134,7 @@ ssh ubuntu@IP 'cd /opt/appui &amp;&amp; docker compose -f serveur/docker-compose
   <h2>Faire évoluer</h2>
   <p class="lead">Tout le projet est pensé pour être modifié en français avec Claude Code : le fichier <code>CLAUDE.md</code> lui explique ce qu'est Appui, quelles commandes lancer et quelles règles respecter.</p>
   <ol class="steps">
-    <li><div><h3>Installer Claude Code</h3><p>Application Claude pour ordinateur (onglet Code) ou Terminal. Ouvrir le dossier du projet (dépôt GitHub <code>thesloanesquire/appui-levier</code> : Tim doit t'y inviter, indique-lui ton pseudo GitHub).</p></div></li>
+    <li><div><h3>Installer Claude Code</h3><p>Application Claude pour ordinateur (onglet Code) ou Terminal. Télécharger le projet (une seule fois), puis l'ouvrir dans Claude Code :</p><div class="code"><pre>git clone https://github.com/thesloanesquire/appui-levier.git</pre><button type="button" data-copy>Copier</button></div><p>Le dépôt est public le temps de la remise. Une fois le projet sur ton ordinateur, copie-le dans ton propre compte GitHub (dépôt privé) : le dépôt de Tim sera refermé.</p></div></li>
     <li><div><h3>Premier message</h3><div class="say">« Aide-moi à installer Appui. »</div><p>Claude lit <code>DEMARRER.md</code>, installe, crée ton compte administrateur et ouvre l'outil.</p></div></li>
     <li><div><h3>Ensuite, parler normalement</h3><p>Quelques demandes courantes :</p></div></li>
   </ol>

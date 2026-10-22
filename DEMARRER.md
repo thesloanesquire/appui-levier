@@ -2,6 +2,15 @@
 
 Bienvenue Alexandre. Appui est ton outil : il est à toi (code, données, nom). Ce guide tient en 4 étapes. Tu peux aussi simplement ouvrir ce dossier dans Claude Code et écrire : **« Aide-moi à installer Appui »**. Claude lira le fichier `CLAUDE.md` et fera les étapes avec toi.
 
+## 0. Récupérer le projet
+
+```bash
+git clone https://github.com/thesloanesquire/appui-levier.git
+cd appui-levier
+```
+
+Le dépôt est public le temps de la remise. Ensuite, copie-le dans ton propre compte GitHub en dépôt privé (Claude Code peut le faire : « publie ce dossier dans mon GitHub en privé »).
+
 ## 1. Installer (une fois, 10 minutes)
 
 Ouvre le Terminal dans ce dossier, puis :
