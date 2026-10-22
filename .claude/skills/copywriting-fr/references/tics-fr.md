@@ -70,7 +70,7 @@ Le mot « levier » est le nom de l'agence : il reste dans le nom, pas comme fig
 - Tiret long « — » : supprime dans les titres, objets d'e-mail, accroches, publications. Dans un texte long, un tiret au maximum par page.
 - Points d'exclamation : aucun dans le texte de présentation ; un seul toléré dans une confirmation d'interface (« Lettre enregistrée »).
 - Majuscules : pas de capitales sur les mots importants. Une seule majuscule en début de phrase et aux noms propres.
-- Emojis : aucun (sauf message personnel à Sarah, hors périmètre Levier).
+- Emojis : aucun.
 - Guillemets : « » avec espaces insécables ; les guillemets droits `"` n'apparaissent pas dans un texte final.
 
 ## Quand une règle cède
